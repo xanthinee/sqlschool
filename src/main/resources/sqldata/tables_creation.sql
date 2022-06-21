@@ -1,13 +1,13 @@
 
-DROP TABLE IF EXISTS public."GROUPS";
-CREATE TABLE public."GROUPS" (
+DROP TABLE IF EXISTS public.groups;
+CREATE TABLE public.groups (
     group_id integer NOT NULL,
     group_name character(6) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT "GROUPS_pkey" PRIMARY KEY (group_id)
 );
 
-DROP TABLE IF EXISTS public."STUDENTS";
-CREATE TABLE public."STUDENTS" (
+DROP TABLE IF EXISTS public.students;
+CREATE TABLE public.students (
     student_id integer NOT NULL,
     group_id integer,
     first_name character(255) COLLATE pg_catalog."default" NOT NULL,
@@ -15,8 +15,8 @@ CREATE TABLE public."STUDENTS" (
     CONSTRAINT "STUDENTS_pkey" PRIMARY KEY (student_id)
 );
 
-DROP TABLE IF EXISTS public."COURSES";
-CREATE TABLE public."COURSES" (
+DROP TABLE IF EXISTS public.courses;
+CREATE TABLE public.courses (
     course_id integer NOT NULL,
     course_name character(255) COLLATE pg_catalog."default" NOT NULL,
     course_description character(510) COLLATE pg_catalog."default" NOT NULL,

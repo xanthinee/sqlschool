@@ -9,7 +9,6 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 public class SQLScriptRunner {
 
     static void executeScriptUsingScriptRunner(String str) throws ClassNotFoundException, SQLException, IOException {
-        String scriptFilePath = str;
         Reader reader = null;
         Connection connection = null;
 
@@ -18,7 +17,7 @@ public class SQLScriptRunner {
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgreSQLTaskFoxminded",
                     "postgres", "7777");
             ScriptRunner scriptExecutor = new ScriptRunner(connection);
-            reader = new BufferedReader(new FileReader(scriptFilePath));
+            reader = new BufferedReader(new FileReader(str));
             scriptExecutor.runScript(reader);
         } catch (Exception e) {
             e.printStackTrace();
