@@ -2,6 +2,7 @@ package sqltask;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Random;
 
 
@@ -20,8 +21,12 @@ public class Main {
 //            throw new RuntimeException(e);
 //        }
 
-        Random rd = new Random();
         GroupsTable groupsTable = new GroupsTable();
         System.out.println(groupsTable.printGroupsTable());
+
+        System.out.println("-------------------------------------");
+
+        CoursesTable coursesT = new CoursesTable();
+        System.out.println(coursesT.printCoursesTable());
     }
 }

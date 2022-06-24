@@ -2,11 +2,15 @@ package sqltask;
 
 import java.sql.*;
 import java.util.Random;
+import java.util.*;
 
 public class GroupsTable {
 
     static Random rd;
     static final int totalAmountOfGroups = 10;
+
+    ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
+    UserConnection userCon = conInfo.getConnectionInfo("textdata/connectioninfo.txt");
 
     private String generateGroupName() {
 
@@ -25,8 +29,7 @@ public class GroupsTable {
 
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection(ConnectionInfo.host,
-                    ConnectionInfo.user, ConnectionInfo.password);
+            connection = DriverManager.getConnection(userCon.host, userCon.user, userCon.password);
             Statement st = connection.createStatement();
             for (int i = 1; i < totalAmountOfGroups + 1; i++) {
                 Group newGroup = new Group(i, generateGroupName());
@@ -45,8 +48,7 @@ public class GroupsTable {
 
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection(ConnectionInfo.host,
-                    ConnectionInfo.user, ConnectionInfo.password);
+            connection = DriverManager.getConnection(userCon.host, userCon.user, userCon.password);
             Statement st = connection.createStatement();
             for (int i = 1; i < totalAmountOfGroups + 1; i++) {
                 st.executeUpdate("DELETE FROM public.groups WHERE group_id = '" + i + "'");
@@ -63,9 +65,9 @@ public class GroupsTable {
     private ResultSet getGroupsFromTable() throws SQLException {
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection(ConnectionInfo.host, ConnectionInfo.user, ConnectionInfo.password);
-            PreparedStatement getSize = connection.prepareStatement("select * FROM public.groups");
-            return getSize.executeQuery();
+            connection = DriverManager.getConnection(userCon.host, userCon.user,userCon.password);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * FROM public.groups");
+            return preparedStatement.executeQuery();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -79,13 +81,15 @@ public class GroupsTable {
     public String printGroupsTable() throws SQLException{
 
         ResultSet rs = getGroupsFromTable();
-        StringBuilder sb = new StringBuilder();
-        sb.append("GROUPS:");
-        sb.append(System.lineSeparator());
+        StringJoiner sj = new StringJoiner("");
+        sj.add("GROUPS:");
+        sj.add(System.lineSeparator());
             while (rs.next()){
-                sb.append(rs.getInt("group_id") + ". " + rs.getString("group_name"));
-                sb.append(System.lineSeparator());
+                sj.add(rs.getInt("group_id") + ". " + rs.getString("group_name").trim());
+                if (!rs.isLast()) {
+                    sj.add(System.lineSeparator());
+                }
             }
-        return sb.toString();
+        return sj.toString();
     }
 }
