@@ -66,7 +66,7 @@ public class GroupsTable {
         sj.add("GROUPS:");
         sj.add(System.lineSeparator());
             while (rs.next()){
-                sj.add(rs.getInt("group_id") + ". " + rs.getString("group_name").trim());
+                sj.add(rs.getInt("group_id") + " - " + rs.getString("group_name").trim());
                 if (!rs.isLast()) {
                     sj.add(System.lineSeparator());
                 }

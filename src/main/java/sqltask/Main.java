@@ -22,7 +22,7 @@ public class Main {
 //        }
 
         GroupsTable groupsTable = new GroupsTable();
-        groupsTable.putGroupIntoTable();
+//        groupsTable.putGroupIntoTable();
 //        groupsTable.deleteGroupsFromTable();
         System.out.println(groupsTable.printGroupsTable());
 
@@ -31,5 +31,9 @@ public class Main {
         CoursesTable coursesT = new CoursesTable();
         System.out.println(coursesT.printCoursesTable());
 
+        System.out.println("-------------------------------------");
+        StudentsTable st = new StudentsTable();
+//
+        st.setStudentsGroups();
     }
 }
