@@ -7,7 +7,6 @@ import java.util.stream.*;
 public class CoursesTable {
 
     ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
-    UserConnection userCon = conInfo.getConnectionInfo("textdata/connectioninfo.txt");
 
     public List<Course> makeCoursesList(String fileName) {
 
@@ -17,11 +16,9 @@ public class CoursesTable {
         return courses.map(cp::parse).toList();
     }
 
-    public void putCoursesInTable(List<Course> courses) throws SQLException {
+    public void putCoursesInTable(List<Course> courses) {
 
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(userCon.host, userCon.user, userCon.password);
+        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
             for (Course course : courses) {
                 String query = "insert into public.courses values (?,?,?)";
                 PreparedStatement st = connection.prepareStatement(query);
@@ -30,42 +27,27 @@ public class CoursesTable {
                 st.setString(3, course.getDescription());
                 st.executeUpdate();
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
         }
     }
-    public void deleteCoursesFromTable() throws SQLException{
+    public void deleteCoursesFromTable() {
 
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(userCon.host, userCon.user, userCon.password);
+        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
             Statement st = connection.createStatement();
             st.executeUpdate("delete from courses");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
         }
     }
 
-    private ResultSet getCoursesFromTable() throws SQLException {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(userCon.host, userCon.user, userCon.password);
+    private ResultSet getCoursesFromTable() {
+
+        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
             PreparedStatement preparedStatement = connection.prepareStatement("select * FROM public.courses");
             return preparedStatement.executeQuery();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
         }
         throw new IllegalStateException("ResultSet wasn't created");
     }

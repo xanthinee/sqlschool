@@ -22,11 +22,14 @@ public class Main {
 //        }
 
         GroupsTable groupsTable = new GroupsTable();
+        groupsTable.putGroupIntoTable();
+//        groupsTable.deleteGroupsFromTable();
         System.out.println(groupsTable.printGroupsTable());
 
         System.out.println("-------------------------------------");
 
         CoursesTable coursesT = new CoursesTable();
         System.out.println(coursesT.printCoursesTable());
+
     }
 }

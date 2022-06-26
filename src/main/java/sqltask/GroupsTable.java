@@ -6,13 +6,12 @@ import java.util.*;
 
 public class GroupsTable {
 
-    static Random rd;
+    static Random rd = new Random();
     static final int totalAmountOfGroups = 10;
 
     ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
-    UserConnection userCon = conInfo.getConnectionInfo("textdata/connectioninfo.txt");
 
-    private String generateGroupName() {
+    private String generateGroupName(Random rd) {
 
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < 2; i++) {
@@ -20,60 +19,42 @@ public class GroupsTable {
         }
         sb.append("--");
         for(int i = 0; i < 2; i++) {
-            sb.append(rd.nextInt(0, 9));
+            sb.append(rd.nextInt(0, 10));
         }
         return sb.toString();
     }
 
-    public void putGroupIntoTable() throws SQLException {
+    public void putGroupIntoTable() {
 
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(userCon.host, userCon.user, userCon.password);
-            Statement st = connection.createStatement();
-            for (int i = 1; i < totalAmountOfGroups + 1; i++) {
-                Group newGroup = new Group(i, generateGroupName());
-                st.executeUpdate("INSERT INTO public.groups VALUES('"+newGroup.getId()+"', '" +newGroup.getName()+ "')");
+        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
+            for (int i = 0; i < totalAmountOfGroups; i++) {
+                String query = "INSERT INTO public.groups VALUES(?,?)";
+                PreparedStatement st = connection.prepareStatement(query);
+                st.setInt(1,rd.nextInt(1000,10000));
+                st.setString(2, generateGroupName(rd));
+                st.executeUpdate();
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
         }
     }
 
-    public void deleteGroupsFromTable() throws SQLException {
+    public void deleteGroupsFromTable() {
 
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(userCon.host, userCon.user, userCon.password);
+        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
             Statement st = connection.createStatement();
-            for (int i = 1; i < totalAmountOfGroups + 1; i++) {
-                st.executeUpdate("DELETE FROM public.groups WHERE group_id = '" + i + "'");
-            }
-        } catch (Exception e) {
+            st.executeUpdate("DELETE FROM public.groups");
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
         }
     }
 
-    private ResultSet getGroupsFromTable() throws SQLException {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(userCon.host, userCon.user,userCon.password);
+    private ResultSet getGroupsFromTable() {
+        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
             PreparedStatement preparedStatement = connection.prepareStatement("select * FROM public.groups");
             return preparedStatement.executeQuery();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
         }
         throw new IllegalStateException("ResultSet wasn't created");
     }
