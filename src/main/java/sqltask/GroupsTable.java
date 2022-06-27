@@ -1,25 +1,24 @@
 package sqltask;
 
 import java.sql.*;
-import java.util.Random;
 import java.util.*;
 
 public class GroupsTable {
 
-    static Random rd = new Random();
     static final int totalAmountOfGroups = 10;
 
     ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
+    Random rd = new Random();
 
-    private String generateGroupName(Random rd) {
+    private String generateGroupName() {
 
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < 2; i++) {
-            sb.append((char) rd.nextInt('A','Z'));
+            sb.append((char)  rd.nextInt('A', 'Z'));
         }
         sb.append("--");
         for(int i = 0; i < 2; i++) {
-            sb.append(rd.nextInt(0, 10));
+            sb.append(rd.nextInt(0,10));
         }
         return sb.toString();
     }
@@ -28,10 +27,9 @@ public class GroupsTable {
 
         try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
             for (int i = 0; i < totalAmountOfGroups; i++) {
-                String query = "INSERT INTO public.groups VALUES(?,?)";
-                PreparedStatement st = connection.prepareStatement(query);
-                st.setInt(1,rd.nextInt(1000,10000));
-                st.setString(2, generateGroupName(rd));
+                PreparedStatement st = connection.prepareStatement("INSERT INTO public.groups VALUES(?,?)");
+                st.setInt(1, rd.nextInt(1000, 10000));
+                st.setString(2, generateGroupName());
                 st.executeUpdate();
             }
         } catch (SQLException e) {
@@ -42,8 +40,8 @@ public class GroupsTable {
     public void deleteGroupsFromTable() {
 
         try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
-            Statement st = connection.createStatement();
-            st.executeUpdate("DELETE FROM public.groups");
+            PreparedStatement st = connection.prepareStatement("DELETE FROM public.groups");
+            st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

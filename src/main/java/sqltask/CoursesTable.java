@@ -20,8 +20,7 @@ public class CoursesTable {
 
         try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
             for (Course course : courses) {
-                String query = "insert into public.courses values (?,?,?)";
-                PreparedStatement st = connection.prepareStatement(query);
+                PreparedStatement st = connection.prepareStatement("insert into public.courses values (?,?,?)");
                 st.setInt(1, course.getId());
                 st.setString(2, course.getName());
                 st.setString(3, course.getDescription());
@@ -34,8 +33,8 @@ public class CoursesTable {
     public void deleteCoursesFromTable() {
 
         try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
-            Statement st = connection.createStatement();
-            st.executeUpdate("delete from courses");
+            PreparedStatement st = connection.prepareStatement("delete from courses");
+            st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

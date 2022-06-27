@@ -1,15 +1,14 @@
 package sqltask;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
-import java.sql.ResultSet;
 
 public class StudentsTable {
 
     ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
     static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
+    static List<Integer> usedIDs = new ArrayList<>();
+    Random rd = new Random();
 
     private List<Integer> groupsIdList() throws SQLException {
 
@@ -24,37 +23,101 @@ public class StudentsTable {
         return ids;
     }
 
+    private int generateUniqueNum(int leftBound, int rightBound) {
+        int num = rd.nextInt(leftBound, rightBound);
+        if (usedIDs.contains(num)) {
+            num = rd.nextInt(leftBound, rightBound);
+        }
+        usedIDs.add(num);
+        return num;
+    }
+
     public List<Student> generateStudents() {
 
-        Random rd = new Random();
         FileConverter fileCon = new FileConverter();
         List<String> names = fileCon.readFile("textdata/names.txt").toList();
         List<String> surnames = fileCon.readFile("textdata/surnames.txt").toList();
         List<Student> students = new ArrayList<>();
 
         for (int i = 0; i < TOTAL_AMOUNT_OF_STUDENTS; i++) {
-            students.add(new Student(rd.nextInt(1000, 10000), null,
-                    names.get(rd.nextInt(0, names.size())), surnames.get(rd.nextInt(0, surnames.size()))));
+            students.add(new Student(generateUniqueNum(1000, 10000), null,
+                    names.get(generateUniqueNum(0, names.size())),
+                    surnames.get(generateUniqueNum(0, surnames.size()))));
+        }
+        return students;
+    }
+    public List<Student> setStudentsGroups() throws SQLException {
+
+        List<Student> students = generateStudents();
+        List<Integer> iDs = groupsIdList();
+        for (int id : iDs) {
+            int groupMembers = generateUniqueNum(0, 31);
+            if (groupMembers >= 10) {
+                for (int i = 0; i < groupMembers; i++) {
+                    students.get(generateUniqueNum(0, students.size())).setGroupId(id);
+                }
+            }
         }
         return students;
     }
 
-    public void setStudentsGroups() throws SQLException {
-
-        Random rd = new Random();
-        List<Student> students = generateStudents();
-        List<Integer> iDs = groupsIdList();
-
-        for (int id : iDs) {
-            int groupMembers = rd.nextInt(0, 31);
-            if (groupMembers >= 10) {
-                for (int i = 0; i < groupMembers; i++) {
-                    students.get(rd.nextInt(0, students.size())).setGroupId(id);
+    public void putStudentsIntoTable(List<Student> students) throws SQLException {
+        System.out.println("1");
+        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")){
+            String query = "insert into public.students values (?,?,?,?)";
+            PreparedStatement st = connection.prepareStatement(query);
+            for (Student student : students) {
+                st.setInt(1, student.getStudentId());
+                if (student.getGroupId() == null) {
+                    st.setNull(2, Types.NULL);
+                } else {
+                    st.setInt(2, student.getGroupId());
                 }
+                st.setString(3, student.getName());
+                st.setString(4, student.getSurname());
+                st.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteStudentsFromTable() throws SQLException {
+
+        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
+            PreparedStatement st = connection.prepareStatement("delete from students");
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ResultSet getStudentsFromTable() throws SQLException {
+
+        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")){
+            PreparedStatement st = connection.prepareStatement("select * from students");
+            return st.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalStateException("ResultSet wasn't created");
+    }
+
+    public String printStudentsTable() throws SQLException {
+
+        ResultSet rs = getStudentsFromTable();
+        StringJoiner sj = new StringJoiner("");
+        sj.add("STUDENTS");
+        sj.add(System.lineSeparator());
+        while (rs.next()) {
+            sj.add(rs.getInt("student_id") + " | ");
+            sj.add(String.format("%-6d", rs.getInt("group_id")) + " | ");
+            sj.add(String.format("%-9s", rs.getString("first_name").trim()) + " | ");
+            sj.add(String.format("%-12s", rs.getString("second_name").trim()) + " | ");
+            if (!rs.isLast()) {
+                sj.add(System.lineSeparator());
             }
         }
-        for(Student student : students) {
-            System.out.println(student);
-        }
+        return sj.toString();
     }
 }

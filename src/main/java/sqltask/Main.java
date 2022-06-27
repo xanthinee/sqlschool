@@ -33,7 +33,6 @@ public class Main {
 
         System.out.println("-------------------------------------");
         StudentsTable st = new StudentsTable();
-//
-        st.setStudentsGroups();
+        System.out.println(st.printStudentsTable());
     }
 }
