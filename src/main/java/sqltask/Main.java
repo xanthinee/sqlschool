@@ -45,6 +45,6 @@ public class Main {
  **/
 
         ApplicationMethods appMethods = new ApplicationMethods();
-        System.out.println(appMethods.compareGroup(4190));
+        System.out.println(appMethods.findStudentsByCourse("Music"));
     }
 }
