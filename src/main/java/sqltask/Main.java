@@ -1,12 +1,7 @@
 package sqltask;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Random;
-
-
-import static sqltask.SQLScriptRunner.executeScriptUsingScriptRunner;
 
 public class Main {
 
@@ -21,18 +16,23 @@ public class Main {
 //            throw new RuntimeException(e);
 //        }
 
-        GroupsTable groupsTable = new GroupsTable();
-//        groupsTable.putGroupIntoTable();
+        StudentsCoursesTable stcoT = new StudentsCoursesTable();
+        System.out.println(stcoT.printStudCourseTable());
+
+
+//        GroupsTable groupsTable = new GroupsTable();
+////        groupsTable.putGroupIntoTable();
 //        groupsTable.deleteGroupsFromTable();
-        System.out.println(groupsTable.printGroupsTable());
-
-        System.out.println("-------------------------------------");
-
-        CoursesTable coursesT = new CoursesTable();
-        System.out.println(coursesT.printCoursesTable());
-
-        System.out.println("-------------------------------------");
-        StudentsTable st = new StudentsTable();
-        System.out.println(st.printStudentsTable());
+//        System.out.println(groupsTable.printGroupsTable());
+//
+//        System.out.println("-------------------------------------");
+//
+//        CoursesTable coursesT = new CoursesTable();
+//        coursesT.deleteCoursesFromTable();
+//
+//        System.out.println("-------------------------------------");
+//        StudentsTable st = new StudentsTable();
+//        st.deleteStudentsFromTable();
+//    }
     }
 }

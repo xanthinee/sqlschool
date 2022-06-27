@@ -5,7 +5,7 @@ import java.util.*;
 
 public class GroupsTable {
 
-    static final int totalAmountOfGroups = 10;
+    static final int TOTAL_AMOUNT_OF_GROUPS = 10;
 
     ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
     Random rd = new Random();
@@ -26,7 +26,7 @@ public class GroupsTable {
     public void putGroupIntoTable() {
 
         try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
-            for (int i = 0; i < totalAmountOfGroups; i++) {
+            for (int i = 0; i < TOTAL_AMOUNT_OF_GROUPS; i++) {
                 PreparedStatement st = connection.prepareStatement("INSERT INTO public.groups VALUES(?,?)");
                 st.setInt(1, rd.nextInt(1000, 10000));
                 st.setString(2, generateGroupName());

@@ -7,7 +7,7 @@ public class StudentsTable {
 
     ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
     static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
-    static List<Integer> usedIDs = new ArrayList<>();
+    static final Set<Integer> usedIDs = new HashSet<>();
     Random rd = new Random();
 
     private List<Integer> groupsIdList() throws SQLException {
@@ -46,7 +46,7 @@ public class StudentsTable {
         }
         return students;
     }
-    public List<Student> setStudentsGroups() throws SQLException {
+    public List<Student> finishStudentsCreation() throws SQLException {
 
         List<Student> students = generateStudents();
         List<Integer> iDs = groupsIdList();

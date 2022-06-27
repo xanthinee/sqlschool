@@ -22,3 +22,13 @@ CREATE TABLE public.courses (
     course_description character(510) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT "COURSES_pkey" PRIMARY KEY (course_id)
 );
+
+DROP TABLE IF EXISTS public.students_courses;
+CREATE TABLE public.students_courses
+(
+    row_id integer NOT NULL,
+    student_id integer NOT NULL,
+    course_name character(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT students_courses_pkey PRIMARY KEY (row_id)
+);
+
