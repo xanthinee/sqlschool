@@ -9,6 +9,7 @@ public class GroupsTable {
 
     ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
     Random rd = new Random();
+    String connectionFile = "data/connectioninfo";
 
     private String generateGroupName() {
 
@@ -25,7 +26,7 @@ public class GroupsTable {
 
     public void putGroupIntoTable() {
 
-        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
+        try (Connection connection = conInfo.getConnection(connectionFile)) {
             for (int i = 0; i < TOTAL_AMOUNT_OF_GROUPS; i++) {
                 PreparedStatement st = connection.prepareStatement("INSERT INTO public.groups VALUES(?,?)");
                 st.setInt(1, rd.nextInt(1000, 10000));
@@ -39,7 +40,7 @@ public class GroupsTable {
 
     public void deleteGroupsFromTable() {
 
-        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
+        try (Connection connection = conInfo.getConnection(connectionFile)) {
             PreparedStatement st = connection.prepareStatement("DELETE FROM public.groups");
             st.executeUpdate();
         } catch (SQLException e) {
@@ -47,8 +48,8 @@ public class GroupsTable {
         }
     }
 
-    private ResultSet getGroupsFromTable() {
-        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
+    public ResultSet getGroupsFromTable() {
+        try (Connection connection = conInfo.getConnection(connectionFile)) {
             PreparedStatement preparedStatement = connection.prepareStatement("select * FROM public.groups");
             return preparedStatement.executeQuery();
         } catch (SQLException e) {

@@ -9,11 +9,12 @@ public class StudentsTable {
     static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
     static final Set<Integer> usedIDs = new HashSet<>();
     Random rd = new Random();
+    String connectionFile = "data/connectioninfo";
 
     private List<Integer> groupsIdList() throws SQLException {
 
         List<Integer> ids = new ArrayList<>();
-        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
+        try (Connection connection = conInfo.getConnection(connectionFile)) {
             PreparedStatement preparedStatement = connection.prepareStatement("select * FROM public.groups");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -35,8 +36,8 @@ public class StudentsTable {
     public List<Student> generateStudents() {
 
         FileConverter fileCon = new FileConverter();
-        List<String> names = fileCon.readFile("textdata/names.txt").toList();
-        List<String> surnames = fileCon.readFile("textdata/surnames.txt").toList();
+        List<String> names = fileCon.readFile("data/names").toList();
+        List<String> surnames = fileCon.readFile("data/surnames").toList();
         List<Student> students = new ArrayList<>();
 
         for (int i = 0; i < TOTAL_AMOUNT_OF_STUDENTS; i++) {
@@ -63,7 +64,7 @@ public class StudentsTable {
 
     public void putStudentsIntoTable(List<Student> students) throws SQLException {
         System.out.println("1");
-        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")){
+        try (Connection connection = conInfo.getConnection(connectionFile)){
             String query = "insert into public.students values (?,?,?,?)";
             PreparedStatement st = connection.prepareStatement(query);
             for (Student student : students) {
@@ -84,7 +85,7 @@ public class StudentsTable {
 
     public void deleteStudentsFromTable() throws SQLException {
 
-        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")) {
+        try (Connection connection = conInfo.getConnection(connectionFile)) {
             PreparedStatement st = connection.prepareStatement("delete from students");
             st.executeUpdate();
         } catch (SQLException e) {
@@ -94,7 +95,7 @@ public class StudentsTable {
 
     public ResultSet getStudentsFromTable() throws SQLException {
 
-        try (Connection connection = conInfo.getConnection("textdata/connectioninfo.txt")){
+        try (Connection connection = conInfo.getConnection(connectionFile)){
             PreparedStatement st = connection.prepareStatement("select * from students");
             return st.executeQuery();
         } catch (SQLException e) {
