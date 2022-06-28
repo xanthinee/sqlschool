@@ -13,19 +13,19 @@ public class ApplicationMethods {
     ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
     String connectionFile = "data/connectioninfo";
     Random rd = new Random();
+    Scanner sc = new Scanner(System.in);
 
     /** 1st option **/
     public String compareGroup() throws SQLException {
 
-        Scanner sc = new Scanner(System.in);
-        int groupID = sc.nextInt();
         GroupsTable gt = new GroupsTable();
+        int groupID = sc.nextInt();
         ResultSet groupsRS = gt.getGroupsFromTable();
         Map<String, Integer> groupMembers = new HashMap<>();
         try (Connection connection = conInfo.getConnection(connectionFile)) {
-            PreparedStatement prepSt = connection.prepareStatement("select g.group_name, count(s.student_id) from groups g " +
+            PreparedStatement getGroupsMembers = connection.prepareStatement("select g.group_name, count(s.student_id) from groups g " +
                     "left outer join students s on g.group_id = s.group_id group by g.group_name");
-            ResultSet rs = prepSt.executeQuery();
+            ResultSet rs = getGroupsMembers.executeQuery();
             while (rs.next()) {
                 groupMembers.put(rs.getString("group_name"), rs.getInt("count"));
             }
@@ -73,10 +73,11 @@ public class ApplicationMethods {
         return sj.toString();
     }
 
-    /** 2nd option **/
+    /**
+     * 2nd option
+     **/
     public String findStudentsByCourse() throws SQLException {
 
-        Scanner sc = new Scanner(System.in);
         String courseName = sc.next();
         List<Student> students = new ArrayList<>();
         try (Connection connection = conInfo.getConnection(connectionFile)) {
@@ -111,11 +112,12 @@ public class ApplicationMethods {
         return newId;
     }
 
-    /** 3rd option **/
+    /**
+     * 3rd option
+     **/
     public void putNewStudent() throws SQLException {
 
         StudentsTable studTab = new StudentsTable();
-        Scanner sc = new Scanner(System.in);
         System.out.println("Enter NAME of student: ");
         String studentName = sc.next();
         System.out.println("Enter SURNAME of student");
@@ -141,13 +143,14 @@ public class ApplicationMethods {
         }
     }
 
-    /** 4th option **/
+    /**
+     * 4th option
+     **/
     public void deleteStudent() throws SQLException {
 
-        Scanner sc = new Scanner(System.in);
         System.out.println("Enter ID of student: ");
         int studentID = sc.nextInt();
-        try (Connection connection = conInfo.getConnection(connectionFile)){
+        try (Connection connection = conInfo.getConnection(connectionFile)) {
             PreparedStatement deleteFromStudents = connection.prepareStatement("delete from students where student_id = ?");
             deleteFromStudents.setInt(1, studentID);
             PreparedStatement deleteFromStudentsCourses = connection.prepareStatement("delete from students_courses where student_id = ?");
@@ -159,6 +162,10 @@ public class ApplicationMethods {
         }
     }
 
+    /**
+     * 5th option
+     **/
+
     private List<String> getCoursesOfStudent(int studentID) {
 
         List<String> coursesOfStudent = new ArrayList<>();
@@ -166,7 +173,7 @@ public class ApplicationMethods {
             PreparedStatement getCoursesOfStud = connection.prepareStatement("select * from students_courses where student_id = ?");
             getCoursesOfStud.setInt(1, studentID);
             ResultSet coursesOfStud = getCoursesOfStud.executeQuery();
-            while(coursesOfStud.next()) {
+            while (coursesOfStud.next()) {
                 coursesOfStudent.add(coursesOfStud.getString("course_name".trim()));
             }
         } catch (SQLException e) {
@@ -174,63 +181,70 @@ public class ApplicationMethods {
         }
         return coursesOfStudent;
     }
-    /** 5th option **/
-    public void giveCourseToStudent() throws SQLException {
-
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter student_id of STUDENT: ");
-        int studentID = sc.nextInt();
-        List<String> coursesOfStudent = getCoursesOfStudent(studentID);
-        int numOfCourses = coursesOfStudent.size();
-
-        CoursesTable courseTab = new CoursesTable();
-        List<Course> allAvailableCourses = courseTab.makeCoursesList("data/descriptions");
-
-        Map<Integer, String> availableCourses = new HashMap<>();
-        for (Course course : allAvailableCourses) {
-            availableCourses.put(course.getId(), course.getName());
-        }
-
+    private String coursesOfStudentInfo(List<String> courses) {
         StringJoiner sj = new StringJoiner("");
-        if (numOfCourses != 0) {
-            sj.add("Chosen STUDENT already has next COURSES: ");
+        sj.add("Entered STUDENT has next COURSES: " + System.lineSeparator());
+        int index = 1;
+        for (String course : courses) {
+            sj.add(index + ". " + course);
             sj.add(System.lineSeparator());
-            int c = numOfCourses - 1;
-            for (String course : coursesOfStudent) {
-                sj.add((numOfCourses - c) + ". " + course);
-                sj.add(System.lineSeparator());
-                c--;
-            }
-            System.out.println(sj);
-            System.out.println("You can give next COURSES to STUDENT:");
+            index++;
+        }
+        return sj.toString();
+    }
 
-            for (Entry<Integer, String> entry : new HashSet<>(availableCourses.entrySet())) {
-                for (String course : coursesOfStudent) {
-                    if (entry.getValue().trim().equals(course.trim())) {
-                        availableCourses.remove(entry.getKey());
-                    }
+    private Map<Integer, String> findUnusedCourses(List<String> coursesOfStudent, Map<Integer, String> availableCourses) {
+
+        for (Entry<Integer, String> entry : new HashSet<>(availableCourses.entrySet())) {
+            for (String course : coursesOfStudent) {
+                if (entry.getValue().trim().equals(course.trim())) {
+                    availableCourses.remove(entry.getKey());
                 }
             }
-
-            StringJoiner strOfAvbCourses = new StringJoiner("");
-            int index = 1;
-            for (Entry<Integer, String> entry : availableCourses.entrySet()) {
-                strOfAvbCourses.add(index + ". " + entry.getValue() + System.lineSeparator());
-                index++;
-            }
-            System.out.println(strOfAvbCourses);
-
-        } else {
-            System.out.println("Chosen STUDENT has no any COURSES");
-            System.out.println("You can give next COURSES to STUDENT:");
-            StringJoiner strOfAvbCourses = new StringJoiner("");
-            int index = 1;
-            for (Course course : allAvailableCourses) {
-                strOfAvbCourses.add(index + ". " + course.getName() + System.lineSeparator());
-                index++;
-            }
-            System.out.println(strOfAvbCourses);
         }
+        return availableCourses;
+    }
+
+    private String completeCoursesInfo(List<String> coursesOfStudent, Map<Integer, String> mainCourses,
+                                      Map<Integer, String> availableForStudentCourses) {
+        int numOfCourses = coursesOfStudent.size();
+        StringJoiner sj = new StringJoiner("");
+        if (numOfCourses != 0) {
+            sj.add(coursesOfStudentInfo(coursesOfStudent));
+            sj.add(System.lineSeparator());
+            sj.add("You can give next COURSES to STUDENT:" + System.lineSeparator());
+            int index = 1;
+            for (Entry<Integer, String> entry : availableForStudentCourses.entrySet()) {
+                sj.add(index + ". " + entry.getValue() + System.lineSeparator());
+                index++;
+            }
+        } else {
+            sj.add("Chosen STUDENT has no any COURSES");
+            sj.add("You can give next COURSES to STUDENT:");
+            int index = 1;
+            for (Entry<Integer,String> entry : mainCourses.entrySet()) {
+                sj.add(index + ". " + entry.getValue() + System.lineSeparator());
+                index++;
+            }
+            return sj.toString();
+        }
+        return sj.toString();
+    }
+    public void giveCourseToStudent() throws SQLException {
+
+        System.out.println("Enter student_id of STUDENT: ");
+        int studentID = sc.nextInt();
+        CoursesTable courseTab = new CoursesTable();
+        List<Course> tempListOfAvailableCourses = courseTab.makeCoursesList("data/descriptions");
+        Map<Integer, String> mainCourses = new HashMap<>();
+        for (Course course : tempListOfAvailableCourses) {
+            mainCourses.put(course.getId(), course.getName());
+        }
+        List<String> coursesOfStudent = getCoursesOfStudent(studentID);
+        Map<Integer, String> availableForStudentCourse = findUnusedCourses(coursesOfStudent,mainCourses);
+        int numOfCourses = coursesOfStudent.size();
+
+        System.out.println(completeCoursesInfo(coursesOfStudent, mainCourses,availableForStudentCourse));
 
         if (numOfCourses < 3) {
             System.out.println("Amount of new available COURSES is: " + (3 - numOfCourses));
@@ -259,20 +273,10 @@ public class ApplicationMethods {
     /** 6th option **/
     public void unlinkCourse() throws SQLException {
 
-        Scanner sc = new Scanner(System.in);
         System.out.println("Enter student_id of STUDENT: ");
         int studentID = sc.nextInt();
-        CoursesTable courseTab = new CoursesTable();
         List<String> coursesOfStudent = getCoursesOfStudent(studentID);
-        System.out.println("Entered STUDENT has next COURSES: ");
-        StringJoiner sj = new StringJoiner("");
-        int index = 1;
-        for (String course : coursesOfStudent) {
-            sj.add(index + ". " + course);
-            sj.add(System.lineSeparator());
-            index++;
-        }
-        System.out.println(sj);
+        System.out.println(coursesOfStudentInfo(coursesOfStudent));
         System.out.println("You can DELETE one of them - ENTER bellow it's NAME: ");
         String courseToDelete = sc.next();
         try (Connection connection = conInfo.getConnection(connectionFile)) {
