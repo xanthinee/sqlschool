@@ -15,10 +15,38 @@ public class ApplicationMethods {
     Random rd = new Random();
     Scanner sc = new Scanner(System.in);
 
-    /** 1st option **/
-    public String compareGroup() throws SQLException {
+    /**
+     * 1st option
+     **/
+
+    private String resultOfComparison(List<String> withEqualSize, List<String> withFewerSize) {
+
+        StringJoiner sj = new StringJoiner("");
+        if (withFewerSize.size() == 0) {
+            sj.add("There no group with FEWER amount of students.");
+        } else {
+            sj.add("Groups with FEWER amount of students: ");
+            for (String names : withFewerSize) {
+                sj.add(names + "; ");
+            }
+        }
+        sj.add(System.lineSeparator());
+
+        if (withEqualSize.size() == 0) {
+            sj.add("There no group with EQUAL amount of students.");
+        } else {
+            sj.add("Groups with EQUAL amount of students: ");
+            for (String names : withEqualSize) {
+                sj.add(names + "; ");
+            }
+        }
+        return sj.toString();
+    }
+
+    public void compareGroup() throws SQLException {
 
         GroupsTable gt = new GroupsTable();
+        System.out.println("Enter GROUP to COMPARE bellow: ");
         int groupID = sc.nextInt();
         ResultSet groupsRS = gt.getGroupsFromTable();
         Map<String, Integer> groupMembers = new HashMap<>();
@@ -50,27 +78,7 @@ public class ApplicationMethods {
                 withEqualSize.add(entry.getValue().getName());
             }
         }
-
-        StringJoiner sj = new StringJoiner("");
-        if (withFewerSize.size() == 0) {
-            sj.add("There no group with FEWER amount of students.");
-        } else {
-            sj.add("Groups with fewer amount of students: ");
-            for (String names : withFewerSize) {
-                sj.add(names + "; ");
-            }
-        }
-        sj.add(System.lineSeparator());
-
-        if (withEqualSize.size() == 0) {
-            sj.add("There no group with EQUAL amount of students.");
-        } else {
-            sj.add("Groups with equal amount of students: ");
-            for (String names : withEqualSize) {
-                sj.add(names + "; ");
-            }
-        }
-        return sj.toString();
+        System.out.println(resultOfComparison(withEqualSize, withFewerSize));
     }
 
     /**
