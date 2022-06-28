@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.Map.Entry;
 
+@SuppressWarnings("java:S106")
 public class ApplicationMethods {
 
     ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
@@ -152,4 +154,100 @@ public class ApplicationMethods {
             e.printStackTrace();
         }
     }
+
+    /** 5th option **/
+    public void giveCourseToStudent() throws SQLException {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter student_id of STUDENT: ");
+        int studentID = sc.nextInt();
+        int numOfCourses = 0;
+        List<String> coursesOfStudent = new ArrayList<>();
+
+        try (Connection connection = conInfo.getConnection(connectionFile)) {
+            PreparedStatement getCoursesOfStud = connection.prepareStatement("select * from students_courses where student_id = ?");
+            getCoursesOfStud.setInt(1, studentID);
+            ResultSet coursesOfStud = getCoursesOfStud.executeQuery();
+            while(coursesOfStud.next()) {
+                coursesOfStudent.add(coursesOfStud.getString("course_name"));
+                numOfCourses++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        CoursesTable courseTab = new CoursesTable();
+        List<Course> allAvailableCourses = courseTab.makeCoursesList("data/descriptions");
+
+        Map<Integer, String> availableCourses = new HashMap<>();
+        for (Course course : allAvailableCourses) {
+            availableCourses.put(course.getId(), course.getName());
+        }
+
+        StringJoiner sj = new StringJoiner("");
+        if (numOfCourses != 0) {
+            sj.add("Chosen STUDENT already has next COURSES: ");
+            sj.add(System.lineSeparator());
+            int c = numOfCourses - 1;
+            for (String course : coursesOfStudent) {
+                sj.add((numOfCourses - c) + ". " + course);
+                sj.add(System.lineSeparator());
+                c--;
+            }
+            System.out.println(sj);
+            System.out.println("You can give next COURSES to STUDENT:");
+
+            for (Entry<Integer, String> entry : new HashSet<>(availableCourses.entrySet())) {
+                for (String course : coursesOfStudent) {
+                    if (entry.getValue().trim().equals(course.trim())) {
+                        availableCourses.remove(entry.getKey());
+                    }
+                }
+            }
+
+            StringJoiner strOfAvbCourses = new StringJoiner("");
+            int index = 1;
+            for (Entry<Integer, String> entry : availableCourses.entrySet()) {
+                strOfAvbCourses.add(index + ". " + entry.getValue() + System.lineSeparator());
+                index++;
+            }
+            System.out.println(strOfAvbCourses);
+
+        } else {
+            System.out.println("Chosen STUDENT has no any COURSES");
+            System.out.println("You can give next COURSES to STUDENT:");
+            StringJoiner strOfAvbCourses = new StringJoiner("");
+            int index = 1;
+            for (Course course : allAvailableCourses) {
+                strOfAvbCourses.add(index + ". " + course.getName() + System.lineSeparator());
+                index++;
+            }
+            System.out.println(strOfAvbCourses);
+        }
+
+        if (numOfCourses < 3) {
+            System.out.println("Amount of new available COURSES is: " + (3 - numOfCourses));
+            System.out.println("Enter NAME (Only 1 by attempt) of COURSE which you want to ADD: ");
+            String courseName = sc.next();
+            List<Integer> usedRowIDs = new ArrayList<>();
+            try (Connection connection = conInfo.getConnection(connectionFile)) {
+                PreparedStatement getUsedIDs = connection.prepareStatement("select row_id from students_courses");
+                ResultSet usedIDs = getUsedIDs.executeQuery();
+                while (usedIDs.next()) {
+                    usedRowIDs.add(usedIDs.getInt("row_id"));
+                }
+                PreparedStatement addCourseToStudent = connection.prepareStatement("insert into students_courses values (?,?,?)");
+                addCourseToStudent.setInt(1, generateNewId(1000, 10000, usedRowIDs));
+                addCourseToStudent.setInt(2, studentID);
+                addCourseToStudent.setString(3, courseName);
+                addCourseToStudent.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            throw new IllegalStateException("Chosen STUDENT already has maximum amount of COURSES, delete some before");
+        }
+    }
+
+    /** 6th option **/
 }
