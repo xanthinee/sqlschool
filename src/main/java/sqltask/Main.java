@@ -45,7 +45,9 @@ public class Main {
  **/
 
         ApplicationMethods appMethods = new ApplicationMethods();
+        ApplicationMenu menu = new ApplicationMenu();
 //        System.out.println(appMethods.findStudentsByCourse("Music"));
-        appMethods.giveCourseToStudent();
+//        System.out.println(menu.throwMenu());
+        menu.implementMenu();
     }
 }

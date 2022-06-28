@@ -15,8 +15,10 @@ public class ApplicationMethods {
     Random rd = new Random();
 
     /** 1st option **/
-    public String compareGroup(int groupID) throws SQLException {
+    public String compareGroup() throws SQLException {
 
+        Scanner sc = new Scanner(System.in);
+        int groupID = sc.nextInt();
         GroupsTable gt = new GroupsTable();
         ResultSet groupsRS = gt.getGroupsFromTable();
         Map<String, Integer> groupMembers = new HashMap<>();
@@ -72,8 +74,10 @@ public class ApplicationMethods {
     }
 
     /** 2nd option **/
-    public String findStudentsByCourse(String courseName) throws SQLException {
+    public String findStudentsByCourse() throws SQLException {
 
+        Scanner sc = new Scanner(System.in);
+        String courseName = sc.next();
         List<Student> students = new ArrayList<>();
         try (Connection connection = conInfo.getConnection(connectionFile)) {
             PreparedStatement st = connection.prepareStatement("select students.student_id, students.group_id, students.first_name, students.second_name \n" +
@@ -155,26 +159,29 @@ public class ApplicationMethods {
         }
     }
 
+    private List<String> getCoursesOfStudent(int studentID) {
+
+        List<String> coursesOfStudent = new ArrayList<>();
+        try (Connection connection = conInfo.getConnection(connectionFile)) {
+            PreparedStatement getCoursesOfStud = connection.prepareStatement("select * from students_courses where student_id = ?");
+            getCoursesOfStud.setInt(1, studentID);
+            ResultSet coursesOfStud = getCoursesOfStud.executeQuery();
+            while(coursesOfStud.next()) {
+                coursesOfStudent.add(coursesOfStud.getString("course_name".trim()));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return coursesOfStudent;
+    }
     /** 5th option **/
     public void giveCourseToStudent() throws SQLException {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter student_id of STUDENT: ");
         int studentID = sc.nextInt();
-        int numOfCourses = 0;
-        List<String> coursesOfStudent = new ArrayList<>();
-
-        try (Connection connection = conInfo.getConnection(connectionFile)) {
-            PreparedStatement getCoursesOfStud = connection.prepareStatement("select * from students_courses where student_id = ?");
-            getCoursesOfStud.setInt(1, studentID);
-            ResultSet coursesOfStud = getCoursesOfStud.executeQuery();
-            while(coursesOfStud.next()) {
-                coursesOfStudent.add(coursesOfStud.getString("course_name"));
-                numOfCourses++;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        List<String> coursesOfStudent = getCoursesOfStudent(studentID);
+        int numOfCourses = coursesOfStudent.size();
 
         CoursesTable courseTab = new CoursesTable();
         List<Course> allAvailableCourses = courseTab.makeCoursesList("data/descriptions");
@@ -250,4 +257,30 @@ public class ApplicationMethods {
     }
 
     /** 6th option **/
+    public void unlinkCourse() throws SQLException {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter student_id of STUDENT: ");
+        int studentID = sc.nextInt();
+        CoursesTable courseTab = new CoursesTable();
+        List<String> coursesOfStudent = getCoursesOfStudent(studentID);
+        System.out.println("Entered STUDENT has next COURSES: ");
+        StringJoiner sj = new StringJoiner("");
+        int index = 1;
+        for (String course : coursesOfStudent) {
+            sj.add(index + ". " + course);
+            sj.add(System.lineSeparator());
+            index++;
+        }
+        System.out.println(sj);
+        System.out.println("You can DELETE one of them - ENTER bellow it's NAME: ");
+        String courseToDelete = sc.next();
+        try (Connection connection = conInfo.getConnection(connectionFile)) {
+            PreparedStatement unlinkCourse = connection.prepareStatement("delete from students_courses " +
+                    "where student_id = ? and course_name = ?");
+            unlinkCourse.setInt(1, studentID);
+            unlinkCourse.setString(2, courseToDelete);
+            unlinkCourse.executeUpdate();
+        }
+    }
 }
