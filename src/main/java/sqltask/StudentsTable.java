@@ -11,7 +11,7 @@ public class StudentsTable {
     Random rd = new Random();
     String connectionFile = "data/connectioninfo";
 
-    private List<Integer> groupsIdList() throws SQLException {
+    public List<Integer> groupsIdList() throws SQLException {
 
         List<Integer> ids = new ArrayList<>();
         try (Connection connection = conInfo.getConnection(connectionFile)) {

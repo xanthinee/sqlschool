@@ -45,6 +45,7 @@ public class Main {
  **/
 
         ApplicationMethods appMethods = new ApplicationMethods();
-        System.out.println(appMethods.findStudentsByCourse("Music"));
+//        System.out.println(appMethods.findStudentsByCourse("Music"));
+        appMethods.deleteStudent();
     }
 }
