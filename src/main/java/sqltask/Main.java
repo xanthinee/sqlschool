@@ -48,8 +48,7 @@ public class Main {
 
         ApplicationMethods appMethods = new ApplicationMethods();
         ApplicationMenu menu = new ApplicationMenu();
-        Class cls = appMethods.getClass();
-        List<MenuTable> mt = menu.getMenuTable();
+        List<MenuTable> mt = menu.getMenuTable(new ApplicationMethods());
         menu.implementMenu(mt, new ApplicationMethods());
 
     }
