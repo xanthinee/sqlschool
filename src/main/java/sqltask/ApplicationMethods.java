@@ -1,9 +1,6 @@
 package sqltask;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -43,7 +40,7 @@ public class ApplicationMethods {
         return sj.toString();
     }
 
-    public void compareGroup() throws SQLException {
+    public String compareGroup() throws SQLException {
 
         GroupsTable gt = new GroupsTable();
         System.out.println("Enter GROUP to COMPARE bellow: ");
@@ -79,6 +76,7 @@ public class ApplicationMethods {
             }
         }
         System.out.println(resultOfComparison(withEqualSize, withFewerSize));
+        return resultOfComparison(withEqualSize, withFewerSize);
     }
 
     /**
@@ -144,7 +142,12 @@ public class ApplicationMethods {
             int groupIndex = rd.nextInt(0, groupIDs.size());
             PreparedStatement putStudent = connection.prepareStatement("insert into students values (?,?,?,?)");
             putStudent.setInt(1, studentID);
-            putStudent.setInt(2, groupIDs.get(groupIndex));
+            int groupPresence = rd.nextInt(0,2);
+            if (groupPresence == 0) {
+                putStudent.setInt(2, Types.NULL);
+            } else {
+                putStudent.setInt(2, groupIDs.get(groupIndex));
+            }
             putStudent.setString(3, studentName);
             putStudent.setString(4, studentSurname);
             putStudent.executeUpdate();

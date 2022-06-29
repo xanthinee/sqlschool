@@ -1,11 +1,13 @@
 package sqltask;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class Main {
 
     @SuppressWarnings("java:S106")
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
         /** running .sql script
         try {
@@ -46,8 +48,9 @@ public class Main {
 
         ApplicationMethods appMethods = new ApplicationMethods();
         ApplicationMenu menu = new ApplicationMenu();
-//        System.out.println(appMethods.findStudentsByCourse("Music"));
-//        System.out.println(menu.throwMenu());
-        menu.implementMenu();
+        Class cls = appMethods.getClass();
+        List<MenuTable> mt = menu.getMenuTable();
+        menu.implementMenu(mt, new ApplicationMethods());
+
     }
 }
