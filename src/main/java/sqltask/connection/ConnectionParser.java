@@ -1,4 +1,6 @@
-package sqltask;
+package sqltask.connection;
+
+import sqltask.helpers.*;
 
 public class ConnectionParser implements Parser<UserConnection> {
 

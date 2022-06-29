@@ -1,4 +1,4 @@
-package sqltask;
+package sqltask.helpers;
 
 import java.util.StringJoiner;
 

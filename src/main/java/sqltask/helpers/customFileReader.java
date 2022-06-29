@@ -1,4 +1,4 @@
-package sqltask;
+package sqltask.helpers;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-public class FileConverter {
+public class customFileReader {
 
     public Stream<String> readFile(String fileName) {
         ClassLoader classLoader = getClass().getClassLoader();

@@ -1,4 +1,6 @@
-package sqltask;
+package sqltask.courses;
+
+import sqltask.helpers.*;
 
 public class CoursesParser implements Parser<Course> {
 

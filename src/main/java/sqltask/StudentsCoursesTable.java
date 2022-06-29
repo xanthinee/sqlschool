@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.*;
+import sqltask.students.*;
+import sqltask.courses.*;
+import sqltask.connection.*;
 
 import java.sql.SQLException;
 
 public class StudentsCoursesTable {
 
-    ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
+    private final ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
     static final Set<Integer> usedIDs = new HashSet<>();
     Random rd = new Random();
     String connectionFile = "data/connectioninfo";

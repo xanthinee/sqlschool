@@ -1,4 +1,4 @@
-package sqltask;
+package sqltask.helpers;
 
 public interface Parser<T> {
 

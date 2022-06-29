@@ -1,10 +1,12 @@
-package sqltask;
+package sqltask.applicationmethods;
+
+import sqltask.helpers.Utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Scanner;
 import java.util.StringJoiner;
-import java.util.*;
 
 @SuppressWarnings("java:S106")
 public class ApplicationMenu {

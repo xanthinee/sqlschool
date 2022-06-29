@@ -3,21 +3,23 @@ package sqltask;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.List;
+import java.io.IOException;
+import sqltask.helpers.*;
 
 public class Main {
 
     @SuppressWarnings("java:S106")
-    public static void main(String[] args) throws SQLException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public static void main(String[] args)  {
 
-        /** running .sql script
+        SQLScriptRunner sqlS = new SQLScriptRunner();
         try {
-            executeScriptUsingScriptRunner("/Users/xanthine/IdeaProjects/SqlSchool/src/main/resources/sqldata/tables_creation.sql");
+            sqlS.executeScriptUsingScriptRunner("/Users/xanthine/IdeaProjects/SqlSchool/src/main/resources/sqldata/tables_creation.sql");
         } catch (IOException | SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-         **/
+
 
 /** creating table with groups
         GroupsTable groupsTable = new GroupsTable();
@@ -46,10 +48,10 @@ public class Main {
         System.out.println(stCoTab.printStudCourseTable());
  **/
 
-        ApplicationMethods appMethods = new ApplicationMethods();
-        ApplicationMenu menu = new ApplicationMenu();
-        List<MenuTable> mt = menu.getMenuTable(new ApplicationMethods());
-        menu.implementMenu(mt, new ApplicationMethods());
+//        ApplicationMethods appMethods = new ApplicationMethods();
+//        ApplicationMenu menu = new ApplicationMenu();
+//        List<MenuTable> mt = menu.getMenuTable(new ApplicationMethods());
+//        menu.implementMenu(mt, new ApplicationMethods());
 
     }
 }

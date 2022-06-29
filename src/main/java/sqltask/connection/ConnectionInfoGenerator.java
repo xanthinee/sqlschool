@@ -1,15 +1,16 @@
-package sqltask;
+package sqltask.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.stream.Stream;
+import sqltask.helpers.*;
 
 public class ConnectionInfoGenerator {
 
     private UserConnection getConnectionInfo(String fileName) {
 
-        FileConverter fileCon = new FileConverter();
+        customFileReader fileCon = new customFileReader();
         ConnectionParser conP = new ConnectionParser();
         Stream<String> stream = fileCon.readFile(fileName);
         return stream.map(conP::parse).toList().get(0);

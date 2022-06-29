@@ -1,16 +1,22 @@
-package sqltask;
+package sqltask.courses;
 
-import java.sql.*;
-import java.util.*;
-import java.util.stream.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.StringJoiner;
+import java.util.stream.Stream;
+import sqltask.connection.*;
+import sqltask.helpers.*;
 
 public class CoursesTable {
 
-    ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
+    private final ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
 
     public List<Course> makeCoursesList(String fileName) {
 
-        FileConverter fileCon = new FileConverter();
+        customFileReader fileCon = new customFileReader();
         Stream<String> courses = fileCon.readFile(fileName);
         CoursesParser cp = new CoursesParser();
         return courses.map(cp::parse).toList();

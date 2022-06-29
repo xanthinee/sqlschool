@@ -1,7 +1,6 @@
-package sqltask;
+package sqltask.groups;
 
 import lombok.Data;
-
 import java.util.Random;
 
 @Data

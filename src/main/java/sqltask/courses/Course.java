@@ -1,4 +1,4 @@
-package sqltask;
+package sqltask.courses;
 
 import lombok.Data;
 

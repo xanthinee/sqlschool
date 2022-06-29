@@ -1,10 +1,10 @@
-package sqltask;
+package sqltask.connection;
 
 public class UserConnection {
 
-    protected String host;
-    protected String user;
-    protected String password;
+    public String host;
+    public String user;
+    public String password;
 
     public UserConnection(String host, String user, String password) {
         this.host = host;

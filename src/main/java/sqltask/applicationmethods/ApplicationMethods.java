@@ -1,4 +1,11 @@
-package sqltask;
+package sqltask.applicationmethods;
+
+import sqltask.connection.ConnectionInfoGenerator;
+import sqltask.courses.Course;
+import sqltask.courses.CoursesTable;
+import sqltask.groups.Group;
+import sqltask.groups.GroupsTableDB;
+import sqltask.students.Student;
 
 import java.sql.*;
 import java.util.*;
@@ -7,7 +14,7 @@ import java.util.Map.Entry;
 @SuppressWarnings("java:S106")
 public class ApplicationMethods {
 
-    ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
+    private final ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
     String connectionFile = "data/connectioninfo";
     Random rd = new Random();
     Scanner sc = new Scanner(System.in);
@@ -42,10 +49,10 @@ public class ApplicationMethods {
 
     public String compareGroup() throws SQLException {
 
-        GroupsTable gt = new GroupsTable();
+        GroupsTableDB gt = new GroupsTableDB();
         System.out.println("Enter GROUP to COMPARE bellow: ");
         int groupID = sc.nextInt();
-        ResultSet groupsRS = gt.getGroupsFromTable();
+        List<Group> groupsList = gt.getGroupsFromTable();
         Map<String, Integer> groupMembers = new HashMap<>();
         try (Connection connection = conInfo.getConnection(connectionFile)) {
             PreparedStatement getGroupsMembers = connection.prepareStatement("select g.group_name, count(s.student_id) from groups g " +
@@ -59,15 +66,14 @@ public class ApplicationMethods {
         }
 
         Map<Integer, Group> groups = new HashMap<>();
-        while (groupsRS.next()) {
-            groups.put(groupsRS.getInt("group_id"), new Group(groupsRS.getInt("group_id"),
-                    groupsRS.getString("group_name")));
+        for (Group group : groupsList) {
+            groups.put(group.getId(), group);
         }
 
         int amountOfStudentsInInputGroup = groupMembers.get(groups.get(groupID).getName());
         List<String> withEqualSize = new ArrayList<>();
         List<String> withFewerSize = new ArrayList<>();
-        for (Map.Entry<Integer, Group> entry : groups.entrySet()) {
+        for (Entry<Integer, Group> entry : groups.entrySet()) {
             if (entry.getKey() != groupID && (groupMembers.get(entry.getValue().getName()) < amountOfStudentsInInputGroup)) {
                 withFewerSize.add(entry.getValue().getName());
             }
@@ -123,7 +129,7 @@ public class ApplicationMethods {
      **/
     public void putNewStudent() throws SQLException {
 
-        StudentsTable studTab = new StudentsTable();
+        GroupsTableDB groupTab = new GroupsTableDB();
         System.out.println("Enter NAME of student: ");
         String studentName = sc.next();
         System.out.println("Enter SURNAME of student");
@@ -131,7 +137,7 @@ public class ApplicationMethods {
         List<Integer> takenIDsList = new ArrayList<>();
 
         try (Connection connection = conInfo.getConnection(connectionFile)) {
-            List<Integer> groupIDs = studTab.groupsIdList();
+            List<Integer> groupIDs = groupTab.groupsIdList();
             PreparedStatement takenIDs = connection.prepareStatement("select student_id from students");
             ResultSet takenIDRs = takenIDs.executeQuery();
             while (takenIDRs.next()) {
