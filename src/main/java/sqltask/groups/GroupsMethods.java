@@ -1,14 +1,10 @@
 package sqltask.groups;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Random;
 import java.util.StringJoiner;
 import java.util.*;
 
 public class GroupsMethods {
-
-    static final int TOTAL_AMOUNT_OF_GROUPS = 10;
 
     Random rd = new Random();
 
@@ -25,7 +21,7 @@ public class GroupsMethods {
         return sb.toString();
     }
 
-    public String printGroupsTable(List<Group> groups) throws SQLException {
+    public String printGroupsTable(List<Group> groups)  {
 
         StringJoiner sj = new StringJoiner("");
         sj.add("GROUPS:");

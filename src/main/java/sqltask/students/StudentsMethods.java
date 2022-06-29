@@ -57,9 +57,10 @@ public class StudentsMethods {
         sj.add(System.lineSeparator());
         for (Student student : students) {
             sj.add(student.getStudentId() + " | ");
-            sj.add(String.format("%-6d", student.getGroupId() + " | "));
+            int idOfGroup = student.getGroupId();
+            sj.add(String.format("%-6d", idOfGroup) + " | ");
             sj.add(String.format("%-9s", student.getName()) + " | ");
-            sj.add(String.format("%-12s", student.getSurname() + " | "));
+            sj.add(String.format("%-12s", student.getSurname()));
             sj.add(System.lineSeparator());
         }
         return sj.toString();

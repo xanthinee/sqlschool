@@ -2,7 +2,7 @@ package sqltask.applicationmethods;
 
 import sqltask.connection.ConnectionInfoGenerator;
 import sqltask.courses.Course;
-import sqltask.courses.CoursesTable;
+import sqltask.courses.CourseMethods;
 import sqltask.groups.Group;
 import sqltask.groups.GroupsTableDB;
 import sqltask.students.Student;
@@ -15,7 +15,7 @@ import java.util.Map.Entry;
 public class ApplicationMethods {
 
     private final ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
-    String connectionFile = "data/connectioninfo";
+    private static final String CONNECTION_FILE = "data/connectioninfo";
     Random rd = new Random();
     Scanner sc = new Scanner(System.in);
 
@@ -26,7 +26,7 @@ public class ApplicationMethods {
     private String resultOfComparison(List<String> withEqualSize, List<String> withFewerSize) {
 
         StringJoiner sj = new StringJoiner("");
-        if (withFewerSize.size() == 0) {
+        if (withFewerSize.isEmpty()) {
             sj.add("There no group with FEWER amount of students.");
         } else {
             sj.add("Groups with FEWER amount of students: ");
@@ -36,7 +36,7 @@ public class ApplicationMethods {
         }
         sj.add(System.lineSeparator());
 
-        if (withEqualSize.size() == 0) {
+        if (withEqualSize.isEmpty()) {
             sj.add("There no group with EQUAL amount of students.");
         } else {
             sj.add("Groups with EQUAL amount of students: ");
@@ -47,16 +47,16 @@ public class ApplicationMethods {
         return sj.toString();
     }
 
-    public String compareGroup() throws SQLException {
+    public String compareGroup() {
 
         GroupsTableDB gt = new GroupsTableDB();
         System.out.println("Enter GROUP to COMPARE bellow: ");
         int groupID = sc.nextInt();
         List<Group> groupsList = gt.getGroupsFromTable();
         Map<String, Integer> groupMembers = new HashMap<>();
-        try (Connection connection = conInfo.getConnection(connectionFile)) {
-            PreparedStatement getGroupsMembers = connection.prepareStatement("select g.group_name, count(s.student_id) from groups g " +
-                    "left outer join students s on g.group_id = s.group_id group by g.group_name");
+        try (Connection connection = conInfo.getConnection(CONNECTION_FILE);
+             PreparedStatement getGroupsMembers = connection.prepareStatement("select g.group_name, count(s.student_id) from groups g " +
+                     "left outer join students s on g.group_id = s.group_id group by g.group_name")) {
             ResultSet rs = getGroupsMembers.executeQuery();
             while (rs.next()) {
                 groupMembers.put(rs.getString("group_name"), rs.getInt("count"));
@@ -90,11 +90,12 @@ public class ApplicationMethods {
      **/
     public String findStudentsByCourse() throws SQLException {
 
+        System.out.println("ENTER name of COURSE bellow: ");
         String courseName = sc.next();
         List<Student> students = new ArrayList<>();
-        try (Connection connection = conInfo.getConnection(connectionFile)) {
-            PreparedStatement st = connection.prepareStatement("select students.student_id, students.group_id, students.first_name, students.second_name \n" +
-                    "from students inner join students_courses on students_courses.student_id = students.student_id where course_name = ?");
+        try (Connection connection = conInfo.getConnection(CONNECTION_FILE);
+             PreparedStatement st = connection.prepareStatement("select students.student_id, students.group_id, students.first_name, students.second_name \n" +
+                     "from students inner join students_courses on students_courses.student_id = students.student_id where course_name = ?")) {
             st.setString(1, courseName);
             ResultSet studentsRS = st.executeQuery();
             while (studentsRS.next()) {
@@ -112,6 +113,7 @@ public class ApplicationMethods {
             sj.add(String.format("%-13s", student.getSurname().trim()));
             sj.add(System.lineSeparator());
         }
+        System.out.println(sj);
         return sj.toString();
     }
 
@@ -136,9 +138,10 @@ public class ApplicationMethods {
         String studentSurname = sc.next();
         List<Integer> takenIDsList = new ArrayList<>();
 
-        try (Connection connection = conInfo.getConnection(connectionFile)) {
+        try (Connection connection = conInfo.getConnection(CONNECTION_FILE);
+             PreparedStatement takenIDs = connection.prepareStatement("select student_id from students");
+             PreparedStatement putStudent = connection.prepareStatement("insert into students values (?,?,?,?)")) {
             List<Integer> groupIDs = groupTab.groupsIdList();
-            PreparedStatement takenIDs = connection.prepareStatement("select student_id from students");
             ResultSet takenIDRs = takenIDs.executeQuery();
             while (takenIDRs.next()) {
                 takenIDsList.add(takenIDRs.getInt("student_id"));
@@ -146,7 +149,7 @@ public class ApplicationMethods {
             int studentID = generateNewId(1000, 10000, takenIDsList);
             takenIDsList.clear();
             int groupIndex = rd.nextInt(0, groupIDs.size());
-            PreparedStatement putStudent = connection.prepareStatement("insert into students values (?,?,?,?)");
+
             putStudent.setInt(1, studentID);
             int groupPresence = rd.nextInt(0,2);
             if (groupPresence == 0) {
@@ -163,14 +166,14 @@ public class ApplicationMethods {
     /**
      * 4th option
      **/
-    public void deleteStudent() throws SQLException {
+    public void deleteStudent() {
 
         System.out.println("Enter ID of student: ");
         int studentID = sc.nextInt();
-        try (Connection connection = conInfo.getConnection(connectionFile)) {
-            PreparedStatement deleteFromStudents = connection.prepareStatement("delete from students where student_id = ?");
+        try (Connection connection = conInfo.getConnection(CONNECTION_FILE);
+             PreparedStatement deleteFromStudents = connection.prepareStatement("delete from students where student_id = ?");
+             PreparedStatement deleteFromStudentsCourses = connection.prepareStatement("delete from students_courses where student_id = ?")) {
             deleteFromStudents.setInt(1, studentID);
-            PreparedStatement deleteFromStudentsCourses = connection.prepareStatement("delete from students_courses where student_id = ?");
             deleteFromStudentsCourses.setInt(1, studentID);
             deleteFromStudents.executeUpdate();
             deleteFromStudentsCourses.executeUpdate();
@@ -186,8 +189,8 @@ public class ApplicationMethods {
     private List<String> getCoursesOfStudent(int studentID) {
 
         List<String> coursesOfStudent = new ArrayList<>();
-        try (Connection connection = conInfo.getConnection(connectionFile)) {
-            PreparedStatement getCoursesOfStud = connection.prepareStatement("select * from students_courses where student_id = ?");
+        try (Connection connection = conInfo.getConnection(CONNECTION_FILE);
+             PreparedStatement getCoursesOfStud = connection.prepareStatement("select * from students_courses where student_id = ?")) {
             getCoursesOfStud.setInt(1, studentID);
             ResultSet coursesOfStud = getCoursesOfStud.executeQuery();
             while (coursesOfStud.next()) {
@@ -247,12 +250,12 @@ public class ApplicationMethods {
         }
         return sj.toString();
     }
-    public void giveCourseToStudent() throws SQLException {
+    public void giveCourseToStudent() {
 
         System.out.println("Enter student_id of STUDENT: ");
         int studentID = sc.nextInt();
-        CoursesTable courseTab = new CoursesTable();
-        List<Course> tempListOfAvailableCourses = courseTab.makeCoursesList("data/descriptions");
+        CourseMethods courseMtd = new CourseMethods();
+        List<Course> tempListOfAvailableCourses = courseMtd.makeCoursesList("data/descriptions");
         Map<Integer, String> mainCourses = new HashMap<>();
         for (Course course : tempListOfAvailableCourses) {
             mainCourses.put(course.getId(), course.getName());
@@ -268,13 +271,13 @@ public class ApplicationMethods {
             System.out.println("Enter NAME (Only 1 by attempt) of COURSE which you want to ADD: ");
             String courseName = sc.next();
             List<Integer> usedRowIDs = new ArrayList<>();
-            try (Connection connection = conInfo.getConnection(connectionFile)) {
-                PreparedStatement getUsedIDs = connection.prepareStatement("select row_id from students_courses");
+            try (Connection connection = conInfo.getConnection(CONNECTION_FILE);
+                 PreparedStatement getUsedIDs = connection.prepareStatement("select row_id from students_courses");
+                 PreparedStatement addCourseToStudent = connection.prepareStatement("insert into students_courses values (?,?,?)")) {
                 ResultSet usedIDs = getUsedIDs.executeQuery();
                 while (usedIDs.next()) {
                     usedRowIDs.add(usedIDs.getInt("row_id"));
                 }
-                PreparedStatement addCourseToStudent = connection.prepareStatement("insert into students_courses values (?,?,?)");
                 addCourseToStudent.setInt(1, generateNewId(1000, 10000, usedRowIDs));
                 addCourseToStudent.setInt(2, studentID);
                 addCourseToStudent.setString(3, courseName);
@@ -296,9 +299,9 @@ public class ApplicationMethods {
         System.out.println(coursesOfStudentInfo(coursesOfStudent));
         System.out.println("You can DELETE one of them - ENTER bellow it's NAME: ");
         String courseToDelete = sc.next();
-        try (Connection connection = conInfo.getConnection(connectionFile)) {
-            PreparedStatement unlinkCourse = connection.prepareStatement("delete from students_courses " +
-                    "where student_id = ? and course_name = ?");
+        try (Connection connection = conInfo.getConnection(CONNECTION_FILE);
+             PreparedStatement unlinkCourse = connection.prepareStatement("delete from students_courses " +
+                     "where student_id = ? and course_name = ?")) {
             unlinkCourse.setInt(1, studentID);
             unlinkCourse.setString(2, courseToDelete);
             unlinkCourse.executeUpdate();

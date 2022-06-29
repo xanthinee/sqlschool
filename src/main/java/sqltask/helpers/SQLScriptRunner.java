@@ -11,14 +11,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class SQLScriptRunner {
-    private final ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
-    private final String connectionFile = "data/connectioninfo";
+    ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
+    private static final String CONNECTION_FILE = "data/connectioninfo";
 
-    public void executeScriptUsingScriptRunner(String str) throws SQLException, IOException, ClassNotFoundException {
-        Reader reader = null;
-        try (Connection connection = conInfo.getConnection(connectionFile)) {
+    public void executeScriptUsingScriptRunner(String str) {
+        try (Connection connection = conInfo.getConnection(CONNECTION_FILE)) {
             ScriptRunner scriptExecutor = new ScriptRunner(connection);
-            reader = new BufferedReader(new FileReader(str));
+            Reader reader = new BufferedReader(new FileReader(str));
             scriptExecutor.runScript(reader);
             reader.close();
         } catch (SQLException | IOException e) {
