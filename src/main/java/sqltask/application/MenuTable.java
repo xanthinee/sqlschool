@@ -1,4 +1,4 @@
-package sqltask.applicationmethods;
+package sqltask.application;
 
 import lombok.Data;
 

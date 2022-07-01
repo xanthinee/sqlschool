@@ -2,6 +2,7 @@ package sqltask.helpers;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 import sqltask.connection.ConnectionInfoGenerator;
+import sqltask.connection.UserConnection;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,13 +12,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class SQLScriptRunner {
-    ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
-    private static final String CONNECTION_FILE = "data/connectioninfo";
 
-    public void executeScriptUsingScriptRunner(String str) {
-        try (Connection connection = conInfo.getConnection(CONNECTION_FILE)) {
+    public void executeScriptUsingScriptRunner(String fileName, Connection con) {
+        try (Connection connection = con) {
             ScriptRunner scriptExecutor = new ScriptRunner(connection);
-            Reader reader = new BufferedReader(new FileReader(str));
+            Reader reader = new BufferedReader(new FileReader(fileName));
             scriptExecutor.runScript(reader);
             reader.close();
         } catch (SQLException | IOException e) {

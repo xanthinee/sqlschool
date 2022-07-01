@@ -1,19 +1,33 @@
 package sqltask.students;
 
+import sqltask.groups.GroupsTableDB;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import sqltask.connection.*;
 
 @SuppressWarnings("java:S106")
 public class StudentsTableDB {
 
-    private final ConnectionInfoGenerator conInfo = new ConnectionInfoGenerator();
-    private static final String CONNENCTION_FILE = "data/connectioninfo";
 
-    public void putStudentsIntoTable(List<Student> students) throws SQLException {
-        try (Connection connection = conInfo.getConnection(CONNENCTION_FILE);
-             PreparedStatement st = connection.prepareStatement("insert into public.students values (?,?,?,?)")){
+    public List<Student> finishStudentsCreation(Connection con) throws SQLException {
+
+        StudentsMethods studMethods = new StudentsMethods();
+        List<Student> students = studMethods.generateStudents();
+        GroupsTableDB groupsTab = new GroupsTableDB();
+        List<Integer> iDs = groupsTab.groupsIdList(con);
+        for (int id : iDs) {
+            int groupMembers = studMethods.generateUniqueNum(0, 31);
+            if (groupMembers >= 10) {
+                for (int i = 0; i < groupMembers; i++) {
+                    students.get(studMethods.generateUniqueNum(0, students.size())).setGroupId(id);
+                }
+            }
+        }
+        return students;
+    }
+    public void putStudentsIntoTable(Connection con, List<Student> students) throws SQLException {
+        try (PreparedStatement st = con.prepareStatement("insert into public.students values (?,?,?,?)")){
             for (Student student : students) {
                 st.setInt(1, student.getStudentId());
                 if (student.getGroupId() == null) {
@@ -30,9 +44,9 @@ public class StudentsTableDB {
         }
     }
 
-    public void deleteStudentsFromTable() throws SQLException {
+    public void deleteStudentsFromTable(Connection con) throws SQLException {
 
-        try (Connection connection = conInfo.getConnection(CONNENCTION_FILE);
+        try (Connection connection = con;
              PreparedStatement st = connection.prepareStatement("delete from students")) {
             st.executeUpdate();
         } catch (SQLException e) {
@@ -40,11 +54,12 @@ public class StudentsTableDB {
         }
     }
 
-    public List<Student> getStudents() throws SQLException {
+    public List<Student> getStudents(Connection con) throws SQLException {
 
         List<Student> students = new ArrayList<>();
-        try (Connection connection = conInfo.getConnection(CONNENCTION_FILE);
-             PreparedStatement psStudents = connection.prepareStatement("select * from students")) {
+        try {
+            Connection connection = con;
+            PreparedStatement psStudents = connection.prepareStatement("select * from students");
             ResultSet rsStudents = psStudents.executeQuery();
             while (rsStudents.next()) {
                 students.add(new Student(rsStudents.getInt("student_id"), rsStudents.getInt("group_id"),

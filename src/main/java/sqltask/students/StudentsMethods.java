@@ -10,7 +10,7 @@ public class StudentsMethods {
     static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
     static final Set<Integer> usedIDs = new HashSet<>();
     Random rd = new Random();
-    private int generateUniqueNum(int leftBound, int rightBound) {
+    public int generateUniqueNum(int leftBound, int rightBound) {
         int num = rd.nextInt(leftBound, rightBound);
         if (usedIDs.contains(num)) {
             num = rd.nextInt(leftBound, rightBound);
@@ -22,30 +22,14 @@ public class StudentsMethods {
     public List<Student> generateStudents() {
 
         customFileReader fileCon = new customFileReader();
-        List<String> names = fileCon.readFile("data/names").toList();
-        List<String> surnames = fileCon.readFile("data/surnames").toList();
+        List<String> names = fileCon.readFile("data/names.txt").toList();
+        List<String> surnames = fileCon.readFile("data/surnames.txt").toList();
         List<Student> students = new ArrayList<>();
 
         for (int i = 0; i < TOTAL_AMOUNT_OF_STUDENTS; i++) {
-            students.add(new Student(generateUniqueNum(1000, 10000), null,
+            students.add(new Student(generateUniqueNum(1, 10000), null,
                     names.get(generateUniqueNum(0, names.size())),
                     surnames.get(generateUniqueNum(0, surnames.size()))));
-        }
-        return students;
-    }
-
-    public List<Student> finishStudentsCreation() throws SQLException {
-
-        List<Student> students = generateStudents();
-        GroupsTableDB groupsTab = new GroupsTableDB();
-        List<Integer> iDs = groupsTab.groupsIdList();
-        for (int id : iDs) {
-            int groupMembers = generateUniqueNum(0, 31);
-            if (groupMembers >= 10) {
-                for (int i = 0; i < groupMembers; i++) {
-                    students.get(generateUniqueNum(0, students.size())).setGroupId(id);
-                }
-            }
         }
         return students;
     }

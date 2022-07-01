@@ -8,7 +8,7 @@ import sqltask.helpers.*;
 
 public class ConnectionInfoGenerator {
 
-    private UserConnection getConnectionInfo(String fileName) {
+    public UserConnection getConnectionProperties(String fileName) {
 
         customFileReader fileCon = new customFileReader();
         ConnectionParser conP = new ConnectionParser();
@@ -16,8 +16,7 @@ public class ConnectionInfoGenerator {
         return stream.map(conP::parse).toList().get(0);
     }
 
-    public Connection getConnection(String fileName) throws SQLException {
-        UserConnection user = getConnectionInfo(fileName);
-        return DriverManager.getConnection(user.host, user.user, user.password);
+    public Connection getConnection(UserConnection userCon) throws SQLException {
+        return DriverManager.getConnection(userCon.host, userCon.user, userCon.password);
     }
 }
