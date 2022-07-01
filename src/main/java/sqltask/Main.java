@@ -3,15 +3,13 @@ package sqltask;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import sqltask.connection.*;
 import sqltask.courses.CourseMethods;
 import sqltask.courses.CoursesTableDB;
-import sqltask.helpers.*;
 import sqltask.application.methods.*;
+import sqltask.application.methods.comparison.*;
+import sqltask.application.methods.courseaddition.*;
+import sqltask.application.methods.coursemembers.*;
 import sqltask.connection.ConnectionInfoGenerator;
-import sqltask.connection.UserConnection;
-import sqltask.groups.GroupsTableDB;
-
 import sqltask.students.StudentsTableDB;
 
 public class Main {
@@ -26,7 +24,7 @@ public class Main {
         CourseMethods courseMethods = new CourseMethods();
         CompareGroups compareGroups = new CompareGroups();
         DeleteStudent deleteStudent = new DeleteStudent();
-        GiveNewCourseToStudent giveNew = new GiveNewCourseToStudent();
+        GiveNewCourse giveNew = new GiveNewCourse();
         PutNewStudent putNew = new PutNewStudent();
         StudentsByCourse byCourse = new StudentsByCourse();
         UnlinkCourse unlink = new UnlinkCourse();

@@ -1,4 +1,4 @@
-package sqltask.application.methods;
+package sqltask.application.methods.comparison;
 
 import sqltask.groups.Group;
 import sqltask.groups.GroupsTableDB;
@@ -12,30 +12,6 @@ import java.util.*;
 public class CompareGroups {
 
     Scanner sc = new Scanner(System.in);
-
-    private String resultOfComparison(List<String> withEqualSize, List<String> withFewerSize) {
-
-        StringJoiner sj = new StringJoiner("");
-        if (withFewerSize.isEmpty()) {
-            sj.add("There no group with FEWER amount of students.");
-        } else {
-            sj.add("Groups with FEWER amount of students: ");
-            for (String names : withFewerSize) {
-                sj.add(names + "; ");
-            }
-        }
-        sj.add(System.lineSeparator());
-
-        if (withEqualSize.isEmpty()) {
-            sj.add("There no group with EQUAL amount of students.");
-        } else {
-            sj.add("Groups with EQUAL amount of students: ");
-            for (String names : withEqualSize) {
-                sj.add(names + "; ");
-            }
-        }
-        return sj.toString();
-    }
 
     public String compareGroup(Connection con) {
 
@@ -71,7 +47,9 @@ public class CompareGroups {
                 withEqualSize.add(entry.getValue().getName());
             }
         }
-        System.out.println(resultOfComparison(withEqualSize, withFewerSize));
-        return resultOfComparison(withEqualSize, withFewerSize);
+
+        CompareGroupsMethods methods = new CompareGroupsMethods();
+        System.out.println(methods.resultOfComparison(withEqualSize, withFewerSize));
+        return methods.resultOfComparison(withEqualSize, withFewerSize);
     }
 }

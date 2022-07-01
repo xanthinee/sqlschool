@@ -1,15 +1,17 @@
-package sqltask;
+package sqltask.studentscourses;
+
+import sqltask.courses.Course;
+import sqltask.courses.CourseMethods;
+import sqltask.students.Student;
+import sqltask.students.StudentsTableDB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.*;
-import sqltask.students.*;
-import sqltask.courses.*;
-
 import java.sql.SQLException;
+import java.util.*;
 
-public class StudentsCoursesTable {
+public class StudentsCoursesTableDB {
 
     private static final Set<Integer> usedIDs = new HashSet<>();
     Random rd = new Random();
@@ -63,20 +65,5 @@ public class StudentsCoursesTable {
             e.printStackTrace();
         }
         throw new IllegalStateException("ResultSet wasn't created");
-    }
-
-    public String printStudCourseTable(ResultSet rs) throws SQLException {
-
-        StringJoiner sj = new StringJoiner("");
-        sj.add("STUDENTS's COURSES");
-        sj.add(System.lineSeparator());
-        while (rs.next()) {
-            sj.add(rs.getInt("student_id") + " | ");
-            sj.add(String.format("%-20s", rs.getString("course_name").trim()) + "  | ");
-            if (!rs.isLast()) {
-                sj.add(System.lineSeparator());
-            }
-        }
-        return sj.toString();
     }
 }

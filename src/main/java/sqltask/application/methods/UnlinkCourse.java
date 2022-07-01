@@ -1,13 +1,11 @@
 package sqltask.application.methods;
 
-import sqltask.connection.ConnectionInfoGenerator;
-import sqltask.connection.UserConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+import sqltask.application.methods.courseaddition.*;
 
 public class UnlinkCourse {
 
@@ -15,10 +13,11 @@ public class UnlinkCourse {
 
     public void unlinkCourse(Connection con) throws SQLException {
 
-        GiveNewCourseToStudent studCourses = new GiveNewCourseToStudent();
+        GiveNewCourseMethods studCourses = new GiveNewCourseMethods();
+        GiveNewCourse newCourse = new GiveNewCourse();
         System.out.println("Enter student_id of STUDENT: ");
         int studentID = sc.nextInt();
-        List<String> coursesOfStudent = studCourses.getCoursesOfStudent(con, studentID);
+        List<String> coursesOfStudent = newCourse.getCoursesOfStudent(con, studentID);
         System.out.println(coursesOfStudent.size());
         System.out.println(studCourses.printCoursesOfStud(coursesOfStudent));
         System.out.println("You can DELETE one of them - ENTER bellow it's NAME: ");
