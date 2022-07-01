@@ -18,12 +18,11 @@ public class CourseMethods {
 
     public String printCoursesTable(List<Course> courses) {
 
-        StringJoiner sj = new StringJoiner("");
+        StringJoiner sj = new StringJoiner(System.lineSeparator());
         sj.add("COURSES:");
-        sj.add(System.lineSeparator());
         for (Course course : courses) {
             sj.add(course.getId() + ". " + course.getName().trim()
-                    + ": " + course.getDescription().trim() + System.lineSeparator());
+                    + ": " + course.getDescription().trim());
         }
         return sj.toString();
     }

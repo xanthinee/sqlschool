@@ -36,16 +36,15 @@ public class StudentsMethods {
 
     public String printStudentsTable(List<Student> students) {
 
-        StringJoiner sj = new StringJoiner("");
+        StringJoiner sj = new StringJoiner(System.lineSeparator());
         sj.add("STUDENTS");
-        sj.add(System.lineSeparator());
+
         for (Student student : students) {
-            sj.add(student.getStudentId() + " | ");
             int idOfGroup = student.getGroupId();
-            sj.add(String.format("%-6d", idOfGroup) + " | ");
-            sj.add(String.format("%-9s", student.getName()) + " | ");
-            sj.add(String.format("%-12s", student.getSurname()));
-            sj.add(System.lineSeparator());
+            sj.add(student.getStudentId() + " | "
+            + String.format("%-6d", idOfGroup) + " | "
+            + String.format("%-9s", student.getName()) + " | "
+            + String.format("%-12s", student.getSurname()));
         }
         return sj.toString();
     }

@@ -13,6 +13,7 @@ public class MethodsMenu {
         List<MenuTable> appMenu = new ArrayList<>();
         for (String name : menuTable) {
             appMenu.add(new MenuTable(index, name));
+            index++;
         }
         return appMenu;
     }

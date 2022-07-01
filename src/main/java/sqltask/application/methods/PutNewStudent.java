@@ -1,8 +1,5 @@
 package sqltask.application.methods;
 
-import sqltask.connection.ConnectionInfoGenerator;
-import sqltask.connection.UserConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

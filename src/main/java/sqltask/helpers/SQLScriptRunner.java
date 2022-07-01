@@ -1,8 +1,6 @@
 package sqltask.helpers;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
-import sqltask.connection.ConnectionInfoGenerator;
-import sqltask.connection.UserConnection;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

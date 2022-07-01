@@ -2,7 +2,6 @@ package sqltask.application.methods.courseaddition;
 
 import sqltask.courses.Course;
 import sqltask.courses.CourseMethods;
-import sqltask.application.methods.courseaddition.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,11 +16,19 @@ public class GiveNewCourse {
     public List<String> getCoursesOfStudent(Connection con, int studentID) {
 
         List<String> coursesOfStudent = new ArrayList<>();
-        try (PreparedStatement getCoursesOfStud = con.prepareStatement("select course_name from students_courses where student_id = ?")) {
+        try {
+            PreparedStatement getCoursesOfStud = con.prepareStatement("select course_id from students_courses where student_id = ?");
+            PreparedStatement getAllCourses = con.prepareStatement("select course_id, course_name from courses");
             getCoursesOfStud.setInt(1, studentID);
             ResultSet coursesOfStud = getCoursesOfStud.executeQuery();
+            ResultSet allCourses = getAllCourses.executeQuery();
+
+            Map <Integer, String> courses = new HashMap<>();
+            while (allCourses.next()) {
+                courses.put(allCourses.getInt("course_id"), allCourses.getString("course_name".trim()));
+            }
             while (coursesOfStud.next()) {
-                coursesOfStudent.add(coursesOfStud.getString("course_name").trim());
+                coursesOfStudent.add(courses.get(coursesOfStud.getInt("course_id")).trim());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,10 +62,10 @@ public class GiveNewCourse {
                 } else {
                     throw new IllegalStateException("Chosen STUDENT already has maximum amount of COURSES, delete some before");
                 }
-                String courseName = sc.next();
+                int courseIndex = sc.nextInt();
                 PreparedStatement addCourseToStudent = con.prepareStatement("insert into students_courses values (default,?,?)");
                 addCourseToStudent.setInt(1, studentID);
-                addCourseToStudent.setString(2, courseName);
+                addCourseToStudent.setInt(2, courseIndex);
                 addCourseToStudent.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();

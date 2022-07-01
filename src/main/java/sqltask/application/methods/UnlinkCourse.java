@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 import sqltask.application.methods.courseaddition.*;
 
+@SuppressWarnings("java:S106")
 public class UnlinkCourse {
 
     Scanner sc = new Scanner(System.in);
@@ -20,11 +21,13 @@ public class UnlinkCourse {
         List<String> coursesOfStudent = newCourse.getCoursesOfStudent(con, studentID);
         System.out.println(coursesOfStudent.size());
         System.out.println(studCourses.printCoursesOfStud(coursesOfStudent));
-        System.out.println("You can DELETE one of them - ENTER bellow it's NAME: ");
+        System.out.println("You can DELETE one of them - ENTER bellow it's INDEX: ");
         String courseToDelete = sc.next();
         try (Connection connection = con;
-             PreparedStatement unlinkCourse = connection.prepareStatement("delete from students_courses " +
-                     "where student_id = ? and course_name = ?")) {
+             PreparedStatement unlinkCourse = connection.prepareStatement("delete from students_courses sc " +
+                     "using courses c " +
+                     "where c.course_id = sc.course_id and " +
+                     "sc.student_id = ? and c.course_name = ?")) {
             unlinkCourse.setInt(1, studentID);
             unlinkCourse.setString(2, courseToDelete);
             unlinkCourse.executeUpdate();

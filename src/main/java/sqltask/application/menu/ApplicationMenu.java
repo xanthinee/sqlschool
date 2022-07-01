@@ -18,14 +18,11 @@ public class ApplicationMenu {
 
     public String menuOutput(List<MenuTable> menuTable) {
 
-        StringJoiner sj = new StringJoiner("");
-        sj.add(System.lineSeparator());
-        sj.add(Utils.stringCentre("APPLICATION_NAME",30) + System.lineSeparator());
-        sj.add(System.lineSeparator());
-        sj.add("APPLICATION FUNCTIONS:" + System.lineSeparator());
+        StringJoiner sj = new StringJoiner(System.lineSeparator());
+        sj.add(Utils.stringCentre("APPLICATION_NAME",30));
+        sj.add("APPLICATION FUNCTIONS:");
         for (MenuTable mt : menuTable) {
             sj.add(mt.getCode() + ". " + mt.getName());
-            sj.add(System.lineSeparator());
         }
         return sj.toString();
     }

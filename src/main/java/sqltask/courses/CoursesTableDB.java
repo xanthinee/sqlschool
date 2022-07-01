@@ -32,11 +32,11 @@ public class CoursesTableDB {
         }
     }
 
-    private List<Course> getCoursesFromTable(Connection con) {
+    public List<Course> getCoursesFromTable(Connection con) {
 
         List<Course> courses = new ArrayList<>();
-        try (Connection connection = con;
-             PreparedStatement preparedStatement = connection.prepareStatement("select * FROM public.courses")) {
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement("select * FROM public.courses");
             ResultSet coursesRS = preparedStatement.executeQuery();
             while (coursesRS.next()) {
                 courses.add(new Course(coursesRS.getInt("course_id"), coursesRS.getString("course_name"),

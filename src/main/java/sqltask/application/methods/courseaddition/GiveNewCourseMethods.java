@@ -8,12 +8,11 @@ import java.util.StringJoiner;
 public class GiveNewCourseMethods {
 
     public String printCoursesOfStud(List<String> courses) {
-        StringJoiner sj = new StringJoiner("");
-        sj.add("Entered STUDENT has next COURSES: " + System.lineSeparator());
+        StringJoiner sj = new StringJoiner(System.lineSeparator());
+        sj.add("Entered STUDENT has next COURSES: ");
         int index = 1;
         for (String course : courses) {
             sj.add(index + ". " + course);
-            sj.add(System.lineSeparator());
             index++;
         }
         return sj.toString();
@@ -34,14 +33,13 @@ public class GiveNewCourseMethods {
     public String completeCoursesInfo(List<String> coursesOfStudent, Map<Integer, String> mainCourses,
                                        Map<Integer, String> availableForStudentCourses) {
         int numOfCourses = coursesOfStudent.size();
-        StringJoiner sj = new StringJoiner("");
+        StringJoiner sj = new StringJoiner(System.lineSeparator());
         if (numOfCourses != 0) {
             sj.add(printCoursesOfStud(coursesOfStudent));
-            sj.add(System.lineSeparator());
-            sj.add("You can give next COURSES to STUDENT:" + System.lineSeparator());
+            sj.add("You can give next COURSES to STUDENT:");
             int index = 1;
             for (Map.Entry<Integer, String> entry : availableForStudentCourses.entrySet()) {
-                sj.add(index + ". " + entry.getValue() + System.lineSeparator());
+                sj.add(index + ". " + entry.getValue());
                 index++;
             }
         } else {
@@ -49,7 +47,7 @@ public class GiveNewCourseMethods {
             sj.add("You can give next COURSES to STUDENT:");
             int index = 1;
             for (Map.Entry<Integer,String> entry : mainCourses.entrySet()) {
-                sj.add(index + ". " + entry.getValue() + System.lineSeparator());
+                sj.add(index + ". " + entry.getValue());
                 index++;
             }
             return sj.toString();

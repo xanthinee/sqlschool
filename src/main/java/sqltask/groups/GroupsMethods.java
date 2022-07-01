@@ -23,12 +23,10 @@ public class GroupsMethods {
 
     public String printGroupsTable(List<Group> groups)  {
 
-        StringJoiner sj = new StringJoiner("");
+        StringJoiner sj = new StringJoiner(System.lineSeparator());
         sj.add("GROUPS:");
-        sj.add(System.lineSeparator());
         for (Group group : groups) {
             sj.add(group.getId() + " - " + group.getName());
-            sj.add(System.lineSeparator());
         }
         return sj.toString();
     }

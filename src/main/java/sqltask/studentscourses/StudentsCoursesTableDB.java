@@ -2,6 +2,7 @@ package sqltask.studentscourses;
 
 import sqltask.courses.Course;
 import sqltask.courses.CourseMethods;
+import sqltask.courses.CoursesTableDB;
 import sqltask.students.Student;
 import sqltask.students.StudentsTableDB;
 
@@ -27,17 +28,17 @@ public class StudentsCoursesTableDB {
 
     public void createStdCrsTable(Connection con) throws SQLException {
 
-        CourseMethods courseMtd = new CourseMethods();
         StudentsTableDB studentsDB = new StudentsTableDB();
-        List<Course> courses = courseMtd.makeCoursesList("data/courses.txt");
+        CoursesTableDB coursesDb = new CoursesTableDB();
         List<Student> students = studentsDB.getStudents(con);
+        List<Course> courses = coursesDb.getCoursesFromTable(con);
 
         for (Student student : students) {
             int numOfCourses = rd.nextInt(1, 4);
             for (int i = 0; i < numOfCourses; i++) {
                 try (PreparedStatement st = con.prepareStatement("insert into public.students_courses values (default,?,?)")) {
                     st.setInt(1, student.getStudentId());
-                    st.setString(2, courses.get(generateUniqueNum(0, courses.size())).getName());
+                    st.setInt(2, courses.get(rd.nextInt(0, courses.size())).getId());
                     st.executeUpdate();
                 } catch (SQLException e) {
                     e.printStackTrace();
