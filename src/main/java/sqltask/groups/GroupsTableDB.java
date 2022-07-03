@@ -1,27 +1,26 @@
 package sqltask.groups;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import sqltask.connection.*;
 
 public class GroupsTableDB {
 
     private static final int TOTAL_AMOUNT_OF_GROUPS = 10;
     Random rd = new Random();
-    GroupsMethods groupMtd = new GroupsMethods();
+    MethodsForGroups groupMtd = new MethodsForGroups();
 
     public void putGroupIntoTable(Connection con) {
-        try (PreparedStatement st = con.prepareStatement("INSERT INTO public.groups VALUES(?,?)")) {
+        try (PreparedStatement st = con.prepareStatement("INSERT INTO public.groups VALUES(?,?)")){
+            con.setAutoCommit(false);
             for (int i = 0; i < TOTAL_AMOUNT_OF_GROUPS; i++) {
                 st.setInt(1, rd.nextInt(1000, 10000));
                 st.setString(2, groupMtd.generateGroupName());
-                st.executeUpdate();
+                st.addBatch();
             }
+            st.executeUpdate();
+            con.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -54,10 +53,10 @@ public class GroupsTableDB {
     public List<Group> getGroupsFromTable(Connection con) {
         List<Group> groups = new ArrayList<>();
         try {
-            PreparedStatement preparedStatement = con.prepareStatement("select * FROM public.groups");
+            PreparedStatement preparedStatement = con.prepareStatement("select group_id, group_name FROM public.groups");
             ResultSet groupsRS = preparedStatement.executeQuery();
             while (groupsRS.next()) {
-                groups.add(new Group(groupsRS.getInt("group_id"), groupsRS.getString("group_name").trim()));
+                groups.add(new Group(groupsRS.getInt("group_id"), groupsRS.getString("group_name")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

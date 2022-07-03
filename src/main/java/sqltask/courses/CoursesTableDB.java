@@ -36,7 +36,7 @@ public class CoursesTableDB {
 
         List<Course> courses = new ArrayList<>();
         try {
-            PreparedStatement preparedStatement = con.prepareStatement("select * FROM public.courses");
+            PreparedStatement preparedStatement = con.prepareStatement("select course_id, course_name, course_description FROM public.courses");
             ResultSet coursesRS = preparedStatement.executeQuery();
             while (coursesRS.next()) {
                 courses.add(new Course(coursesRS.getInt("course_id"), coursesRS.getString("course_name"),

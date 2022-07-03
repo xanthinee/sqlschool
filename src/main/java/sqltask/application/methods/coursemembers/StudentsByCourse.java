@@ -20,8 +20,8 @@ public class StudentsByCourse {
         String courseName = sc.next();
         List<Student> students = new ArrayList<>();
         try (Connection connection = con;
-             PreparedStatement st = connection.prepareStatement("select students.student_id, students.group_id, students.first_name, students.second_name \n" +
-                     "from students inner join students_courses on students_courses.student_id = students.student_id where course_name = ?")) {
+             PreparedStatement st = connection.prepareStatement("select s.student_id, s.group_id, s.first_name, s.second_name \n" +
+                     "from students s inner join students_courses sc on sc.student_id = s.student_id where sc.course_id = ?")) {
             st.setString(1, courseName);
             ResultSet studentsRS = st.executeQuery();
             while (studentsRS.next()) {

@@ -3,7 +3,7 @@ package sqltask.application.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MethodsMenu {
+public class MethodsForMenu {
 
     public List<MenuTable> getMenuTable() {
 

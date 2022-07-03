@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-public class customFileReader {
+public class CustomFileReader {
 
     public Stream<String> readFile(String fileName) {
         ClassLoader classLoader = getClass().getClassLoader();

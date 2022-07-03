@@ -1,7 +1,6 @@
 package sqltask.studentscourses;
 
 import sqltask.courses.Course;
-import sqltask.courses.CourseMethods;
 import sqltask.courses.CoursesTableDB;
 import sqltask.students.Student;
 import sqltask.students.StudentsTableDB;
@@ -14,17 +13,7 @@ import java.util.*;
 
 public class StudentsCoursesTableDB {
 
-    private static final Set<Integer> usedIDs = new HashSet<>();
     Random rd = new Random();
-
-    private int generateUniqueNum(int leftBound, int rightBound) {
-        int num = rd.nextInt(leftBound, rightBound);
-        if (usedIDs.contains(num)) {
-            num = rd.nextInt(leftBound, rightBound);
-        }
-        usedIDs.add(num);
-        return num;
-    }
 
     public void createStdCrsTable(Connection con) throws SQLException {
 

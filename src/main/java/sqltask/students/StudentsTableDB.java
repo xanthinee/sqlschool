@@ -12,7 +12,7 @@ public class StudentsTableDB {
 
     public List<Student> finishStudentsCreation(Connection con) throws SQLException {
 
-        StudentsMethods studMethods = new StudentsMethods();
+        MethodsForStudents studMethods = new MethodsForStudents();
         List<Student> students = studMethods.generateStudents();
         GroupsTableDB groupsTab = new GroupsTableDB();
         List<Integer> iDs = groupsTab.groupsIdList(con);
@@ -27,18 +27,20 @@ public class StudentsTableDB {
         return students;
     }
     public void putStudentsIntoTable(Connection con, List<Student> students) throws SQLException {
-        try (PreparedStatement st = con.prepareStatement("insert into public.students values (?,?,?,?)")){
+        try (PreparedStatement st = con.prepareStatement("insert into public.students values (default,?,?,?)")){
+            con.setAutoCommit(false);
             for (Student student : students) {
-                st.setInt(1, student.getStudentId());
                 if (student.getGroupId() == null) {
-                    st.setNull(2, Types.NULL);
+                    st.setNull(1, Types.NULL);
                 } else {
-                    st.setInt(2, student.getGroupId());
+                    st.setInt(1, student.getGroupId());
                 }
-                st.setString(3, student.getName());
-                st.setString(4, student.getSurname());
-                st.executeUpdate();
+                st.setString(2, student.getName());
+                st.setString(3, student.getSurname());
+                st.addBatch();
             }
+            st.executeUpdate();
+            con.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -58,12 +60,12 @@ public class StudentsTableDB {
 
         List<Student> students = new ArrayList<>();
         try {
-            Connection connection = con;
-            PreparedStatement psStudents = connection.prepareStatement("select * from students");
+            PreparedStatement psStudents = con.prepareStatement("select student_id, group_id, first_name, second_name" +
+                    " from students");
             ResultSet rsStudents = psStudents.executeQuery();
             while (rsStudents.next()) {
                 students.add(new Student(rsStudents.getInt("student_id"), rsStudents.getInt("group_id"),
-                        rsStudents.getString("first_name").trim(), rsStudents.getString("second_name").trim()));
+                        rsStudents.getString("first_name"), rsStudents.getString("second_name")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

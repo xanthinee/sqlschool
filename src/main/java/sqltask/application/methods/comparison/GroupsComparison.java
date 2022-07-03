@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class CompareGroups {
+public class GroupsComparison {
 
     Scanner sc = new Scanner(System.in);
 
@@ -37,19 +37,19 @@ public class CompareGroups {
         }
 
         int amountOfStudentsInInputGroup = groupMembers.get(groups.get(groupID).getName());
-        List<String> withEqualSize = new ArrayList<>();
-        List<String> withFewerSize = new ArrayList<>();
+        StringBuilder sb = new StringBuilder(System.lineSeparator());
+        sb.append("GROUPS with FEWER amount of STUDENTS: ");
+        StringJoiner sjFewer = new StringJoiner(", ");
+        StringJoiner sjEqual = new StringJoiner(", ");
         for (Map.Entry<Integer, Group> entry : groups.entrySet()) {
             if (entry.getKey() != groupID && (groupMembers.get(entry.getValue().getName()) < amountOfStudentsInInputGroup)) {
-                withFewerSize.add(entry.getValue().getName());
+                sjFewer.add(entry.getValue().getName());
             }
             if (entry.getKey() != groupID && groupMembers.get(entry.getValue().getName()) == amountOfStudentsInInputGroup) {
-                withEqualSize.add(entry.getValue().getName());
+                sjEqual.add(entry.getValue().getName());
             }
         }
-
-        CompareGroupsMethods methods = new CompareGroupsMethods();
-        System.out.println(methods.resultOfComparison(withEqualSize, withFewerSize));
-        return methods.resultOfComparison(withEqualSize, withFewerSize);
+        sb.append(sjFewer).append(System.lineSeparator()).append("GROUPS with EQUAL amount of STUDENTS: ").append(sjEqual);
+        return sb.toString();
     }
 }

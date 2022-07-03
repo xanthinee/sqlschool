@@ -14,14 +14,13 @@ public class UnlinkCourse {
 
     public void unlinkCourse(Connection con) throws SQLException {
 
-        GiveNewCourseMethods studCourses = new GiveNewCourseMethods();
-        GiveNewCourse newCourse = new GiveNewCourse();
+        CourseAdditionMethods studCourses = new CourseAdditionMethods();
+        CourseAddition newCourse = new CourseAddition();
         System.out.println("Enter student_id of STUDENT: ");
         int studentID = sc.nextInt();
         List<String> coursesOfStudent = newCourse.getCoursesOfStudent(con, studentID);
-        System.out.println(coursesOfStudent.size());
         System.out.println(studCourses.printCoursesOfStud(coursesOfStudent));
-        System.out.println("You can DELETE one of them - ENTER bellow it's INDEX: ");
+        System.out.println("You can DELETE one of them - ENTER bellow it's NAME: ");
         String courseToDelete = sc.next();
         try (Connection connection = con;
              PreparedStatement unlinkCourse = connection.prepareStatement("delete from students_courses sc " +

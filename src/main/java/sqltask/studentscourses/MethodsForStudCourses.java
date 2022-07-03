@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.StringJoiner;
 
-public class StudentsCoursesMethods {
+public class MethodsForStudCourses {
 
     public String printStudCourseTable(ResultSet rs) throws SQLException {
 
@@ -13,7 +13,7 @@ public class StudentsCoursesMethods {
         sj.add(System.lineSeparator());
         while (rs.next()) {
             sj.add(rs.getInt("student_id") + " | ");
-            sj.add(String.format("%-20s", rs.getString("course_name").trim()) + "  | ");
+            sj.add(String.format("%-20s", rs.getString("course_name")) + "  | ");
             if (!rs.isLast()) {
                 sj.add(System.lineSeparator());
             }

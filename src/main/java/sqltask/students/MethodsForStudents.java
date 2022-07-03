@@ -1,11 +1,10 @@
 package sqltask.students;
 
-import java.sql.SQLException;
 import java.util.*;
-import sqltask.groups.GroupsTableDB;
 import sqltask.helpers.*;
 
-public class StudentsMethods {
+
+public class MethodsForStudents {
 
     static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
     static final Set<Integer> usedIDs = new HashSet<>();
@@ -21,13 +20,13 @@ public class StudentsMethods {
 
     public List<Student> generateStudents() {
 
-        customFileReader fileCon = new customFileReader();
+        CustomFileReader fileCon = new CustomFileReader();
         List<String> names = fileCon.readFile("data/names.txt").toList();
         List<String> surnames = fileCon.readFile("data/surnames.txt").toList();
         List<Student> students = new ArrayList<>();
 
         for (int i = 0; i < TOTAL_AMOUNT_OF_STUDENTS; i++) {
-            students.add(new Student(generateUniqueNum(1, 10000), null,
+            students.add(new Student(null, null,
                     names.get(generateUniqueNum(0, names.size())),
                     surnames.get(generateUniqueNum(0, surnames.size()))));
         }
@@ -45,6 +44,19 @@ public class StudentsMethods {
             + String.format("%-6d", idOfGroup) + " | "
             + String.format("%-9s", student.getName()) + " | "
             + String.format("%-12s", student.getSurname()));
+        }
+        return sj.toString();
+    }
+
+    public String printStudentsPartly(List<Student> students) {
+
+        StringJoiner sj = new StringJoiner(System.lineSeparator());
+        sj.add("Students which have desired course:");
+        for (Student student : students) {
+            sj.add(String.format("%-6d", student.getStudentId()) + " | "
+                    + String.format("%-6d", student.getGroupId()) + " | "
+                    + String.format("%s", student.getName()) + " "
+                    + String.format("%-13s", student.getSurname()));
         }
         return sj.toString();
     }

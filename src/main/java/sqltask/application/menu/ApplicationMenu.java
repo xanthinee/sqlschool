@@ -3,8 +3,8 @@ package sqltask.application.menu;
 import sqltask.application.methods.DeleteStudent;
 import sqltask.application.methods.PutNewStudent;
 import sqltask.application.methods.UnlinkCourse;
-import sqltask.application.methods.comparison.CompareGroups;
-import sqltask.application.methods.courseaddition.GiveNewCourse;
+import sqltask.application.methods.comparison.GroupsComparison;
+import sqltask.application.methods.courseaddition.CourseAddition;
 import sqltask.application.methods.coursemembers.StudentsByCourse;
 import sqltask.helpers.Utils;
 import java.sql.Connection;
@@ -29,7 +29,7 @@ public class ApplicationMenu {
 
     public void implementMenu(Connection connection) throws SQLException {
 
-        MethodsMenu methods = new MethodsMenu();
+        MethodsForMenu methods = new MethodsForMenu();
         List<MenuTable> listOfMethods = methods.getMenuTable();
         Scanner sc = new Scanner(System.in);
         System.out.println(menuOutput(listOfMethods));
@@ -38,7 +38,7 @@ public class ApplicationMenu {
 
         switch (functionNum) {
             case 1 :
-                CompareGroups compareGps = new CompareGroups();
+                GroupsComparison compareGps = new GroupsComparison();
                 compareGps.compareGroup(connection);
                 break;
             case 2 :
@@ -54,7 +54,7 @@ public class ApplicationMenu {
                 deleteStd.deleteStudent(connection);
                 break;
             case 5 :
-                GiveNewCourse newCourse = new GiveNewCourse();
+                CourseAddition newCourse = new CourseAddition();
                 newCourse.giveCourseToStudent(connection);
                 break;
             case 6 :

@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.StringJoiner;
 import java.util.*;
 
-public class GroupsMethods {
+public class MethodsForGroups {
 
     Random rd = new Random();
 
