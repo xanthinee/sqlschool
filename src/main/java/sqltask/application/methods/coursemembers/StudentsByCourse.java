@@ -1,5 +1,6 @@
 package sqltask.application.methods.coursemembers;
 
+import sqltask.application.menu.IMenu;
 import sqltask.students.Student;
 
 import java.sql.Connection;
@@ -10,11 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class StudentsByCourse {
+public class StudentsByCourse implements IMenu {
 
     Scanner sc = new Scanner(System.in);
 
-    public List<Student> findStudentsByCourse(Connection con) throws SQLException {
+    @Override
+    public String getMenuText() {
+        return "Find all STUDENTS with specified COURSE";
+    }
+
+    @Override
+    public String doAction(Connection con) {
 
         System.out.println("ENTER name of COURSE bellow: ");
         String courseName = sc.next();
@@ -28,7 +35,10 @@ public class StudentsByCourse {
                 students.add(new Student(studentsRS.getInt("student_id"), studentsRS.getInt("group_id"),
                         studentsRS.getString("first_name"), studentsRS.getString("second_name")));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return students;
+        MethodsForStudByCourse methods = new MethodsForStudByCourse();
+        return methods.printMembers(students);
     }
 }

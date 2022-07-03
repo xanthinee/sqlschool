@@ -1,5 +1,6 @@
 package sqltask.application.methods.comparison;
 
+import sqltask.application.menu.IMenu;
 import sqltask.groups.Group;
 import sqltask.groups.GroupsTableDB;
 
@@ -9,11 +10,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class GroupsComparison {
+public class GroupsComparison implements IMenu {
 
     Scanner sc = new Scanner(System.in);
 
-    public String compareGroup(Connection con) {
+    @Override
+    public String getMenuText() {
+        return "Compare GROUP with others";
+    }
+
+    @Override
+    public String doAction(Connection con) {
 
         GroupsTableDB groupsDB = new GroupsTableDB();
         List<Group> groupsList = groupsDB.getGroupsFromTable(con);

@@ -1,15 +1,22 @@
 package sqltask.application.methods;
 
+import sqltask.application.menu.IMenu;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class PutNewStudent {
+public class PutNewStudent implements IMenu {
 
     Scanner sc = new Scanner(System.in);
 
-    public void putNewStudent(Connection con) throws SQLException {
+    @Override
+    public String getMenuText() {
+        return "Put NEW STUDENT to DataBase";
+    }
+    @Override
+    public String doAction(Connection con) {
 
         System.out.println("Enter NAME of student: ");
         String studentName = sc.next();
@@ -24,6 +31,9 @@ public class PutNewStudent {
             putStudent.setString(2, studentName);
             putStudent.setString(3, studentSurname);
             putStudent.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return "NEW STUDENT WAS ADDED";
     }
 }

@@ -1,5 +1,7 @@
 package sqltask.application.methods.courseaddition;
 
+import sqltask.application.menu.IMenu;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,9 +9,14 @@ import java.sql.SQLException;
 import java.util.*;
 
 @SuppressWarnings("java:S106")
-public class CourseAddition {
+public class CourseAddition implements IMenu {
     Scanner sc = new Scanner(System.in);
     CourseAdditionMethods giveCourse = new CourseAdditionMethods();
+
+    @Override
+    public String getMenuText() {
+        return "ADD new COURSE to STUDENT";
+    }
 
     public List<String> getCoursesOfStudent(Connection con, int studentID) {
 
@@ -20,7 +27,7 @@ public class CourseAddition {
             getCoursesOfStud.setInt(1, studentID);
             ResultSet coursesOfStud = getCoursesOfStud.executeQuery();
             while (coursesOfStud.next()) {
-                coursesOfStudent.add(coursesOfStud.getString("course_name").trim());
+                coursesOfStudent.add(coursesOfStud.getString("course_name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -28,7 +35,8 @@ public class CourseAddition {
         return coursesOfStudent;
     }
 
-    public void giveCourseToStudent(Connection con) throws SQLException {
+    @Override
+    public String doAction(Connection con) {
 
         System.out.println("Enter student_id of STUDENT: ");
         int studentID = sc.nextInt();
@@ -55,6 +63,7 @@ public class CourseAddition {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            return "Course was added!";
         }
     }
 

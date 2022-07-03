@@ -1,19 +1,12 @@
 package sqltask;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.StringJoiner;
 
-import sqltask.courses.Course;
 import sqltask.groups.GroupsTableDB;
 import sqltask.helpers.*;
 import sqltask.application.menu.ApplicationMenu;
-import sqltask.application.menu.MethodsForMenu;
+import sqltask.application.menu.MenuList;
 import sqltask.courses.MethodsForCourses;
 import sqltask.courses.CoursesTableDB;
 import sqltask.application.methods.*;
@@ -42,7 +35,7 @@ public class Main {
         StudentsByCourse byCourse = new StudentsByCourse();
         UnlinkCourse unlink = new UnlinkCourse();
         ApplicationMenu appMenu = new ApplicationMenu();
-        MethodsForMenu menuMethods = new MethodsForMenu();
+        MenuList menuMethods = new MenuList();
         GroupsTableDB groupsDB = new GroupsTableDB();
         StudentsCoursesTableDB studCourses = new StudentsCoursesTableDB();
         MethodsForStudents studentsMethods = new MethodsForStudents();
@@ -62,11 +55,7 @@ public class Main {
 //            e.printStackTrace();
 //        }
 
-        try {
-            giveNew.giveCourseToStudent(connection);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        System.out.println(appMenu.implementMenu(connection));
 
     }
 }

@@ -1,15 +1,23 @@
 package sqltask.application.methods;
 
+import lombok.Data;
+import sqltask.application.menu.IMenu;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class DeleteStudent {
+public class DeleteStudent implements IMenu {
 
     Scanner sc = new Scanner(System.in);
 
-    public void deleteStudent(Connection con) {
+    @Override
+    public String getMenuText() {
+        return "Delete STUDENT from DataBase";
+    }
+    @Override
+    public String doAction(Connection con) {
 
         System.out.println("Enter ID of student: ");
         int studentID = sc.nextInt();
@@ -20,5 +28,6 @@ public class DeleteStudent {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return "STUDENT WAS DELETED";
     }
 }

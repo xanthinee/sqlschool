@@ -5,14 +5,22 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+
+import sqltask.application.menu.IMenu;
 import sqltask.application.methods.courseaddition.*;
 
 @SuppressWarnings("java:S106")
-public class UnlinkCourse {
+public class UnlinkCourse implements IMenu {
 
     Scanner sc = new Scanner(System.in);
 
-    public void unlinkCourse(Connection con) throws SQLException {
+    @Override
+    public String getMenuText() {
+        return "Unlink COURSE from STUDENT";
+    }
+
+    @Override
+    public String doAction(Connection con) {
 
         CourseAdditionMethods studCourses = new CourseAdditionMethods();
         CourseAddition newCourse = new CourseAddition();
@@ -30,6 +38,9 @@ public class UnlinkCourse {
             unlinkCourse.setInt(1, studentID);
             unlinkCourse.setString(2, courseToDelete);
             unlinkCourse.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return "COURSE WAS UNLINKED";
     }
 }
