@@ -49,12 +49,6 @@ public class Main {
         }
 //        sqlS.executeScriptUsingScriptRunner("/Users/xanthine/IdeaProjects/SqlSchool/src/main/resources/sqldata/tables_creation.sql", connection);
 
-//        try {
-//            unlink.unlinkCourse(connection);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-
         System.out.println(groupsComparison.doAction(connection));
 //        System.out.println(appMenu.implementMenu(connection));
 
