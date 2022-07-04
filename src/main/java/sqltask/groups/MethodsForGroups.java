@@ -26,7 +26,7 @@ public class MethodsForGroups {
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         sj.add("GROUPS:");
         for (Group group : groups) {
-            sj.add(group.getId() + " - " + group.getName());
+            sj.add(String.format("%-5d",group.getId()) + " - " + group.getName());
         }
         return sj.toString();
     }
