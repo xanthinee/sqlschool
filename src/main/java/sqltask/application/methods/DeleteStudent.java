@@ -1,14 +1,13 @@
 package sqltask.application.methods;
 
-import lombok.Data;
-import sqltask.application.menu.IMenu;
+import sqltask.application.menu.Menu;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class DeleteStudent implements IMenu {
+public class DeleteStudent implements Menu {
 
     Scanner sc = new Scanner(System.in);
 

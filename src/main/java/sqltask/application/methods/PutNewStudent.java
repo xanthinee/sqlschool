@@ -1,13 +1,13 @@
 package sqltask.application.methods;
 
-import sqltask.application.menu.IMenu;
+import sqltask.application.menu.Menu;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class PutNewStudent implements IMenu {
+public class PutNewStudent implements Menu {
 
     Scanner sc = new Scanner(System.in);
 

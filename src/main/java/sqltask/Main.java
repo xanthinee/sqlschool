@@ -55,7 +55,9 @@ public class Main {
 //            e.printStackTrace();
 //        }
 
-        System.out.println(appMenu.implementMenu(connection));
+        System.out.println(groupsComparison.doAction(connection));
+//        System.out.println(appMenu.implementMenu(connection));
+
 
     }
 }

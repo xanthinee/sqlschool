@@ -1,22 +1,20 @@
 package sqltask.studentscourses;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 import java.util.StringJoiner;
 
 public class MethodsForStudCourses {
 
-    public String printStudCourseTable(ResultSet rs) throws SQLException {
+    public String printStudCourseTable(List<StudentCourse> stdCrs) {
 
-        StringJoiner sj = new StringJoiner("");
+        StringJoiner sj = new StringJoiner(System.lineSeparator());
         sj.add("STUDENTS's COURSES");
-        sj.add(System.lineSeparator());
-        while (rs.next()) {
-            sj.add(rs.getInt("student_id") + " | ");
-            sj.add(String.format("%-20s", rs.getString("course_name")) + "  | ");
-            if (!rs.isLast()) {
-                sj.add(System.lineSeparator());
-            }
+        for(StudentCourse sc : stdCrs) {
+            int studID = sc.getStudentID();
+            int courseID = sc.getCourseID();
+            sj.add(String.format("%-5d", sc.getRowID()) + " | "
+            + String.format("%-5d", studID) + " | "
+            + String.format("%1d",courseID));
         }
         return sj.toString();
     }

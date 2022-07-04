@@ -11,14 +11,14 @@ import java.util.*;
 @SuppressWarnings("java:S106")
 public class ApplicationMenu {
 
-    public String menuOutput() {
+    private String menuOutput() {
 
-        List<IMenu> menu = MenuList.menu;
+        List<Menu> menu = MenuList.menu;
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         sj.add(Utils.stringCentre("APPLICATION_NAME",30));
         sj.add("APPLICATION FUNCTIONS:");
         int index = 1;
-        for (IMenu menuItem : menu) {
+        for (Menu menuItem : menu) {
             sj.add(index + ". " + menuItem.getMenuText());
             index++;
         }
@@ -27,10 +27,10 @@ public class ApplicationMenu {
 
     public Object implementMenu(Connection connection) {
 
-        List<IMenu> menu = MenuList.menu;
-        Map<Integer, IMenu> menuMap = new HashMap<>();
+        List<Menu> menu = MenuList.menu;
+        Map<Integer, Menu> menuMap = new HashMap<>();
         int index = 1;
-        for (IMenu menuItem : menu) {
+        for (Menu menuItem : menu) {
             menuMap.put(index, menuItem);
             index++;
         }

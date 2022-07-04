@@ -1,6 +1,6 @@
 package sqltask.application.methods.coursemembers;
 
-import sqltask.application.menu.IMenu;
+import sqltask.application.menu.Menu;
 import sqltask.students.Student;
 
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class StudentsByCourse implements IMenu {
+public class StudentsByCourse implements Menu {
 
     Scanner sc = new Scanner(System.in);
 

@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
-import sqltask.application.menu.IMenu;
+import sqltask.application.menu.Menu;
 import sqltask.application.methods.courseaddition.*;
 
 @SuppressWarnings("java:S106")
-public class UnlinkCourse implements IMenu {
+public class UnlinkCourse implements Menu {
 
     Scanner sc = new Scanner(System.in);
 

@@ -1,6 +1,6 @@
 package sqltask.application.methods.courseaddition;
 
-import sqltask.application.menu.IMenu;
+import sqltask.application.menu.Menu;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 @SuppressWarnings("java:S106")
-public class CourseAddition implements IMenu {
+public class CourseAddition implements Menu {
     Scanner sc = new Scanner(System.in);
     CourseAdditionMethods giveCourse = new CourseAdditionMethods();
 

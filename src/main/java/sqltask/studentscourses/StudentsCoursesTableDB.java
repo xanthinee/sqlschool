@@ -46,11 +46,17 @@ public class StudentsCoursesTableDB {
         }
     }
 
-    private ResultSet getRowsFromStudCourses(Connection con) throws SQLException {
+    private List<StudentCourse> getStudCourses(Connection con) throws SQLException {
 
+        List<StudentCourse> stdCrs = new ArrayList<>();
         try (Connection connection = con;
              PreparedStatement st = connection.prepareStatement("select * from students_courses")){
-            return st.executeQuery();
+            ResultSet tableValues = st.executeQuery();
+            while (tableValues.next()) {
+                stdCrs.add(new StudentCourse(tableValues.getInt("row_id"), tableValues.getInt("student_id"),
+                        tableValues.getInt("course_id")));
+            }
+            return stdCrs;
         } catch (SQLException e) {
             e.printStackTrace();
         }
