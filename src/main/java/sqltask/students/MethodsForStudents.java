@@ -11,7 +11,7 @@ public class MethodsForStudents {
     Random rd = new Random();
     public int generateUniqueNum(int leftBound, int rightBound) {
         int num = rd.nextInt(leftBound, rightBound);
-        if (usedIDs.contains(num)) {
+        while (usedIDs.contains(num)) {
             num = rd.nextInt(leftBound, rightBound);
         }
         usedIDs.add(num);
@@ -40,7 +40,7 @@ public class MethodsForStudents {
 
         for (Student student : students) {
             int idOfGroup = student.getGroupId();
-            sj.add(student.getStudentId() + " | "
+            sj.add(String.format("%-6d", student.getStudentId()) + " | "
             + String.format("%-6d", idOfGroup) + " | "
             + String.format("%-9s", student.getName()) + " | "
             + String.format("%-12s", student.getSurname()));
@@ -55,8 +55,8 @@ public class MethodsForStudents {
         for (Student student : students) {
             sj.add(String.format("%-6d", student.getStudentId()) + " | "
                     + String.format("%-6d", student.getGroupId()) + " | "
-                    + String.format("%s", student.getName()) + " "
-                    + String.format("%-13s", student.getSurname()));
+                    + String.format("%-12s", student.getName()) + " | "
+                    + String.format("%s", student.getSurname()));
         }
         return sj.toString();
     }
