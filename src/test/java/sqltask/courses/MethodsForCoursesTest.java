@@ -1,5 +1,6 @@
 package sqltask.courses;
 
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -34,6 +35,15 @@ class MethodsForCoursesTest {
                   100.           IT: description
                  1000.             : DESCRIPTION""";
         assertEquals(expected, testObj.printCoursesTable(testList));
+    }
 
+    @Test
+    void makeCourseList_whenDataIsPresence_shouldMakeListOfCourses() {
+
+        Course testCourse = new Course(1, "Mathematics", "mathematical science with geometry features");
+        Course testCourse1 = new Course(2, "Computer science", "Study of computation and automation");
+        Course testCourse2 = new Course(3, "Foreign language", "Study of English language");
+        List<Course> testList = List.of(testCourse, testCourse1, testCourse2);
+        assertEquals(testList, testObj.makeCoursesList("testdata/methodsforcourses.txt"));
     }
 }

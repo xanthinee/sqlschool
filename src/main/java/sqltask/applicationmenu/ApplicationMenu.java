@@ -1,4 +1,4 @@
-package sqltask.application.menu;
+package sqltask.applicationmenu;
 
 import sqltask.helpers.Utils;
 import java.sql.Connection;

@@ -5,10 +5,12 @@ import sqltask.groups.GroupsTableDB;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 @SuppressWarnings("java:S106")
 public class StudentsTableDB {
 
+    Scanner sc = new Scanner(System.in);
 
     public List<Student> finishStudentsCreation(Connection con) throws SQLException {
 
@@ -71,5 +73,40 @@ public class StudentsTableDB {
             e.printStackTrace();
         }
         return students;
+    }
+
+    public String deleteStudent(Connection con) {
+
+        System.out.println("Enter ID of student: ");
+        int studentID = sc.nextInt();
+        try (Connection connection = con;
+             PreparedStatement deleteFromStudents = connection.prepareStatement("delete from students where student_id = ?")) {
+            deleteFromStudents.setInt(1, studentID);
+            deleteFromStudents.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "STUDENT WAS DELETED";
+    }
+
+    public String putNewStudent(Connection con) {
+
+        System.out.println("Enter NAME of student: ");
+        String studentName = sc.next();
+        System.out.println("Enter SURNAME of student");
+        String studentSurname = sc.next();
+        System.out.println("Enter ID of GROUP which new STUDENT will have bellow: ");
+        int groupId = sc.nextInt();
+
+        try (Connection connection = con;
+             PreparedStatement putStudent = connection.prepareStatement("insert into students values (default,?,?,?)")) {
+            putStudent.setInt(1,groupId);
+            putStudent.setString(2, studentName);
+            putStudent.setString(3, studentSurname);
+            putStudent.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "NEW STUDENT WAS ADDED";
     }
 }

@@ -1,15 +1,15 @@
 package sqltask.groups;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
+@SuppressWarnings("java:S106")
 public class GroupsTableDB {
 
     private static final int TOTAL_AMOUNT_OF_GROUPS = 10;
     Random rd = new Random();
     MethodsForGroups groupMtd = new MethodsForGroups();
+    Scanner sc = new Scanner(System.in);
 
     public void putGroupIntoTable(Connection con) {
         try (PreparedStatement st = con.prepareStatement("INSERT INTO public.groups VALUES(?,?)")){
@@ -62,5 +62,37 @@ public class GroupsTableDB {
             e.printStackTrace();
         }
         return groups;
+    }
+
+    public String compareGroups(Connection con) {
+
+        System.out.println("Enter GROUP to COMPARE below: ");
+        int groupID = sc.nextInt();
+        List<String> groupMembers = new ArrayList<>();
+        try (Connection connection = con;
+             PreparedStatement getGroupsMembers = connection.prepareStatement("select g.group_name " +
+                     "from groups g left join students s on g.group_id = s.group_id " +
+                     "where g.group_id <> ? " +
+                     "group by g.group_name " +
+                     "having count(s.student_id) <= (select count(s2.student_id) from students s2 where s2.group_id = ?) " +
+                     "order by g.group_name")) {
+            getGroupsMembers.setInt(1, groupID);
+            getGroupsMembers.setInt(2, groupID);
+            ResultSet rs = getGroupsMembers.executeQuery();
+            while (rs.next()) {
+                groupMembers.add(rs.getString("group_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        StringBuilder sb = new StringBuilder(System.lineSeparator());
+        sb.append("GROUPS with FEWER or EQUAL amount of STUDENTS: ");
+        StringJoiner sjRequired = new StringJoiner(", ");
+        for (String groupName : groupMembers) {
+            sjRequired.add(groupName);
+        }
+        sb.append(sjRequired);
+        return sb.toString();
     }
 }
