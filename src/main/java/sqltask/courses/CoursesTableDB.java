@@ -1,5 +1,7 @@
 package sqltask.courses;
 
+import sqltask.applicationmenu.Menu;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +14,7 @@ public class CoursesTableDB {
 
     Scanner sc = new Scanner(System.in);
     MethodsForCourses coursesMethods = new MethodsForCourses();
+
     public void putCoursesInTable(Connection con, String nameOfCoursesFile) throws SQLException{
 
         MethodsForCourses coursesMethods = new MethodsForCourses();

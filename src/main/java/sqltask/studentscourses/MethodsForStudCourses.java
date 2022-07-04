@@ -28,9 +28,9 @@ public class MethodsForStudCourses {
         for (Student student : students) {
             sj.add(String.format("%-5d|", student.getStudentId())
                     + String.format("%-5d|", student.getGroupId())
-                    + String.format("%-10s|", student.getName())
-                    + String.format("%1s", student.getSurname()));
+                    + String.format("%-10s ", student.getName())
+                    + String.format("%s", student.getSurname()));
         }
-        return "abc";
+        return sj.toString();
     }
 }

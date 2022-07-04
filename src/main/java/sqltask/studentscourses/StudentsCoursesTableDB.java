@@ -79,7 +79,10 @@ public class StudentsCoursesTableDB {
         List<Student> students = new ArrayList<>();
         try (Connection connection = con;
              PreparedStatement st = connection.prepareStatement("select s.student_id, s.group_id, s.first_name, s.second_name \n" +
-                     "from students s inner join students_courses sc on sc.student_id = s.student_id where sc.course_id = ?")) {
+                     "from students s " +
+                     "inner join students_courses sc on sc.student_id = s.student_id " +
+                     "inner join courses c on sc.course_id = c.course_id " +
+                     "where c.course_name = ?")) {
             st.setString(1, courseName);
             ResultSet studentsRS = st.executeQuery();
             while (studentsRS.next()) {
