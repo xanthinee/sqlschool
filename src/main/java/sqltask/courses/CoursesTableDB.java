@@ -1,6 +1,6 @@
 package sqltask.courses;
 
-import sqltask.applicationmenu.Menu;
+import sqltask.connection.ConnectionProvider;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,45 +8,50 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class CoursesTableDB {
 
-    Scanner sc = new Scanner(System.in);
+    ConnectionProvider conProvider;
     MethodsForCourses coursesMethods = new MethodsForCourses();
 
-    public void putCoursesInTable(Connection con, String nameOfCoursesFile) throws SQLException{
+    public CoursesTableDB(ConnectionProvider conProvider) {
+        this.conProvider = conProvider;
+    }
+
+
+    public void putCoursesInTable(String nameOfCoursesFile) throws SQLException{
 
         MethodsForCourses coursesMethods = new MethodsForCourses();
         List<Course> courses = coursesMethods.makeCoursesList(nameOfCoursesFile);
-        try (PreparedStatement st = con.prepareStatement("insert into public.courses values (default,?,?)")) {
-            con.setAutoCommit(false);
+        try (Connection con = conProvider.getConnection();
+             PreparedStatement st = con.prepareStatement("insert into public.courses values (default,?,?)")) {
             for (Course course : courses) {
                 st.setString(1, course.getName());
                 st.setString(2, course.getDescription());
                 st.addBatch();
             }
             st.executeUpdate();
-            con.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public void deleteCoursesFromTable(Connection con) {
+    public void deleteCoursesFromTable() {
 
-        try (Connection connection = con;
-             PreparedStatement st = connection.prepareStatement("delete from courses")) {
+        try (Connection con = conProvider.getConnection();
+             PreparedStatement st = con.prepareStatement("delete from courses")) {
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public List<Course> getCoursesFromTable(Connection con) {
+    public List<Course> getCoursesFromTable() {
 
         List<Course> courses = new ArrayList<>();
         try {
-            PreparedStatement preparedStatement = con.prepareStatement("select course_id, course_name, course_description FROM public.courses");
+            Connection con = conProvider.getConnection();
+            PreparedStatement preparedStatement = con.prepareStatement("select course_id, course_name, course_description " +
+                    "FROM public.courses");
             ResultSet coursesRS = preparedStatement.executeQuery();
             while (coursesRS.next()) {
                 courses.add(new Course(coursesRS.getInt("course_id"), coursesRS.getString("course_name"),
@@ -58,16 +63,19 @@ public class CoursesTableDB {
         return courses;
     }
 
-    public List<String> getCoursesOfStudent(Connection con, int studentID) {
+    public List<Course> getCoursesOfStudent(int studentID) {
 
-        List<String> coursesOfStudent = new ArrayList<>();
+        List<Course> coursesOfStudent = new ArrayList<>();
         try {
-            PreparedStatement getCoursesOfStud = con.prepareStatement("select course_name from courses c inner join students_courses sc " +
+            Connection con = conProvider.getConnection();
+            PreparedStatement getCoursesOfStud = con.prepareStatement("select c.course_id, c.course_name, c.course_description" +
+                    " from courses c inner join students_courses sc " +
                     "on c.course_id = sc.course_id where student_id = ?");
             getCoursesOfStud.setInt(1, studentID);
             ResultSet coursesOfStud = getCoursesOfStud.executeQuery();
             while (coursesOfStud.next()) {
-                coursesOfStudent.add(coursesOfStud.getString("course_name"));
+                coursesOfStudent.add(new Course(coursesOfStud.getInt("course_id"),coursesOfStud.getString("course_name"),
+                        coursesOfStud.getString("course_description")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,33 +83,34 @@ public class CoursesTableDB {
         return coursesOfStudent;
     }
 
-    public String setNewCourse(Connection con) {
+    public List<Course> findAvailableCourses(int studentID) {
 
-        System.out.println("Enter student_id of STUDENT: ");
-        int studentID = sc.nextInt();
-
-        List<String> availableCourses = new ArrayList<>();
-        try {
-            List<String> coursesOfStudent = getCoursesOfStudent(con, studentID);
-            PreparedStatement avbCourses = con.prepareStatement("select c.course_name from courses c where c.course_id not in " +
-                    "(select sc.course_id from students_courses sc where sc.student_id = ?)");
+        List<Course> available = new ArrayList<>();
+        try (Connection con = conProvider.getConnection();
+             PreparedStatement avbCourses = con.prepareStatement(" select c.course_id, c.course_name, c.course_description" +
+                " from courses c " +
+                "where c.course_id not in (select sc.course_id from students_courses sc where sc.student_id = ?) ")){
             avbCourses.setInt(1, studentID);
             ResultSet avbCoursesRs = avbCourses.executeQuery();
             while (avbCoursesRs.next()) {
-                availableCourses.add(avbCoursesRs.getString("course_name"));
+                available.add(new Course(avbCoursesRs.getInt("course_id"), avbCoursesRs.getString("course_name").trim(),
+                        avbCoursesRs.getString("course_description").trim()));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return available;
+    }
 
-            System.out.println(coursesMethods.infoToPrint(coursesOfStudent, availableCourses));
-            System.out.println("Enter NAME (Only 1 by attempt) of COURSE which you want to ADD: ");
-            String courseName = sc.next();
-            PreparedStatement addCourseToStudent = con.prepareStatement("insert into students_courses (student_id, course_id) " +
-                    "select ?, course_id from courses where course_name = ?");
+    public void setNewCourse(int studentID, String courseName) {
+        try (Connection con = conProvider.getConnection();
+                PreparedStatement addCourseToStudent = con.prepareStatement("insert into students_courses (student_id, course_id) " +
+                "select ?, course_id from courses where course_name = ?")) {
             addCourseToStudent.setInt(1, studentID);
             addCourseToStudent.setString(2, courseName);
             addCourseToStudent.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "Course was added!";
     }
 }

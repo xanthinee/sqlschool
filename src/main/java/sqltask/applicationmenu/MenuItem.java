@@ -19,7 +19,7 @@ public class MenuItem implements Menu {
     @Override
     public void doAction() {
         try {
-            System.out.println(action.doAction());
+            action.doAction();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,25 +1,32 @@
 package sqltask.students;
 
+import sqltask.connection.ConnectionProvider;
 import sqltask.groups.GroupsTableDB;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Random;
 
 @SuppressWarnings("java:S106")
 public class StudentsTableDB {
 
-    Scanner sc = new Scanner(System.in);
+    ConnectionProvider conProvider;
+    Random rd = new Random();
 
-    public List<Student> finishStudentsCreation(Connection con) throws SQLException {
+    public StudentsTableDB(ConnectionProvider conProvider) {
+        this.conProvider = conProvider;
+    }
+
+
+    public List<Student> finishStudentsCreation() throws SQLException {
 
         MethodsForStudents studMethods = new MethodsForStudents();
         List<Student> students = studMethods.generateStudents();
-        GroupsTableDB groupsTab = new GroupsTableDB();
-        List<Integer> iDs = groupsTab.groupsIdList(con);
+        GroupsTableDB groupsTab = new GroupsTableDB(conProvider);
+        List<Integer> iDs = groupsTab.groupsIdList();
         for (int id : iDs) {
-            int groupMembers = studMethods.generateUniqueNum(0, 31);
+            int groupMembers = rd.nextInt(0, 31);
             if (groupMembers >= 10) {
                 for (int i = 0; i < groupMembers; i++) {
                     students.get(studMethods.generateUniqueNum(0, students.size())).setGroupId(id);
@@ -28,9 +35,9 @@ public class StudentsTableDB {
         }
         return students;
     }
-    public void putStudentsIntoTable(Connection con, List<Student> students) throws SQLException {
-        try (PreparedStatement st = con.prepareStatement("insert into public.students values (default,?,?,?)")){
-            con.setAutoCommit(false);
+    public void putStudentsIntoTable(List<Student> students) throws SQLException {
+        try (Connection con = conProvider.getConnection();
+                PreparedStatement st = con.prepareStatement("insert into public.students values (default,?,?,?)")){
             for (Student student : students) {
                 if (student.getGroupId() == null) {
                     st.setNull(1, Types.NULL);
@@ -42,26 +49,26 @@ public class StudentsTableDB {
                 st.addBatch();
             }
             st.executeUpdate();
-            con.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void deleteStudentsFromTable(Connection con) throws SQLException {
+    public void deleteStudentsFromTable() throws SQLException {
 
-        try (Connection connection = con;
-             PreparedStatement st = connection.prepareStatement("delete from students")) {
+        try (Connection con = conProvider.getConnection();
+             PreparedStatement st = con.prepareStatement("delete from students")) {
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public List<Student> getStudents(Connection con) throws SQLException {
+    public List<Student> getStudents() throws SQLException {
 
         List<Student> students = new ArrayList<>();
         try {
+            Connection con = conProvider.getConnection();
             PreparedStatement psStudents = con.prepareStatement("select student_id, group_id, first_name, second_name" +
                     " from students");
             ResultSet rsStudents = psStudents.executeQuery();
@@ -75,12 +82,10 @@ public class StudentsTableDB {
         return students;
     }
 
-    public String deleteStudent(Connection con) {
+    public String deleteStudent(int studentID) {
 
-        System.out.println("Enter ID of student: ");
-        int studentID = sc.nextInt();
-        try (Connection connection = con;
-             PreparedStatement deleteFromStudents = connection.prepareStatement("delete from students where student_id = ?")) {
+        try (Connection con = conProvider.getConnection();
+             PreparedStatement deleteFromStudents = con.prepareStatement("delete from students where student_id = ?")) {
             deleteFromStudents.setInt(1, studentID);
             deleteFromStudents.executeUpdate();
         } catch (SQLException e) {
@@ -89,17 +94,10 @@ public class StudentsTableDB {
         return "STUDENT WAS DELETED";
     }
 
-    public String putNewStudent(Connection con) {
+    public String putNewStudent(String studentName, String studentSurname, int groupId) {
 
-        System.out.println("Enter NAME of student: ");
-        String studentName = sc.next();
-        System.out.println("Enter SURNAME of student");
-        String studentSurname = sc.next();
-        System.out.println("Enter ID of GROUP which new STUDENT will have bellow: ");
-        int groupId = sc.nextInt();
-
-        try (Connection connection = con;
-             PreparedStatement putStudent = connection.prepareStatement("insert into students values (default,?,?,?)")) {
+        try (Connection con = conProvider.getConnection();
+             PreparedStatement putStudent = con.prepareStatement("insert into students values (default,?,?,?)")) {
             putStudent.setInt(1,groupId);
             putStudent.setString(2, studentName);
             putStudent.setString(3, studentSurname);

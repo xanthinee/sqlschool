@@ -1,16 +1,15 @@
 package sqltask;
 
-import sqltask.applicationmenu.Controller;
+import sqltask.applicationmenu.MenuHandler;
 import sqltask.applicationmenu.MenuGroup;
 import sqltask.connection.ConnectionProvider;
-import sqltask.studentscourses.StudentsCoursesTableDB;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Main {
 
-    @SuppressWarnings("java:S106")
+
     public static void main(String[] args) {
 
         Connection connection = null;
@@ -21,8 +20,9 @@ public class Main {
             e.printStackTrace();
         }
 
-        Controller controller = new Controller();
-        MenuGroup.completeMenu(controller).doAction();
+        MenuHandler menuHandler = new MenuHandler();
+        MenuGroup.completeMenu(menuHandler).doAction();
+
 //        sqlS.executeScriptUsingScriptRunner("/Users/xanthine/IdeaProjects/SqlSchool/src/main/resources/sqldata/tables_creation.sql", connection);
 
     }

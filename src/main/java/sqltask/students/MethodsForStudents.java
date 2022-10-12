@@ -7,14 +7,14 @@ import sqltask.helpers.*;
 public class MethodsForStudents {
 
     static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
-    static final Set<Integer> usedIDs = new HashSet<>();
+    static final Set<Integer> usedNUMs = new HashSet<>();
     Random rd = new Random();
     public int generateUniqueNum(int leftBound, int rightBound) {
         int num = rd.nextInt(leftBound, rightBound);
-        while (usedIDs.contains(num)) {
+        while (usedNUMs.contains(num)) {
             num = rd.nextInt(leftBound, rightBound);
         }
-        usedIDs.add(num);
+        usedNUMs.add(num);
         return num;
     }
 
@@ -27,8 +27,8 @@ public class MethodsForStudents {
 
         for (int i = 0; i < TOTAL_AMOUNT_OF_STUDENTS; i++) {
             students.add(new Student(null, null,
-                    names.get(generateUniqueNum(0, names.size())),
-                    surnames.get(generateUniqueNum(0, surnames.size()))));
+                    names.get(rd.nextInt(0, names.size())),
+                    surnames.get(rd.nextInt(0, surnames.size()))));
         }
         return students;
     }

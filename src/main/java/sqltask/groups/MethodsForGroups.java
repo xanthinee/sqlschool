@@ -30,4 +30,15 @@ public class MethodsForGroups {
         }
         return sj.toString();
     }
+
+    public String printResultOfComparison(List<Group> groups) {
+        StringBuilder sb = new StringBuilder(System.lineSeparator());
+        sb.append("GROUPS with FEWER or EQUAL amount of STUDENTS: ");
+        StringJoiner sjRequired = new StringJoiner(", ");
+        for (Group groupName : groups) {
+            sjRequired.add(groupName.getName());
+        }
+        sb.append(sjRequired);
+        return sb.toString();
+    }
 }

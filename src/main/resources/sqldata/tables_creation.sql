@@ -6,7 +6,7 @@
 
 DROP TABLE IF EXISTS public.groups;
 CREATE TABLE public.groups (
-                               group_id integer NOT NULL,
+                               group_id serial NOT NULL,
                                group_name character varying(6) COLLATE pg_catalog."default" NOT NULL,
                                CONSTRAINT "GROUPS_pkey" PRIMARY KEY (group_id)
 );

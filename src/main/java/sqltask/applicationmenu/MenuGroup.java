@@ -20,18 +20,18 @@ public class MenuGroup implements Menu {
         return label;
     }
 
-   static public MenuGroup completeMenu(Controller controller) {
-        return new MenuGroup("MAIN MENU",
-                new MenuGroup("GROUPS OPTIONS", new MenuItem("Compare group", controller::compareGroup)),
-                new MenuGroup("COURSES OPTIONS",
-                        new MenuItem("Find students by Course", controller::findStudentsByCourse),
-                        new MenuItem("Add course to Student", controller::setNewCourse),
-                        new MenuItem("Unlink Course", controller::unlinkCourse)),
-                new MenuGroup("STUDENTS OPTIONS",
-                        new MenuItem("Add new student", controller::addStudent),
-                        new MenuItem("Delete student", controller::deleteStudent)
-                )
-        );
+    public static MenuGroup completeMenu(MenuHandler menuHandler) {
+            return new MenuGroup("MAIN MENU",
+                    new MenuGroup("GROUPS OPTIONS", new MenuItem("Compare group", menuHandler::compareGroup)),
+                    new MenuGroup("COURSES OPTIONS",
+                            new MenuItem("Find students by Course", menuHandler::findStudentsByCourse),
+                            new MenuItem("Add course to Student", menuHandler::setNewCourse),
+                            new MenuItem("Unlink Course", menuHandler::unlinkCourse)),
+                    new MenuGroup("STUDENTS OPTIONS",
+                            new MenuItem("Add new student", menuHandler::addStudent),
+                            new MenuItem("Delete student", menuHandler::deleteStudent)
+                    )
+            );
     }
 
     @Override

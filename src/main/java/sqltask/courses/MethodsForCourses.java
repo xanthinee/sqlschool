@@ -28,34 +28,33 @@ public class MethodsForCourses {
         return sj.toString();
     }
 
-    public String printCoursesOfStud(List<String> courses) {
+    public String printCoursesOfStud(List<Course> courses) {
         StringJoiner sjCourses = new StringJoiner(System.lineSeparator());
         sjCourses.add("Entered STUDENT has next COURSES: ");
         int index = 1;
-        for (String course : courses) {
-            sjCourses.add(index + ". " + course);
+        for (Course course : courses) {
+            sjCourses.add(index + ". " + course.getName());
             index++;
         }
         return sjCourses.toString();
     }
 
-    public String infoToPrint(List<String> coursesOfStudent, List<String> availableForStudentCourses) {
+    public String infoToPrint(List<Course> coursesOfStudent, List<Course> availableForStudentCourses) {
         int numOfCourses = coursesOfStudent.size();
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         if (numOfCourses != 0) {
-            sj.add(printCoursesOfStud(coursesOfStudent));
-            sj.add("You can give next COURSES to STUDENT:");
+            sj.add("You can give next COURSES to STUDENT1:");
             int index = 1;
-            for (String courseName : availableForStudentCourses) {
-                sj.add(index + ". " + courseName);
+            for (Course courseName : availableForStudentCourses) {
+                sj.add(index + ". " + courseName.getName());
                 index++;
             }
         } else {
             sj.add("Chosen STUDENT has no any COURSES");
-            sj.add("You can give next COURSES to STUDENT:");
+            sj.add("You can give next COURSES to STUDENT2:");
             int index = 1;
-            for (String courseName : availableForStudentCourses) {
-                sj.add(index + ". " + courseName);
+            for (Course courseName : availableForStudentCourses) {
+                sj.add(index + ". " + courseName.getName());
                 index++;
             }
             return sj.toString();
