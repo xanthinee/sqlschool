@@ -23,9 +23,9 @@ public class Main {
 //            e.printStackTrace();
 //        }
 //
-        MenuHandler menuHandler = new MenuHandler();
-        MenuGroup menuGroup = new MenuGroup("Artem");
-        menuGroup.completeMenu(menuHandler).doAction();
+//        MenuHandler menuHandler = new MenuHandler();
+//        MenuGroup menuGroup = new MenuGroup("Artem");
+//        menuGroup.completeMenu(menuHandler).doAction();
 
 //        sqlS.executeScriptUsingScriptRunner("/Users/xanthine/IdeaProjects/SqlSchool/src/main/resources/sqldata/tables_creation.sql", connection);
 
@@ -38,9 +38,14 @@ public class Main {
 ////        System.out.println(studentsTableDB.getById(2481041).toString());
 //        System.out.println(groupsTableDB.getById(8581).toString());
 
-//        CoursesTableDB coursesTableDB = new CoursesTableDB(dataSource, "courses", "students_courses");
-//        List<Student> students = coursesTableDB.getCourseMembers("Chemistry");
-//        students.forEach(student -> System.out.println(student.toString()));
+        CoursesTableDB coursesTableDB = new CoursesTableDB(dataSource, "courses", "students_courses");
+        System.out.println(coursesTableDB.getById(9).toString());
+
+//        GroupsTableDB groupsTableDB = new GroupsTableDB(dataSource, "groups");
+//        System.out.println(groupsTableDB.getById(6539).toString());
+
+//        StudentsTableDB studentsTableDB = new StudentsTableDB(dataSource);
+//        System.out.println(studentsTableDB.getById(45).toString());
 
     }
 }

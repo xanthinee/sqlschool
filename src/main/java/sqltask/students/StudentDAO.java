@@ -2,7 +2,10 @@ package sqltask.students;
 
 import sqltask.applicationmenu.DAO;
 
+import java.util.List;
+
 public interface StudentDAO extends DAO<Student>{
 
-    void addNewStudent(String name, String surname, int groupID);
+    void putStudentsIntoTable(List<Student> students);
+    void save(Student entity);
 }

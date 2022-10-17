@@ -21,8 +21,7 @@ public class MenuGroup implements Menu {
     }
 
     public MenuGroup completeMenu(MenuHandler menuHandler) {
-            return new MenuGroup("MAIN MENU",
-                    new MenuGroup("GROUPS OPTIONS", new MenuItem("Compare group", menuHandler::compareGroup)),
+            return new MenuGroup("MAIN MENU", new MenuGroup("GROUPS OPTIONS", new MenuItem("Compare group", menuHandler::compareGroup)),
                     new MenuGroup("COURSES OPTIONS",
                             new MenuItem("Find students by Course", menuHandler::findStudentsByCourse),
                             new MenuItem("Add course to Student", menuHandler::setNewCourse),

@@ -1,25 +1,27 @@
-package sqltask.applicationmenu;
+package sqltask.applicationmenu.menufunctions;
 
+import sqltask.applicationmenu.Menu;
 import sqltask.groups.Group;
+import sqltask.groups.GroupService;
 import sqltask.groups.GroupsTableDB;
 
 import java.io.InputStream;
-import java.io.*;
+import java.io.PrintStream;
+import java.util.List;
 import java.util.Scanner;
-import java.util.*;
 
 @SuppressWarnings("java:S106")
 public class GroupsByStudentCountMenuItem implements Menu {
 
-    private final GroupsTableDB service;
+    private final GroupService service;
     private final InputStream inStream;
     private final PrintStream outStream;
 
-    public GroupsByStudentCountMenuItem(GroupsTableDB service) {
+    public GroupsByStudentCountMenuItem(GroupService service) {
         this(service, System.in, System.out);
     }
 
-    public GroupsByStudentCountMenuItem(GroupsTableDB service, InputStream inStream, PrintStream outStream) {
+    public GroupsByStudentCountMenuItem(GroupService service, InputStream inStream, PrintStream outStream) {
         this.service = service;
         this.inStream = inStream;
         this.outStream = outStream;

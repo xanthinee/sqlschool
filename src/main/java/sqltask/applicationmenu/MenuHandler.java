@@ -6,6 +6,7 @@ import sqltask.courses.CoursesTableDB;
 import sqltask.courses.MethodsForCourses;
 import sqltask.groups.GroupsTableDB;
 import sqltask.groups.MethodsForGroups;
+import sqltask.students.Student;
 import sqltask.students.StudentsTableDB;
 
 import java.util.Scanner;
@@ -43,7 +44,7 @@ public class MenuHandler {
         String studentSurname = sc.next();
         System.out.println("Enter ID of GROUP which new STUDENT will have bellow: ");
         int groupId = sc.nextInt();
-        studentsDB.addNewStudent(studentName, studentSurname, groupId);
+        studentsDB.save(new Student(null, groupId, studentName, studentSurname));
         return null;
     }
 

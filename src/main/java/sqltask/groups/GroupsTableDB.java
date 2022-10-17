@@ -14,11 +14,15 @@ public class GroupsTableDB implements GroupDAO{
     private final String tableName;
     GroupMapper groupMapper = new GroupMapper();
 
+    private static final String GROUP_ID = "group_id";
+    private static final String GROUP_NAME = "group_name";
+
     public GroupsTableDB(DataSource ds, String tableName) {
         this.ds = ds;
         this.tableName = tableName;
     }
 
+    @Override
     public void putGroupIntoTable() {
         try (Connection con = ds.getConnection();
              PreparedStatement st = con.prepareStatement("INSERT INTO public.groups VALUES(default,?)")){
@@ -77,7 +81,7 @@ public class GroupsTableDB implements GroupDAO{
              PreparedStatement preparedStatement = con.prepareStatement("select group_id, group_name FROM public.groups");) {
             ResultSet groupsRS = preparedStatement.executeQuery();
             while (groupsRS.next()) {
-                groups.add(new Group(groupsRS.getInt("group_id"), groupsRS.getString("group_name")));
+                groups.add(groupMapper.mapToEntity(groupsRS));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,7 +103,7 @@ public class GroupsTableDB implements GroupDAO{
             getGroupsMembers.setInt(2, groupID);
             ResultSet rs = getGroupsMembers.executeQuery();
             while (rs.next()) {
-                groupMembers.add(new Group(rs.getInt("group_id"), rs.getString("group_name")));
+                groupMembers.add(new Group(rs.getInt(GROUP_ID), rs.getString(GROUP_NAME)));
             }
         } catch (SQLException e) {
             e.printStackTrace();

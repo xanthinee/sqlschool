@@ -6,7 +6,7 @@ import java.util.*;
 
 public class MethodsForGroups {
 
-    Random rd = new Random();
+    private final Random rd = new Random();
 
     public String generateGroupName() {
 

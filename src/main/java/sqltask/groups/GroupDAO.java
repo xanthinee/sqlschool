@@ -8,4 +8,5 @@ public interface GroupDAO extends DAO<Group> {
 
     List<Group> compareGroups(int groupId);
     List<Integer> groupsIdList();
+    void putGroupIntoTable();
 }

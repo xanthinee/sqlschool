@@ -1,0 +1,40 @@
+package sqltask.applicationmenu.menufunctions;
+
+import sqltask.applicationmenu.*;
+import sqltask.courses.CoursesTableDB;
+import sqltask.courses.MethodsForCourses;
+
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.Scanner;
+
+public class StudentsByCourseMenuItem implements Menu {
+
+    private final CoursesTableDB service;
+    private final InputStream inputStream;
+    private final PrintStream outStream;
+
+    public StudentsByCourseMenuItem (CoursesTableDB service) {
+        this (service, System.in, System.out);
+    }
+
+    public StudentsByCourseMenuItem (CoursesTableDB service, InputStream inputStream, PrintStream outStream) {
+        this.service = service;
+        this.inputStream = inputStream;
+        this.outStream = outStream;
+    }
+
+    @Override
+    public String getLabel() {
+        return "Get all students having exact course";
+    }
+
+    @Override
+    public void doAction() {
+        Scanner sc = new Scanner(inputStream);
+        MethodsForCourses methods = new MethodsForCourses();
+        outStream.println("ENTER name of COURSE bellow: ");
+        String courseName = sc.next();
+        System.out.println(methods.printMembers(service.getCourseMembers(courseName)));
+    }
+}

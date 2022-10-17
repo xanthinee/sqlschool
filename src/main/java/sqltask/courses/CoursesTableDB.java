@@ -15,7 +15,7 @@ import java.util.Random;
 public class CoursesTableDB implements CourseDAO {
 
     private final DataSource ds;
-    private final String courseTable;
+    private final String tableName;
     private final String manyToManyTable;
     CourseMapper courseMapper = new CourseMapper();
     Random rd = new Random();
@@ -27,20 +27,18 @@ public class CoursesTableDB implements CourseDAO {
     private static final String STUDENT_SURNAME = "second_name";
     private static final String GROUP_ID = "group_id";
 
-    MethodsForCourses coursesMethods = new MethodsForCourses();
-
-    public CoursesTableDB(DataSource ds, String courseTable, String manyToManyTable) {
+    public CoursesTableDB(DataSource ds, String tableName, String manyToManyTable) {
         this.ds = ds;
-        this.courseTable = "courses";
-        this.manyToManyTable = "students_courses";
+        this.tableName = tableName;
+        this.manyToManyTable = manyToManyTable;
     }
 
 
-    public void putCoursesInTable(String nameOfCoursesFile) {
+    @Override
+    public void putCoursesInTable(List<Course> courses) {
 
-        List<Course> courses = coursesMethods.makeCoursesList(nameOfCoursesFile);
         try (Connection con = ds.getConnection();
-             PreparedStatement st = con.prepareStatement("insert into " + courseTable + " values (default,?,?)")) {
+             PreparedStatement st = con.prepareStatement("insert into " + tableName + " values (default,?,?)")) {
             for (Course course : courses) {
                 st.setString(1, course.getName());
                 st.setString(2, course.getDescription());
@@ -56,7 +54,7 @@ public class CoursesTableDB implements CourseDAO {
     public void deleteAll() {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement st = con.prepareStatement("delete from " + courseTable)) {
+             PreparedStatement st = con.prepareStatement("delete from " + tableName)) {
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,11 +67,10 @@ public class CoursesTableDB implements CourseDAO {
         List<Course> courses = new ArrayList<>();
         try (Connection con = ds.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement("select * " +
-                     "FROM " + courseTable )){
+                     "FROM " + tableName)){
             ResultSet coursesRS = preparedStatement.executeQuery();
             while (coursesRS.next()) {
-                courses.add(new Course(coursesRS.getInt(COURSE_ID), coursesRS.getString(COURSE_NAME),
-                        coursesRS.getString(COURSE_DESCRIPTION)));
+                courses.add(courseMapper.mapToEntity(coursesRS));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,6 +78,7 @@ public class CoursesTableDB implements CourseDAO {
         return courses;
     }
 
+    @Override
     public List<Course> getCoursesOfStudent(int studentID) {
 
         List<Course> coursesOfStudent = new ArrayList<>();
@@ -100,6 +98,7 @@ public class CoursesTableDB implements CourseDAO {
         return coursesOfStudent;
     }
 
+    @Override
     public List<Course> findAvailableCourses(int studentID) {
 
         List<Course> available = new ArrayList<>();
@@ -174,7 +173,7 @@ public class CoursesTableDB implements CourseDAO {
     public Course getById(int id) {
 
         try (Connection con = ds.getConnection();
-        PreparedStatement ps = con.prepareStatement(" select from " + courseTable + " where course_id = ?")) {
+        PreparedStatement ps = con.prepareStatement(" select * from " + tableName + " where course_id = ?")) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
@@ -191,7 +190,7 @@ public class CoursesTableDB implements CourseDAO {
     public void deleteById(int id) {
 
         try (Connection con = ds.getConnection();
-        PreparedStatement ps = con.prepareStatement(" delete from " + courseTable + " where course_id = ? ")) {
+        PreparedStatement ps = con.prepareStatement(" delete from " + tableName + " where course_id = ? ")) {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -199,29 +198,7 @@ public class CoursesTableDB implements CourseDAO {
         }
     }
 
-    public void createStdCrsTable() {
-
-        StudentsTableDB studentsDB = new StudentsTableDB(ds);
-        CoursesTableDB coursesDb = new CoursesTableDB(ds, "courses", "students_courses");
-        List<Student> students = studentsDB.getAll();
-        List<Course> courses = coursesDb.getAll();
-
-        for (Student student : students) {
-            int numOfCourses = rd.nextInt(1, 4);
-            try (Connection con = ds.getConnection();
-                 PreparedStatement st = con.prepareStatement("insert into public.students_courses values (default,?,?)")) {
-                for (int i = 0; i < numOfCourses; i++ ) {
-                    st.setInt(1, student.getStudentId());
-                    st.setInt(2, courses.get(rd.nextInt(0, courses.size())).getId());
-                    st.addBatch();
-                }
-                st.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
+    @Override
     public void deleteAllFromStudentsCourses() {
 
         try (Connection con = ds.getConnection();

@@ -14,9 +14,10 @@ public class CourseMapper implements Mapper<Course> {
         Course course = new Course(null, null, null);
         try {
             course.setId(rs.getInt("course_id"));
-            course.setName("course_name");
-            course.setDescription("course_description");
-        } catch (SQLException e) {
+            course.setName(rs.getString("course_name"));
+            course.setDescription(rs.getString("course_description"));
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
         return course;

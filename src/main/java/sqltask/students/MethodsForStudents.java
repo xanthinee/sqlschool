@@ -6,9 +6,10 @@ import sqltask.helpers.*;
 
 public class MethodsForStudents {
 
-    static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
-    static final Set<Integer> usedNUMs = new HashSet<>();
-    Random rd = new Random();
+    private static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
+    private static final Set<Integer> usedNUMs = new HashSet<>();
+    private final Random rd = new Random();
+
     public int generateUniqueNum(int leftBound, int rightBound) {
         int num = rd.nextInt(leftBound, rightBound);
         while (usedNUMs.contains(num)) {

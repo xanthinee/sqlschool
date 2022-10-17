@@ -21,10 +21,10 @@ public class Student {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("student ID: " + studentId + " | ");
-        sb.append("group ID: " + groupId + " | ");
-        sb.append("name: " + String.format("%-9s", name).trim() + " | ");
-        sb.append("surname: " + String.format("%-14s", surname));
+        sb.append("student ID: ").append(studentId).append(" | ");
+        sb.append("group ID: ").append(groupId).append(" | ");
+        sb.append("name: ").append(String.format("%-9s", name).trim()).append(" | ");
+        sb.append("surname: ").append(String.format("%-14s", surname));
         return sb.toString();
     }
 }
