@@ -7,8 +7,8 @@ import java.util.Scanner;
 @SuppressWarnings("java:S106")
 public class MenuGroup implements Menu {
 
-    String label;
-    List<Menu> items;
+    private final String label;
+    private final List<Menu> items;
 
     public MenuGroup(String label, Menu... items) {
         this.label = label;
@@ -20,7 +20,7 @@ public class MenuGroup implements Menu {
         return label;
     }
 
-    public static MenuGroup completeMenu(MenuHandler menuHandler) {
+    public MenuGroup completeMenu(MenuHandler menuHandler) {
             return new MenuGroup("MAIN MENU",
                     new MenuGroup("GROUPS OPTIONS", new MenuItem("Compare group", menuHandler::compareGroup)),
                     new MenuGroup("COURSES OPTIONS",

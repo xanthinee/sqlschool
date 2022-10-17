@@ -1,16 +1,13 @@
 package sqltask.applicationmenu;
 
-import sqltask.connection.ConnectionProvider;
+import sqltask.connection.DataSource;
 import sqltask.courses.Course;
 import sqltask.courses.CoursesTableDB;
 import sqltask.courses.MethodsForCourses;
 import sqltask.groups.GroupsTableDB;
 import sqltask.groups.MethodsForGroups;
 import sqltask.students.StudentsTableDB;
-import sqltask.studentscourses.MethodsForStudCourses;
-import sqltask.studentscourses.StudentsCoursesTableDB;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 import java.util.*;
 
@@ -18,15 +15,12 @@ import java.util.*;
 public class MenuHandler {
 
     Scanner sc = new Scanner(System.in);
-    ConnectionProvider conProvider = new ConnectionProvider();
-    GroupsTableDB groupDB = new GroupsTableDB(conProvider);
-    StudentsCoursesTableDB studentsCoursesDB = new StudentsCoursesTableDB(conProvider);
+    DataSource conProvider = new DataSource();
+    GroupsTableDB groupDB = new GroupsTableDB(conProvider, "groups");
     StudentsTableDB studentsDB = new StudentsTableDB(conProvider);
-    CoursesTableDB coursesDB = new CoursesTableDB(conProvider);
+    CoursesTableDB coursesDB = new CoursesTableDB(conProvider, "courses", "students_courses");
     MethodsForCourses coursesMethods = new MethodsForCourses();
-    MethodsForStudCourses studCourseMethods = new MethodsForStudCourses();
     MethodsForGroups groupsMethods = new MethodsForGroups();
-    Service service = new Service();
 
     public Object compareGroup() {
         System.out.println("Enter ID of Group:");
@@ -38,8 +32,8 @@ public class MenuHandler {
     public Object findStudentsByCourse() {
         System.out.println("ENTER name of COURSE bellow: ");
         String courseName = sc.next();
-        System.out.println(studCourseMethods.printMembers(studentsCoursesDB.getCourseMembers(courseName)));
-        return studentsCoursesDB.getCourseMembers(courseName);
+        System.out.println(coursesMethods.printMembers(coursesDB.getCourseMembers(courseName)));
+        return coursesDB.getCourseMembers(courseName);
     }
 
     public Void addStudent() {
@@ -49,14 +43,14 @@ public class MenuHandler {
         String studentSurname = sc.next();
         System.out.println("Enter ID of GROUP which new STUDENT will have bellow: ");
         int groupId = sc.nextInt();
-        studentsDB.putNewStudent(studentName, studentSurname, groupId);
+        studentsDB.addNewStudent(studentName, studentSurname, groupId);
         return null;
     }
 
     public Void deleteStudent() {
         System.out.println("Enter ID of student: ");
         int studentID = sc.nextInt();
-        studentsDB.deleteStudent(studentID);
+        studentsDB.deleteById(studentID);
         return null;
     }
 
@@ -78,7 +72,7 @@ public class MenuHandler {
         System.out.println(coursesMethods.printCoursesOfStud(coursesDB.getCoursesOfStudent(studentID)));
         System.out.println("You can DELETE one of them - ENTER bellow it's NAME: ");
         String courseToDelete = sc.next();
-        studentsCoursesDB.unlinkCourse(studentID, courseToDelete);
+        coursesDB.unlinkCourse(studentID, courseToDelete);
         return null;
     }
 }

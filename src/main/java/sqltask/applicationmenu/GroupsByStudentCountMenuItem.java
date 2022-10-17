@@ -1,0 +1,44 @@
+package sqltask.applicationmenu;
+
+import sqltask.groups.Group;
+import sqltask.groups.GroupsTableDB;
+
+import java.io.InputStream;
+import java.io.*;
+import java.util.Scanner;
+import java.util.*;
+
+@SuppressWarnings("java:S106")
+public class GroupsByStudentCountMenuItem implements Menu {
+
+    private final GroupsTableDB service;
+    private final InputStream inStream;
+    private final PrintStream outStream;
+
+    public GroupsByStudentCountMenuItem(GroupsTableDB service) {
+        this(service, System.in, System.out);
+    }
+
+    public GroupsByStudentCountMenuItem(GroupsTableDB service, InputStream inStream, PrintStream outStream) {
+        this.service = service;
+        this.inStream = inStream;
+        this.outStream = outStream;
+    }
+
+    @Override
+    public String getLabel() {
+        return "Group members comparison";
+    }
+
+    @Override
+    public void doAction() {
+        outStream.println("Enter group ID:");
+        try (Scanner scanner = new Scanner(inStream)) {
+            int id = scanner.nextInt();
+            List<Group> groups = service.compareGroups(id);
+            for (Group group : groups) {
+                outStream.println(group);
+            }
+        }
+    }
+}

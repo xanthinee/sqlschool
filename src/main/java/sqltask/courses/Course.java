@@ -5,11 +5,11 @@ import lombok.Data;
 @Data
 public class Course {
 
-    private int id;
+    private Integer id;
     private String name;
     private String description;
 
-    public Course(int id, String name, String description) {
+    public Course(Integer id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;

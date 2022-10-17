@@ -1,19 +1,18 @@
-package sqltask.connection;
+package sqltask;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class ConnectionProvider {
+public class DataSourceTest {
 
     Properties properties;
 
-    public ConnectionProvider() {
+    public DataSourceTest() {
         try {
             this.properties = new Properties();
-            properties.load(getClass().getClassLoader().getResourceAsStream("data/connectioninfo.properties"));
+            properties.load(getClass().getClassLoader().getResourceAsStream("data/connectioninfotests.properties"));
         } catch (Exception e) {
             e.printStackTrace();
         }

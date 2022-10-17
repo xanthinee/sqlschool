@@ -3,8 +3,8 @@ package sqltask.applicationmenu;
 @SuppressWarnings("java:S106")
 public class MenuItem implements Menu {
 
-    String label;
-    Action action;
+    private final String label;
+    private final Action action;
 
     public MenuItem(String label, Action action) {
         this.label = label;

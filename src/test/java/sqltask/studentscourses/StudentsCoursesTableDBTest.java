@@ -1,19 +1,13 @@
 package sqltask.studentscourses;
 
 import org.junit.jupiter.api.Test;
-import sqltask.ConnectionProviderTest;
-
-import java.sql.Connection;
 import java.sql.SQLException;
-
-import static org.junit.jupiter.api.Assertions.*;
+import sqltask.connection.DataSource;
+import sqltask.courses.*;
 
 class StudentsCoursesTableDBTest {
 
-    ConnectionProviderTest conTests = new ConnectionProviderTest();
-    StudentsCoursesTableDB testObjDB = new StudentsCoursesTableDB();
-    Connection connection = conTests.getConnection();
-
+    DataSource dsTest = new DataSource();
     StudentsCoursesTableDBTest() throws SQLException {
     }
 

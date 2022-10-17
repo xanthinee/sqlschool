@@ -23,7 +23,7 @@ public class Student {
         StringBuilder sb = new StringBuilder();
         sb.append("student ID: " + studentId + " | ");
         sb.append("group ID: " + groupId + " | ");
-        sb.append("name: " + String.format("%-9s", name) + " | ");
+        sb.append("name: " + String.format("%-9s", name).trim() + " | ");
         sb.append("surname: " + String.format("%-14s", surname));
         return sb.toString();
     }
