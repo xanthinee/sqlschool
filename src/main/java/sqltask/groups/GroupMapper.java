@@ -11,14 +11,11 @@ public class GroupMapper implements Mapper<Group> {
     @Override
     public Group mapToEntity(ResultSet rs) {
 
-        Group group = new Group(null, null);
         try {
-            group.setId(rs.getInt("group_id"));
-            group.setName(rs.getString("group_name"));
+            return new Group(rs.getInt("group_id"), rs.getString("group_name"));
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e);
         }
-        return group;
     }
 
     @Override

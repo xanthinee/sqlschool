@@ -2,7 +2,7 @@ package sqltask.students;
 
 import sqltask.connection.DataSource;
 import sqltask.groups.Group;
-import sqltask.groups.GroupsTableDB;
+import sqltask.groups.GroupDAOImpl;
 
 import java.util.List;
 import java.util.Random;
@@ -10,11 +10,11 @@ import java.util.Random;
 @SuppressWarnings("java:S106")
 public class StudentService {
 
-    private final StudentsTableDB dao;
+    private final StudentDAOImpl dao;
     private final DataSource ds = new DataSource();
     private final Random rd = new Random();
 
-    public StudentService(StudentsTableDB dao) {
+    public StudentService(StudentDAOImpl dao) {
         this.dao = dao;
     }
 
@@ -40,9 +40,9 @@ public class StudentService {
 
     public List<Student> setGroupsToStudents() {
 
-        MethodsForStudents studMethods = new MethodsForStudents();
-        List<Student> students = studMethods.generateStudents();
-        GroupsTableDB groupsDAO = new GroupsTableDB(ds, "groups");
+
+        List<Student> students = StudentUtils.generateStudents();
+        GroupDAOImpl groupsDAO = new GroupDAOImpl(ds, "groups");
         List<Group> groups = groupsDAO.getAll();
         for (Group group : groups) {
             int groupMembers = rd.nextInt(0, 31);

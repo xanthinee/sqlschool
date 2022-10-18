@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("java:S106")
-public class StudentsTableDB implements StudentDAO {
+public class StudentDAOImpl implements StudentDAO {
 
     private final String tableName;
     private final StudentMapper studentMapper = new StudentMapper();
@@ -16,7 +16,7 @@ public class StudentsTableDB implements StudentDAO {
     Random rd = new Random();
 
 
-    public StudentsTableDB(DataSource ds) {
+    public StudentDAOImpl(DataSource ds) {
         this.ds = ds;
         this.tableName = "students";
     }

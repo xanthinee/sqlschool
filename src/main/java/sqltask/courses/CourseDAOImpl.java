@@ -2,7 +2,6 @@ package sqltask.courses;
 
 import sqltask.connection.DataSource;
 import sqltask.students.Student;
-import sqltask.students.StudentsTableDB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class CoursesTableDB implements CourseDAO {
+public class CourseDAOImpl implements CourseDAO {
 
     private final DataSource ds;
     private final String tableName;
@@ -27,7 +26,7 @@ public class CoursesTableDB implements CourseDAO {
     private static final String STUDENT_SURNAME = "second_name";
     private static final String GROUP_ID = "group_id";
 
-    public CoursesTableDB(DataSource ds, String tableName, String manyToManyTable) {
+    public CourseDAOImpl(DataSource ds, String tableName, String manyToManyTable) {
         this.ds = ds;
         this.tableName = tableName;
         this.manyToManyTable = manyToManyTable;

@@ -6,9 +6,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MethodsForGroupsTest {
+class GroupUtilsTest {
 
-    MethodsForGroups testObj = new MethodsForGroups();
+    GroupUtils testObj = new GroupUtils();
 
     @Test
     void generateGroupName_whenFormatToCompareIsRight_shouldReturnTrue() {

@@ -6,18 +6,17 @@ import java.sql.*;
 import java.util.*;
 
 @SuppressWarnings("java:S106")
-public class GroupsTableDB implements GroupDAO{
+public class GroupDAOImpl implements GroupDAO{
 
     DataSource ds;
     private static final int TOTAL_AMOUNT_OF_GROUPS = 10;
-    MethodsForGroups groupMtd = new MethodsForGroups();
     private final String tableName;
     GroupMapper groupMapper = new GroupMapper();
 
     private static final String GROUP_ID = "group_id";
     private static final String GROUP_NAME = "group_name";
 
-    public GroupsTableDB(DataSource ds, String tableName) {
+    public GroupDAOImpl(DataSource ds, String tableName) {
         this.ds = ds;
         this.tableName = tableName;
     }
@@ -27,7 +26,7 @@ public class GroupsTableDB implements GroupDAO{
         try (Connection con = ds.getConnection();
              PreparedStatement st = con.prepareStatement("INSERT INTO public.groups VALUES(default,?)")){
             for (int i = 0; i < TOTAL_AMOUNT_OF_GROUPS; i++) {
-                st.setString(1, groupMtd.generateGroupName());
+                st.setString(1, GroupUtils.generateGroupName());
                 st.addBatch();
             }
             st.executeUpdate();

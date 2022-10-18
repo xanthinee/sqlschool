@@ -1,14 +1,10 @@
 package sqltask.studentscourses;
 
-import org.junit.jupiter.api.Test;
-import java.util.List;
 import sqltask.courses.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MethodsForStudCoursesTest {
 
-    MethodsForCourses testObj = new MethodsForCourses();
+    CourseUtils testObj = new CourseUtils();
 
 //    @Test
 //    void printStudCourseTable_whenNoLines() {

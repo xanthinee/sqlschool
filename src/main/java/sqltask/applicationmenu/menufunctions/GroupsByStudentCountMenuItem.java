@@ -3,7 +3,6 @@ package sqltask.applicationmenu.menufunctions;
 import sqltask.applicationmenu.Menu;
 import sqltask.groups.Group;
 import sqltask.groups.GroupService;
-import sqltask.groups.GroupsTableDB;
 
 import java.io.InputStream;
 import java.io.PrintStream;

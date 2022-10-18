@@ -1,14 +1,11 @@
 package sqltask.courses;
 
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-class MethodsForCoursesTest {
-
-    MethodsForCourses testObj = new MethodsForCourses();
+class CourseUtilsTest {
 
     @Test
     void printCoursesTable_whenOneCourse_shouldReturnCorrectString() {
@@ -18,7 +15,7 @@ class MethodsForCoursesTest {
         String expected = """
                 COURSES:
                     1.      History: description""";
-        assertEquals(expected, testObj.printCoursesTable(testList));
+        assertEquals(expected, CourseUtils.printCoursesTable(testList));
     }
 
     @Test
@@ -34,7 +31,7 @@ class MethodsForCoursesTest {
                    10.         Math:\040\040
                   100.           IT: description
                  1000.             : DESCRIPTION""";
-        assertEquals(expected, testObj.printCoursesTable(testList));
+        assertEquals(expected, CourseUtils.printCoursesTable(testList));
     }
 
     @Test
@@ -44,6 +41,6 @@ class MethodsForCoursesTest {
         Course testCourse1 = new Course(2, "Computer science", "Study of computation and automation");
         Course testCourse2 = new Course(3, "Foreign language", "Study of English language");
         List<Course> testList = List.of(testCourse, testCourse1, testCourse2);
-        assertEquals(testList, testObj.makeCoursesList("testdata/methodsforcourses.txt"));
+        assertEquals(testList, CourseUtils.makeCoursesList("testdata/methodsforcourses.txt"));
     }
 }

@@ -4,9 +4,9 @@ import java.util.List;
 
 public class GroupService {
 
-    private final GroupsTableDB dao;
+    private final GroupDAOImpl dao;
 
-    public GroupService(GroupsTableDB dao) {
+    public GroupService(GroupDAOImpl dao) {
         this.dao = dao;
     }
 

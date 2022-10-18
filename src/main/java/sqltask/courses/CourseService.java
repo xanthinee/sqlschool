@@ -2,7 +2,7 @@ package sqltask.courses;
 
 import sqltask.connection.DataSource;
 import sqltask.students.Student;
-import sqltask.students.StudentsTableDB;
+import sqltask.students.StudentDAOImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,9 +13,9 @@ public class CourseService {
 
     private final DataSource ds = new DataSource();
     private final Random rd = new Random();
-    private final CoursesTableDB dao;
+    private final CourseDAOImpl dao;
 
-    public CourseService(CoursesTableDB dao) {
+    public CourseService(CourseDAOImpl dao) {
         this.dao = dao;
     }
 
@@ -57,10 +57,9 @@ public class CourseService {
 
     public void createStdCrsTable() {
 
-        StudentsTableDB studentsDB = new StudentsTableDB(ds);
-        MethodsForCourses methods = new MethodsForCourses();
+        StudentDAOImpl studentsDB = new StudentDAOImpl(ds);
         List<Student> students = studentsDB.getAll();
-        List<Course> courses = methods.makeCoursesList("data/courses.txt");
+        List<Course> courses = CourseUtils.makeCoursesList("data/courses.txt");
 
         for (Student student : students) {
             int numOfCourses = rd.nextInt(1, 4);

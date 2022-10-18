@@ -5,10 +5,10 @@ import java.sql.SQLException;
 import sqltask.connection.DataSource;
 import sqltask.courses.*;
 
-class StudentsCoursesTableDBTest {
+class StudentsCourseDAOImplTest {
 
     DataSource dsTest = new DataSource();
-    StudentsCoursesTableDBTest() throws SQLException {
+    StudentsCourseDAOImplTest() throws SQLException {
     }
 
     @Test

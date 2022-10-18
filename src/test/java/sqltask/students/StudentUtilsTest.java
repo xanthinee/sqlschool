@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-class MethodsForStudentsTest {
+class StudentUtilsTest {
 
-    MethodsForStudents testObj = new MethodsForStudents();
+    StudentUtils testObj = new StudentUtils();
 
     @Test
     void generateStudents_whenAskedForStudentsGeneration_shouldCreateListOfStudents() {

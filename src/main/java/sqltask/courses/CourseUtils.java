@@ -7,9 +7,13 @@ import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Stream;
 
-public class MethodsForCourses {
+public class CourseUtils {
 
-    public List<Course> makeCoursesList(String fileName) {
+    private CourseUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    public static List<Course> makeCoursesList(String fileName) {
 
         CustomFileReader fileCon = new CustomFileReader();
         Stream<String> courses = fileCon.readFile(fileName);
@@ -17,7 +21,7 @@ public class MethodsForCourses {
         return courses.map(cp::parse).toList();
     }
 
-    public String printCoursesTable(List<Course> courses) {
+    public static String printCoursesTable(List<Course> courses) {
 
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         sj.add("COURSES:");
@@ -29,7 +33,7 @@ public class MethodsForCourses {
         return sj.toString();
     }
 
-    public String printCoursesOfStud(List<Course> courses) {
+    public static String printCoursesOfStud(List<Course> courses) {
         StringJoiner sjCourses = new StringJoiner(System.lineSeparator());
         sjCourses.add("Entered STUDENT has next COURSES: ");
         int index = 1;
@@ -40,7 +44,7 @@ public class MethodsForCourses {
         return sjCourses.toString();
     }
 
-    public String infoToPrint(List<Course> coursesOfStudent, List<Course> availableForStudentCourses) {
+    public static String infoToPrint(List<Course> coursesOfStudent, List<Course> availableForStudentCourses) {
         int numOfCourses = coursesOfStudent.size();
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         if (numOfCourses != 0) {
@@ -77,7 +81,7 @@ public class MethodsForCourses {
 //        return sj.toString();
 //    }
 
-    public String printMembers(List<Student> students) {
+    public static String printMembers(List<Student> students) {
 
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         sj.add("STUDENTS which have this COURSE: ");

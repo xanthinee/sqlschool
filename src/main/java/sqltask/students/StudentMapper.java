@@ -10,16 +10,12 @@ public class StudentMapper implements Mapper<Student> {
 
     @Override
     public Student mapToEntity(ResultSet rs) {
-        Student student = new Student(null,null,null,null);
         try {
-                student.setStudentId(rs.getInt("student_id"));
-                student.setGroupId(rs.getInt("group_id"));
-                student.setName(rs.getString("first_name"));
-                student.setSurname(rs.getString("second_name"));
+            return new Student(rs.getInt("student_id"), rs.getInt("group_id"),
+                    rs.getString("first_name"), rs.getString("second_name"));
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e);
         }
-        return student;
     }
 
     @Override

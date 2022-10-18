@@ -11,16 +11,13 @@ public class CourseMapper implements Mapper<Course> {
     @Override
     public Course mapToEntity(ResultSet rs) {
 
-        Course course = new Course(null, null, null);
         try {
-            course.setId(rs.getInt("course_id"));
-            course.setName(rs.getString("course_name"));
-            course.setDescription(rs.getString("course_description"));
+            return new Course(rs.getInt("course_id"), rs.getString("course_name"),
+                    rs.getString("course_description"));
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e);
         }
-        return course;
     }
 
     @Override

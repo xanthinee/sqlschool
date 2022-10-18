@@ -2,8 +2,7 @@ package sqltask.applicationmenu.menufunctions;
 
 import sqltask.applicationmenu.*;
 import sqltask.courses.CourseService;
-import sqltask.courses.CoursesTableDB;
-import sqltask.courses.MethodsForCourses;
+import sqltask.courses.CourseUtils;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -33,9 +32,8 @@ public class StudentsByCourseMenuItem implements Menu {
     @Override
     public void doAction() {
         Scanner sc = new Scanner(inputStream);
-        MethodsForCourses methods = new MethodsForCourses();
         outStream.println("ENTER name of COURSE bellow: ");
         String courseName = sc.next();
-        outStream.println(methods.printMembers(service.getCourseMembers(courseName)));
+        outStream.println(CourseUtils.printMembers(service.getCourseMembers(courseName)));
     }
 }

@@ -4,12 +4,15 @@ import java.util.*;
 import sqltask.helpers.*;
 
 
-public class MethodsForStudents {
+public class StudentUtils {
 
+    private StudentUtils() {
+        throw new IllegalStateException("Utility class");
+    }
     private static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
-    private final Random rd = new Random();
+    private static final Random rd = new Random();
 
-    public List<Student> generateStudents() {
+    public static List<Student> generateStudents() {
 
         CustomFileReader fileCon = new CustomFileReader();
         List<String> names = fileCon.readFile("data/names.txt").toList();
@@ -24,7 +27,7 @@ public class MethodsForStudents {
         return students;
     }
 
-    public String printStudentsTable(List<Student> students) {
+    public static String printStudentsTable(List<Student> students) {
 
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         sj.add("STUDENTS");
@@ -39,7 +42,7 @@ public class MethodsForStudents {
         return sj.toString();
     }
 
-    public String printStudentsPartly(List<Student> students) {
+    public static String printStudentsPartly(List<Student> students) {
 
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         sj.add("Students which have desired course:");
