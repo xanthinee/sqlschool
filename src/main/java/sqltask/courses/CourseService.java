@@ -58,9 +58,9 @@ public class CourseService {
     public void createStdCrsTable() {
 
         StudentsTableDB studentsDB = new StudentsTableDB(ds);
-        CoursesTableDB coursesDb = new CoursesTableDB(ds, "courses", "students_courses");
+        MethodsForCourses methods = new MethodsForCourses();
         List<Student> students = studentsDB.getAll();
-        List<Course> courses = coursesDb.getAll();
+        List<Course> courses = methods.makeCoursesList("data/courses.txt");
 
         for (Student student : students) {
             int numOfCourses = rd.nextInt(1, 4);

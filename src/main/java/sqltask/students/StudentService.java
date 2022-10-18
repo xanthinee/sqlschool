@@ -1,11 +1,13 @@
 package sqltask.students;
 
 import sqltask.connection.DataSource;
+import sqltask.groups.Group;
 import sqltask.groups.GroupsTableDB;
 
 import java.util.List;
 import java.util.Random;
 
+@SuppressWarnings("java:S106")
 public class StudentService {
 
     private final StudentsTableDB dao;
@@ -40,13 +42,18 @@ public class StudentService {
 
         MethodsForStudents studMethods = new MethodsForStudents();
         List<Student> students = studMethods.generateStudents();
-        GroupsTableDB groupsTab = new GroupsTableDB(ds, "groups");
-        List<Integer> iDs = groupsTab.groupsIdList();
-        for (int id : iDs) {
+        GroupsTableDB groupsDAO = new GroupsTableDB(ds, "groups");
+        List<Group> groups = groupsDAO.getAll();
+        for (Group group : groups) {
             int groupMembers = rd.nextInt(0, 31);
             if (groupMembers >= 10) {
                 for (int i = 0; i < groupMembers; i++) {
-                    students.get(studMethods.generateUniqueNum(0, students.size())).setGroupId(id);
+                        Student student = students.get(rd.nextInt(0, students.size()));
+                        if (student.getGroupId() == null) {
+                            student.setGroupId(group.getId());
+                        } else {
+                            i--;
+                        }
                 }
             }
         }

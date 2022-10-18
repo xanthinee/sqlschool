@@ -1,6 +1,7 @@
 package sqltask.applicationmenu.menufunctions;
 
 import sqltask.courses.Course;
+import sqltask.courses.CourseService;
 import sqltask.courses.CoursesTableDB;
 import sqltask.applicationmenu.*;
 import sqltask.courses.MethodsForCourses;
@@ -12,15 +13,15 @@ import java.util.Scanner;
 
 public class SetCourseMenuItem implements Menu {
 
-    private final CoursesTableDB service;
+    private final CourseService service;
     private final InputStream inputStream;
     private final PrintStream outStream;
 
-    public SetCourseMenuItem (CoursesTableDB service) {
+    public SetCourseMenuItem (CourseService service) {
         this (service, System.in, System.out);
     }
 
-    public SetCourseMenuItem (CoursesTableDB service, InputStream inputStream, PrintStream outStream) {
+    public SetCourseMenuItem (CourseService service, InputStream inputStream, PrintStream outStream) {
         this.service = service;
         this.inputStream = inputStream;
         this.outStream = outStream;

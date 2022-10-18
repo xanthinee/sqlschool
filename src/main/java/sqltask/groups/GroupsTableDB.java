@@ -37,21 +37,6 @@ public class GroupsTableDB implements GroupDAO{
     }
 
     @Override
-    public List<Integer> groupsIdList() {
-        List<Integer> ids = new ArrayList<>();
-        try (Connection con = ds.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement("select group_id FROM public.groups")){
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                ids.add(rs.getInt(1));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return ids;
-    }
-
-    @Override
     public void deleteAll() {
 
         try (Connection con = ds.getConnection();

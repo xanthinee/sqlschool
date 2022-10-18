@@ -22,16 +22,16 @@ class MethodsForStudentsTest {
         assertNull(testList.get(2).getStudentId());
     }
 
-    @Test
-    void generateUniqueNum_whenMoreThanOneValuesRequired_SizesOfListAndSetShouldBeEqual() {
-
-        List<Integer> uniqueNumbers = new ArrayList<>();
-        for (int i = 0; i < 101; i++) {
-            uniqueNumbers.add(testObj.generateUniqueNum(0,101));
-        }
-        Set<Integer> bolting = new HashSet<>(uniqueNumbers);
-        assertEquals(uniqueNumbers.size(), bolting.size());
-    }
+//    @Test
+//    void generateUniqueNum_whenMoreThanOneValuesRequired_SizesOfListAndSetShouldBeEqual() {
+//
+//        List<Integer> uniqueNumbers = new ArrayList<>();
+//        for (int i = 0; i < 101; i++) {
+//            uniqueNumbers.add(testObj.generateUniqueNum(0,101));
+//        }
+//        Set<Integer> bolting = new HashSet<>(uniqueNumbers);
+//        assertEquals(uniqueNumbers.size(), bolting.size());
+//    }
 
     @Test
     void printStudentsPartly_whenOneLine_shouldCorrectlyPrintThisLine() {
