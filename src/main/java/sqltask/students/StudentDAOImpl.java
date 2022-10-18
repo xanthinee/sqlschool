@@ -13,7 +13,6 @@ public class StudentDAOImpl implements StudentDAO {
     private final String tableName;
     private final StudentMapper studentMapper = new StudentMapper();
     private final DataSource ds;
-    Random rd = new Random();
 
 
     public StudentDAOImpl(DataSource ds) {

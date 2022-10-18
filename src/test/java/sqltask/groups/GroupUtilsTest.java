@@ -8,26 +8,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GroupUtilsTest {
 
-    GroupUtils testObj = new GroupUtils();
-
     @Test
     void generateGroupName_whenFormatToCompareIsRight_shouldReturnTrue() {
 
-        String generated = testObj.generateGroupName();
+        String generated = GroupUtils.generateGroupName();
         boolean correctness = generated.matches("\\S{2}--\\d{2}");
         assertTrue(correctness);
     }
 
     @Test
     void generateGroupName_whenFormatToCompareIsFalseWithLetters_shouldReturnFalse() {
-        String generated = testObj.generateGroupName();
+        String generated = GroupUtils.generateGroupName();
         boolean correctness = generated.matches("\\s{2}--\\d{2}");
         assertFalse(correctness);
     }
 
     @Test
     void generateGroupName_whenFormatToCompareIsFalseWithHyphens_shouldReturnFalse() {
-        String generated = testObj.generateGroupName();
+        String generated = GroupUtils.generateGroupName();
         boolean correctness = generated.matches("\\S{2}-\\d{2}");
         assertFalse(correctness);
     }
@@ -39,7 +37,7 @@ class GroupUtilsTest {
         List<Group> testList = List.of(testGroup);
         String expected = "GROUPS:\n" +
                 "1 - AA--11";
-        assertEquals(expected, testObj.printGroupsTable(testList));
+        assertEquals(expected, GroupUtils.printGroupsTable(testList));
     }
 
     @Test
@@ -56,6 +54,6 @@ class GroupUtilsTest {
                 10    - AA--11
                 100   - AA--11
                 1000  - AA--11""";
-        assertEquals(expected, testObj.printGroupsTable(testList));
+        assertEquals(expected, GroupUtils.printGroupsTable(testList));
     }
 }

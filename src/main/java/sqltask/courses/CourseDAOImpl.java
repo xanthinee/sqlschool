@@ -207,21 +207,4 @@ public class CourseDAOImpl implements CourseDAO {
             e.printStackTrace();
         }
     }
-
-//    private List<StudentCourse> getStudCourses() {
-//
-//        List<StudentCourse> stdCrs = new ArrayList<>();
-//        try (Connection con = ds.getConnection();
-//             PreparedStatement st = con.prepareStatement("select * from students_courses")){
-//            ResultSet tableValues = st.executeQuery();
-//            while (tableValues.next()) {
-//                stdCrs.add(new StudentCourse(tableValues.getInt("row_id"), tableValues.getInt("student_id"),
-//                        tableValues.getInt("course_id")));
-//            }
-//            return stdCrs;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        throw new IllegalStateException("ResultSet wasn't created");
-//    }
 }

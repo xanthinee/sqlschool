@@ -67,20 +67,6 @@ public class CourseUtils {
         return sj.toString();
     }
 
-//    public String printStudCourseTable(List<StudentCourse> stdCrs) {
-//
-//        StringJoiner sj = new StringJoiner(System.lineSeparator());
-//        sj.add("STUDENTS's COURSES");
-//        for(StudentCourse sc : stdCrs) {
-//            int studID = sc.getStudentID();
-//            int courseID = sc.getCourseID();
-//            sj.add(String.format("%-5d", sc.getRowID()) + " | "
-//                    + String.format("%-5d", studID) + " | "
-//                    + String.format("%1d",courseID));
-//        }
-//        return sj.toString();
-//    }
-
     public static String printMembers(List<Student> students) {
 
         StringJoiner sj = new StringJoiner(System.lineSeparator());

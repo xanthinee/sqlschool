@@ -2,6 +2,10 @@ package sqltask.helpers;
 
 public class Utils {
 
+    private Utils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     private static String repeat(char ch, int repeats) {
         return String.valueOf(ch).repeat(Math.max(0, repeats));
     }

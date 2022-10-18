@@ -1,11 +1,8 @@
 package sqltask.applicationmenu;
 
-import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.List;
 import java.util.Scanner;
-import java.lang.reflect.Method;
 
 @SuppressWarnings("java:S106")
 public class MenuGroup implements Menu {
