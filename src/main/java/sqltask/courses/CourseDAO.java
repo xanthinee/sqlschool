@@ -14,4 +14,5 @@ public interface CourseDAO extends DAO<Course> {
     List<Course> getCoursesOfStudent(int studentID);
     void putCoursesInTable(List<Course> courses);
     void deleteAllFromStudentsCourses();
+    void save(Student student, List<Course> courses);
 }

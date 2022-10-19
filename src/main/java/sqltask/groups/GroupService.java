@@ -1,10 +1,12 @@
 package sqltask.groups;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GroupService {
 
     private final GroupDAOImpl dao;
+    private static final int TOTAL_AMOUNT_OF_GROUPS = 10;
 
     public GroupService(GroupDAOImpl dao) {
         this.dao = dao;
@@ -28,5 +30,14 @@ public class GroupService {
 
     public List<Group> compareGroups(int groupID) {
         return dao.compareGroups(groupID);
+    }
+
+    public List<Group> generateGroups() {
+
+        List<Group> groups = new ArrayList<>();
+        for (int i = 0; i < TOTAL_AMOUNT_OF_GROUPS; i++) {
+            groups.add(new Group(null, GroupUtils.generateGroupName()));
+        }
+        return groups;
     }
 }

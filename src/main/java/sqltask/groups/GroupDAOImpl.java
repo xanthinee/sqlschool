@@ -9,27 +9,36 @@ import java.util.*;
 public class GroupDAOImpl implements GroupDAO{
 
     DataSource ds;
-    private static final int TOTAL_AMOUNT_OF_GROUPS = 10;
-    private final String tableName;
+    private static final String GROUPS_TABLE = "groups";
     GroupMapper groupMapper = new GroupMapper();
 
     private static final String GROUP_ID = "group_id";
     private static final String GROUP_NAME = "group_name";
 
-    public GroupDAOImpl(DataSource ds, String tableName) {
+    public GroupDAOImpl(DataSource ds) {
         this.ds = ds;
-        this.tableName = tableName;
     }
 
     @Override
-    public void putGroupIntoTable() {
+    public void save(Group group) {
         try (Connection con = ds.getConnection();
-             PreparedStatement st = con.prepareStatement("INSERT INTO public.groups VALUES(default,?)")){
-            for (int i = 0; i < TOTAL_AMOUNT_OF_GROUPS; i++) {
-                st.setString(1, GroupUtils.generateGroupName());
-                st.addBatch();
+             PreparedStatement st = con.prepareStatement("INSERT INTO " + GROUPS_TABLE + " VALUES(default,?)")){
+                groupMapper.mapToRow(st,group);
+                st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void saveAll(List<Group> groups) {
+        try (Connection con = ds.getConnection();
+        PreparedStatement ps = con.prepareStatement(" insert into " + GROUPS_TABLE + " values(default,?)")){
+            for (Group group : groups) {
+                groupMapper.mapToRow(ps, group);
+                ps.addBatch();
             }
-            st.executeUpdate();
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -99,7 +108,7 @@ public class GroupDAOImpl implements GroupDAO{
     public Group getById(int id) {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("select * from " + tableName + " where group_id = ? ")) {
+             PreparedStatement ps = con.prepareStatement("select * from " + GROUPS_TABLE + " where group_id = ? ")) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {

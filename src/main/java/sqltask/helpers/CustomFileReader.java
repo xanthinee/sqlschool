@@ -13,6 +13,7 @@ public class CustomFileReader {
         ClassLoader classLoader = getClass().getClassLoader();
         URL url = classLoader.getResource(fileName);
         try {
+            assert url != null;
             return Files.lines(Path.of(url.toURI()));
         } catch (IOException | URISyntaxException e) {
             throw new IllegalStateException(e);

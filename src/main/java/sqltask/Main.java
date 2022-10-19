@@ -22,11 +22,11 @@ public class Main {
         DataSource dataSource = new DataSource();
 
         StudentDAOImpl studentDAO = new StudentDAOImpl(dataSource);
-        GroupDAOImpl groupDAO = new GroupDAOImpl(dataSource, "groups");
-        StudentService studentService = new StudentService(studentDAO);
+        GroupDAOImpl groupDAO = new GroupDAOImpl(dataSource);
+        StudentService studentService = new StudentService(studentDAO, groupDAO);
         GroupService groupService = new GroupService(groupDAO);
-        CourseDAOImpl courseDAO = new CourseDAOImpl(dataSource, "courses", "students_courses");
-        CourseService courseService = new CourseService(courseDAO);
+        CourseDAOImpl courseDAO = new CourseDAOImpl(dataSource);
+        CourseService courseService = new CourseService(courseDAO, studentDAO);
 
         MenuGroup menuGroup = new MenuGroup("sql app");
         menuGroup.addItem(new AddStudentMenuItem(studentService));
@@ -36,11 +36,6 @@ public class Main {
         menuGroup.addItem(new StudentsByCourseMenuItem(courseService));
         menuGroup.addItem(new UnlinkCourseMenuItem(courseService));
         menuGroup.doAction();
-
-
-//        List<Student> students = studentService.setGroupsToStudents();
-//        System.out.println("_____________________________________________");
-//        students.forEach(student -> System.out.println(student.toString()));
 
     }
 }

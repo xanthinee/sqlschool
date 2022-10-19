@@ -4,9 +4,6 @@ import sqltask.connection.DataSource;
 import sqltask.students.Student;
 import sqltask.students.StudentDAOImpl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.*;
 
 public class CourseService {
@@ -14,9 +11,11 @@ public class CourseService {
     private final DataSource ds = new DataSource();
     private final Random rd = new Random();
     private final CourseDAOImpl dao;
+    private final StudentDAOImpl studentDAO;
 
-    public CourseService(CourseDAOImpl dao) {
+    public CourseService(CourseDAOImpl dao, StudentDAOImpl studentDAO) {
         this.dao = dao;
+        this.studentDAO = studentDAO;
     }
 
     public void deleteAll() {
@@ -57,23 +56,12 @@ public class CourseService {
 
     public void createStdCrsTable() {
 
-        StudentDAOImpl studentsDB = new StudentDAOImpl(ds);
-        List<Student> students = studentsDB.getAll();
-        List<Course> courses = CourseUtils.makeCoursesList("data/courses.txt");
+        List<Student> students = studentDAO.getAll();
+        CourseDAOImpl courseDAO = new CourseDAOImpl(ds);
+        List<Course> courses = courseDAO.getAll();
 
         for (Student student : students) {
-            int numOfCourses = rd.nextInt(1, 4);
-            try (Connection con = ds.getConnection();
-                 PreparedStatement st = con.prepareStatement("insert into public.students_courses values (default,?,?)")) {
-                for (int i = 0; i < numOfCourses; i++ ) {
-                    st.setInt(1, student.getStudentId());
-                    st.setInt(2, courses.get(rd.nextInt(0, courses.size())).getId());
-                    st.addBatch();
-                }
-                st.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            courseDAO.save(student, courses);
         }
     }
 

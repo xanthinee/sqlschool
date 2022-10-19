@@ -5,10 +5,6 @@ import java.util.StringJoiner;
 import java.util.*;
 
 public class GroupUtils {
-
-    private GroupUtils() {
-        throw new IllegalStateException("Utility class");
-    }
     private static final Random rd = new Random();
 
     public static String generateGroupName() {

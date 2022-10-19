@@ -5,36 +5,34 @@ import sqltask.connection.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @SuppressWarnings("java:S106")
 public class StudentDAOImpl implements StudentDAO {
 
-    private final String tableName;
+    private static final String STUDENTS_TABLE = "students";
     private final StudentMapper studentMapper = new StudentMapper();
     private final DataSource ds;
 
 
     public StudentDAOImpl(DataSource ds) {
         this.ds = ds;
-        this.tableName = "students";
     }
 
     @Override
     public void putStudentsIntoTable(List<Student> students) {
         try (Connection con = ds.getConnection();
-             PreparedStatement st = con.prepareStatement("insert into public.students values (default,?,?,?)")){
+             PreparedStatement ps = con.prepareStatement("insert into public.students values (default,?,?,?)")){
             for (Student student : students) {
                 if (student.getGroupId() == null) {
-                    st.setNull(1, Types.NULL);
+                    ps.setNull(1, Types.NULL);
                 } else {
-                    st.setInt(1, student.getGroupId());
+                    ps.setInt(1, student.getGroupId());
                 }
-                st.setString(2, student.getName());
-                st.setString(3, student.getSurname());
-                st.addBatch();
+                ps.setString(2, student.getName());
+                ps.setString(3, student.getSurname());
+                ps.addBatch();
             }
-            st.executeUpdate();
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -84,10 +82,22 @@ public class StudentDAOImpl implements StudentDAO {
 
         try (Connection con = ds.getConnection();
              PreparedStatement putStudent = con.prepareStatement("insert into students values (default,?,?,?)")) {
-            putStudent.setInt(1, student.getGroupId());
-            putStudent.setString(2, student.getName());
-            putStudent.setString(3, student.getSurname());
+            studentMapper.mapToRow(putStudent, student);
             putStudent.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateGroupIdByStudId(Student student, int groupID) {
+
+        try (Connection con = ds.getConnection();
+        PreparedStatement ps = con.prepareStatement("update public.students set group_id = ? where student_id = " +
+                student.getStudentId())) {
+            ps.setInt(1, groupID);
+            ps.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -97,7 +107,7 @@ public class StudentDAOImpl implements StudentDAO {
     public Student getById(int id) {
 
         try (Connection con = ds.getConnection();
-        PreparedStatement ps = con.prepareStatement("select * from " + tableName + " WHERE student_id = ? ")) {
+        PreparedStatement ps = con.prepareStatement("select * from " + STUDENTS_TABLE + " WHERE student_id = ? ")) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {

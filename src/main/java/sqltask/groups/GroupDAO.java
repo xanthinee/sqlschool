@@ -7,5 +7,6 @@ import java.util.*;
 public interface GroupDAO extends DAO<Group> {
 
     List<Group> compareGroups(int groupId);
-    void putGroupIntoTable();
+    void save(Group group);
+    void saveAll(List<Group> groups);
 }

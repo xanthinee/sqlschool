@@ -8,11 +8,6 @@ import java.util.StringJoiner;
 import java.util.stream.Stream;
 
 public class CourseUtils {
-
-    private CourseUtils() {
-        throw new IllegalStateException("Utility class");
-    }
-
     public static List<Course> makeCoursesList(String fileName) {
 
         CustomFileReader fileCon = new CustomFileReader();

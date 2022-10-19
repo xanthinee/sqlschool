@@ -3,7 +3,9 @@ package sqltask.students;
 import sqltask.connection.DataSource;
 import sqltask.groups.Group;
 import sqltask.groups.GroupDAOImpl;
+import sqltask.helpers.CustomFileReader;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -11,11 +13,13 @@ import java.util.Random;
 public class StudentService {
 
     private final StudentDAOImpl dao;
-    private final DataSource ds = new DataSource();
-    private final Random rd = new Random();
+    private final GroupDAOImpl groupDAO;
+    private static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
+    private static final Random rd = new Random();
 
-    public StudentService(StudentDAOImpl dao) {
+    public StudentService(StudentDAOImpl dao, GroupDAOImpl groupDAO) {
         this.dao = dao;
+        this.groupDAO = groupDAO;
     }
 
     public void deleteAll() {
@@ -38,24 +42,35 @@ public class StudentService {
         dao.save(student);
     }
 
+    private List<Student> generateStudents() {
+
+        CustomFileReader fileCon = new CustomFileReader();
+        List<String> names = fileCon.readFile("data/names.txt").toList();
+        List<String> surnames = fileCon.readFile("data/surnames.txt").toList();
+        List<Student> students = new ArrayList<>();
+
+        for (int i = 0; i < TOTAL_AMOUNT_OF_STUDENTS; i++) {
+            students.add(new Student(null, null,
+                    names.get(rd.nextInt(0, names.size())),
+                    surnames.get(rd.nextInt(0, surnames.size()))));
+        }
+        return students;
+    }
+
     public List<Student> setGroupsToStudents() {
 
-
-        List<Student> students = StudentUtils.generateStudents();
-        GroupDAOImpl groupsDAO = new GroupDAOImpl(ds, "groups");
-        List<Group> groups = groupsDAO.getAll();
+        List<Student> students = dao.getAll();
+        List<Group> groups = groupDAO.getAll();
         for (Group group : groups) {
-            int groupMembers = rd.nextInt(0, 31);
-            if (groupMembers >= 10) {
+            int groupMembers = rd.nextInt(10, 30);
                 for (int i = 0; i < groupMembers; i++) {
                         Student student = students.get(rd.nextInt(0, students.size()));
                         if (student.getGroupId() == null) {
-                            student.setGroupId(group.getId());
+                            dao.updateGroupIdByStudId(student, group.getId());
                         } else {
                             i--;
                         }
                 }
-            }
         }
         return students;
     }

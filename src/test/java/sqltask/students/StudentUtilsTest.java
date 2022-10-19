@@ -7,20 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class StudentUtilsTest {
 
     @Test
-    void generateStudents_whenAskedForStudentsGeneration_shouldCreateListOfStudents() {
-
-        List<Student> testList = StudentUtils.generateStudents();
-        int expectedSizeOfList = 200;
-        assertEquals(expectedSizeOfList, testList.size());
-    }
-
-    @Test
-    void generateStudents_whenAskedForStudentsGeneration_StudentsShouldHaveNullsInTwoFirstFields() {
-        List<Student> testList = StudentUtils.generateStudents();
-        assertNull(testList.get(2).getStudentId());
-    }
-
-    @Test
     void printStudentsPartly_whenOneLine_shouldCorrectlyPrintThisLine() {
 
         Student testStud = new Student(1,1,"a","a");
