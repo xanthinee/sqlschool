@@ -5,10 +5,10 @@ import java.util.List;
 
 public class GroupService {
 
-    private final GroupDAOImpl dao;
+    private final GroupDAO dao;
     private static final int TOTAL_AMOUNT_OF_GROUPS = 10;
 
-    public GroupService(GroupDAOImpl dao) {
+    public GroupService(GroupDAO dao) {
         this.dao = dao;
     }
 

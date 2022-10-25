@@ -2,6 +2,7 @@ package sqltask.courses;
 
 import sqltask.connection.DataSource;
 import sqltask.students.Student;
+import sqltask.students.StudentMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,14 +18,11 @@ public class CourseDAOImpl implements CourseDAO {
     private static final String COURSES_TABLE = "courses";
     private static final String MANYTOMANY_TABLE = "students_courses";
     private final CourseMapper courseMapper = new CourseMapper();
-    private static final String COURSE_ID = "course_id";
-    private static final String COURSE_NAME = "course_name";
-    private static final String COURSE_DESCRIPTION = "course_description";
+    private final StudentMapper studentMapper = new StudentMapper();
     private static final String STUDENT_ID = "student_id";
     private static final String STUDENT_NAME = "first_name";
     private static final String STUDENT_SURNAME = "second_name";
     private static final String GROUP_ID = "group_id";
-    private final Random rd = new Random();
 
     public CourseDAOImpl(DataSource ds) {
         this.ds = ds;
@@ -37,8 +35,7 @@ public class CourseDAOImpl implements CourseDAO {
         try (Connection con = ds.getConnection();
              PreparedStatement st = con.prepareStatement("insert into " + COURSES_TABLE + " values (default,?,?)")) {
             for (Course course : courses) {
-                st.setString(1, course.getName());
-                st.setString(2, course.getDescription());
+                courseMapper.mapToRow(st, course);
                 st.addBatch();
             }
             st.executeUpdate();
@@ -86,8 +83,7 @@ public class CourseDAOImpl implements CourseDAO {
             getCoursesOfStud.setInt(1, studentID);
             ResultSet coursesOfStud = getCoursesOfStud.executeQuery();
             while (coursesOfStud.next()) {
-                coursesOfStudent.add(new Course(coursesOfStud.getInt(COURSE_ID),coursesOfStud.getString(COURSE_NAME),
-                        coursesOfStud.getString(COURSE_DESCRIPTION)));
+                coursesOfStudent.add(courseMapper.mapToEntity(coursesOfStud));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,8 +102,7 @@ public class CourseDAOImpl implements CourseDAO {
             avbCourses.setInt(1, studentID);
             ResultSet avbCoursesRs = avbCourses.executeQuery();
             while (avbCoursesRs.next()) {
-                available.add(new Course(avbCoursesRs.getInt(COURSE_ID), avbCoursesRs.getString(COURSE_NAME).trim(),
-                        avbCoursesRs.getString(COURSE_DESCRIPTION).trim()));
+                available.add(courseMapper.mapToEntity(avbCoursesRs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -128,8 +123,7 @@ public class CourseDAOImpl implements CourseDAO {
             st.setString(1, courseName);
             ResultSet studentsRS = st.executeQuery();
             while (studentsRS.next()) {
-                students.add(new Student(studentsRS.getInt(STUDENT_ID), studentsRS.getInt(GROUP_ID),
-                        studentsRS.getString(STUDENT_NAME), studentsRS.getString(STUDENT_SURNAME)));
+                students.add(studentMapper.mapToEntity(studentsRS));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -209,12 +203,11 @@ public class CourseDAOImpl implements CourseDAO {
     @Override
     public void save (Student student, List<Course> courses) {
 
-            int numOfCourses = rd.nextInt(1, 4);
             try (Connection con = ds.getConnection();
                  PreparedStatement st = con.prepareStatement("insert into public.students_courses values (default,?,?)")) {
-                for (int i = 0; i < numOfCourses; i++ ) {
+                for (Course course : courses) {
                     st.setInt(1, student.getStudentId());
-                    st.setInt(2, courses.get(rd.nextInt(0, courses.size())).getId());
+                    st.setInt(2, course.getId());
                     st.addBatch();
                 }
                 st.executeUpdate();

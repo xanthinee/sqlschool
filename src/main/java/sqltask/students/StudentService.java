@@ -1,8 +1,7 @@
 package sqltask.students;
 
-import sqltask.connection.DataSource;
 import sqltask.groups.Group;
-import sqltask.groups.GroupDAOImpl;
+import sqltask.groups.GroupDAO;
 import sqltask.helpers.CustomFileReader;
 
 import java.util.ArrayList;
@@ -12,12 +11,12 @@ import java.util.Random;
 @SuppressWarnings("java:S106")
 public class StudentService {
 
-    private final StudentDAOImpl dao;
-    private final GroupDAOImpl groupDAO;
+    private final StudentDAO dao;
+    private final GroupDAO groupDAO;
     private static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
     private static final Random rd = new Random();
 
-    public StudentService(StudentDAOImpl dao, GroupDAOImpl groupDAO) {
+    public StudentService(StudentDAO dao, GroupDAO groupDAO) {
         this.dao = dao;
         this.groupDAO = groupDAO;
     }

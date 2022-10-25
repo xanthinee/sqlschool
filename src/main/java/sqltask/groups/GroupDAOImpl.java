@@ -96,7 +96,7 @@ public class GroupDAOImpl implements GroupDAO{
             getGroupsMembers.setInt(2, groupID);
             ResultSet rs = getGroupsMembers.executeQuery();
             while (rs.next()) {
-                groupMembers.add(new Group(rs.getInt(GROUP_ID), rs.getString(GROUP_NAME)));
+                groupMembers.add(groupMapper.mapToEntity(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();

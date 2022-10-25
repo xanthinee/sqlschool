@@ -2,7 +2,7 @@ package sqltask.courses;
 
 import sqltask.connection.DataSource;
 import sqltask.students.Student;
-import sqltask.students.StudentDAOImpl;
+import sqltask.students.StudentDAO;
 
 import java.util.*;
 
@@ -10,54 +10,62 @@ public class CourseService {
 
     private final DataSource ds = new DataSource();
     private final Random rd = new Random();
-    private final CourseDAOImpl dao;
-    private final StudentDAOImpl studentDAO;
+    private final CourseDAO courseDAO;
+    private final StudentDAO studentDAO;
 
-    public CourseService(CourseDAOImpl dao, StudentDAOImpl studentDAO) {
-        this.dao = dao;
+    public CourseService(CourseDAO courseDAO, StudentDAO studentDAO) {
+        this.courseDAO = courseDAO;
         this.studentDAO = studentDAO;
     }
 
     public void deleteAll() {
-        dao.deleteAll();
+        courseDAO.deleteAll();
     }
 
     public List<Course> getAll() {
-        return dao.getAll();
+        return courseDAO.getAll();
     }
 
     public List<Course> getCoursesOfStudent(int studID) {
-        return dao.getCoursesOfStudent(studID);
+        return courseDAO.getCoursesOfStudent(studID);
     }
 
     public List<Course> findAvailableCourses(int studentID) {
-        return dao.findAvailableCourses(studentID);
+        return courseDAO.findAvailableCourses(studentID);
     }
 
     public List<Student> getCourseMembers(String courseName) {
-        return dao.getCourseMembers(courseName);
+        return courseDAO.getCourseMembers(courseName);
     }
 
     public void unlinkCourse(int studentID, String courseToDelete) {
-        dao.unlinkCourse(studentID, courseToDelete);
+        courseDAO.unlinkCourse(studentID, courseToDelete);
     }
 
     public void setNewCourse(int studentID, String courseName) {
-        dao.setNewCourse(studentID, courseName);
+        courseDAO.setNewCourse(studentID, courseName);
     }
 
     public Course getById(int id) {
-        return dao.getById(id);
+        return courseDAO.getById(id);
     }
 
     public void deleteById(int id) {
-        dao.deleteById(id);
+        courseDAO.deleteById(id);
+    }
+
+    public List<Course> generateSetOfCourses(List<Course> allCourses) {
+
+        List<Course> courses = new ArrayList<>();
+        for (int i = 0; i < rd.nextInt(1,4); i++) {
+            courses.add(allCourses.get(rd.nextInt(0, allCourses.size())));
+        }
+        return courses;
     }
 
     public void createStdCrsTable() {
 
         List<Student> students = studentDAO.getAll();
-        CourseDAOImpl courseDAO = new CourseDAOImpl(ds);
         List<Course> courses = courseDAO.getAll();
 
         for (Student student : students) {
