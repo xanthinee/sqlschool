@@ -17,19 +17,19 @@ import java.util.*;
 @SuppressWarnings("java:S106")
 public class Main {
 
-    DataSource ds = new DataSource();
-    SQLScriptRunner sqlRunner = new SQLScriptRunner();
-    StudentDAO studentDAO = new StudentDAOImpl(ds);
-    GroupDAO groupDAO = new GroupDAOImpl(ds);
-    StudentService studentService = new StudentService(studentDAO, groupDAO);
-    CourseDAO courseDAO = new CourseDAOImpl(ds);
-    GroupService groupService = new GroupService(groupDAO);
-    CourseService courseService = new CourseService(courseDAO, studentDAO);
+    private final DataSource ds = new DataSource();
+    private final SQLScriptRunner sqlRunner = new SQLScriptRunner();
+    private final StudentDAO studentDAO = new StudentDAOImpl(ds);
+    private final GroupDAO groupDAO = new GroupDAOImpl(ds);
+    private final StudentService studentService = new StudentService(studentDAO, groupDAO);
+    private final CourseDAO courseDAO = new CourseDAOImpl(ds);
+    private final GroupService groupService = new GroupService(groupDAO);
+    private final CourseService courseService = new CourseService(courseDAO, studentDAO);
 
     public void startApp() {
 
         try {
-            sqlRunner.executeScriptUsingScriptRunner("src/main/resources/sqldata/tables_creation.sql",
+            sqlRunner.executeScriptUsingScriptRunner("sqldata/tables_creation.sql",
                     ds.getConnection());
 
             List<Course> courses = CourseUtils.makeCoursesList("data/courses.txt");
@@ -51,25 +51,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-        DataSource dataSource = new DataSource();
-
-        StudentDAOImpl studentDAO = new StudentDAOImpl(dataSource);
-        GroupDAOImpl groupDAO = new GroupDAOImpl(dataSource);
-        StudentService studentService = new StudentService(studentDAO, groupDAO);
-        GroupService groupService = new GroupService(groupDAO);
-        CourseDAOImpl courseDAO = new CourseDAOImpl(dataSource);
-        CourseService courseService = new CourseService(courseDAO, studentDAO);
-
         Main main = new Main();
         main.startApp();
 
         MenuGroup menuGroup = new MenuGroup("SQL APP");
-        menuGroup.addItem(new AddStudentMenuItem(studentService));
-        menuGroup.addItem(new DeleteStudentMenuItem(studentService));
-        menuGroup.addItem(new GroupsByStudentCountMenuItem(groupService));
-        menuGroup.addItem(new SetCourseMenuItem(courseService));
-        menuGroup.addItem(new StudentsByCourseMenuItem(courseService));
-        menuGroup.addItem(new UnlinkCourseMenuItem(courseService));
+        menuGroup.addItem(new AddStudentMenuItem(main.studentService));
+        menuGroup.addItem(new DeleteStudentMenuItem(main.studentService));
+        menuGroup.addItem(new GroupsByStudentCountMenuItem(main.groupService));
+        menuGroup.addItem(new SetCourseMenuItem(main.courseService));
+        menuGroup.addItem(new StudentsByCourseMenuItem(main.courseService));
+        menuGroup.addItem(new UnlinkCourseMenuItem(main.courseService));
         menuGroup.doAction();
     }
 }
