@@ -54,7 +54,7 @@ public class CourseService {
         courseDAO.deleteById(id);
     }
 
-    public List<Course> generateSetOfCourses(List<Course> allCourses) {
+    private List<Course> selectRandomCourses(List<Course> allCourses) {
 
         List<Course> courses = new ArrayList<>();
         for (int i = 0; i < rd.nextInt(1,4); i++) {
@@ -69,7 +69,7 @@ public class CourseService {
         List<Course> courses = courseDAO.getAll();
 
         for (Student student : students) {
-            courseDAO.save(student, courses);
+            courseDAO.save(student, selectRandomCourses(courses));
         }
     }
 

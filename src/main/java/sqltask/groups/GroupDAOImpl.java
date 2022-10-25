@@ -12,9 +12,6 @@ public class GroupDAOImpl implements GroupDAO{
     private static final String GROUPS_TABLE = "groups";
     GroupMapper groupMapper = new GroupMapper();
 
-    private static final String GROUP_ID = "group_id";
-    private static final String GROUP_NAME = "group_name";
-
     public GroupDAOImpl(DataSource ds) {
         this.ds = ds;
     }
@@ -38,7 +35,7 @@ public class GroupDAOImpl implements GroupDAO{
                 groupMapper.mapToRow(ps, group);
                 ps.addBatch();
             }
-            ps.executeUpdate();
+            ps.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
         }

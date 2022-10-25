@@ -21,10 +21,8 @@ public class StudentMapper implements Mapper<Student> {
     @Override
     public void mapToRow(PreparedStatement ps, Student entity) {
         try {
-            ps.setInt(1, entity.getStudentId());
-            ps.setInt(2, entity.getGroupId());
-            ps.setString(3,entity.getName());
-            ps.setString(4, entity.getSurname());
+            ps.setString(1,entity.getName());
+            ps.setString(2, entity.getSurname());
         } catch (SQLException e) {
             e.printStackTrace();
         }

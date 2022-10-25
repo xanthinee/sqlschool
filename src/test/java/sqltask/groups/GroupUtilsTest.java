@@ -36,7 +36,7 @@ class GroupUtilsTest {
         Group testGroup = new Group(1,"AA--11");
         List<Group> testList = List.of(testGroup);
         String expected = "GROUPS:\n" +
-                "1 - AA--11";
+                "1      - AA--11";
         assertEquals(expected, GroupUtils.printGroupsTable(testList));
     }
 

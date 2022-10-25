@@ -19,20 +19,14 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
-    public void putStudentsIntoTable(List<Student> students) {
+    public void saveAll(List<Student> students) {
         try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("insert into public.students values (default,?,?,?)")){
+             PreparedStatement ps = con.prepareStatement("insert into public.students values (default,null,?,?)")){
             for (Student student : students) {
-                if (student.getGroupId() == null) {
-                    ps.setNull(1, Types.NULL);
-                } else {
-                    ps.setInt(1, student.getGroupId());
-                }
-                ps.setString(2, student.getName());
-                ps.setString(3, student.getSurname());
+                studentMapper.mapToRow(ps, student);
                 ps.addBatch();
             }
-            ps.executeUpdate();
+            ps.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -97,7 +91,6 @@ public class StudentDAOImpl implements StudentDAO {
                 student.getStudentId())) {
             ps.setInt(1, groupID);
             ps.executeUpdate();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

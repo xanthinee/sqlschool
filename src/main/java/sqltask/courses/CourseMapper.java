@@ -24,9 +24,8 @@ public class CourseMapper implements Mapper<Course> {
     public void mapToRow(PreparedStatement ps, Course entity) {
 
         try {
-            ps.setInt(1, entity.getId());
-            ps.setString(2, entity.getName());
-            ps.setString(3, entity.getDescription());
+            ps.setString(1, entity.getName());
+            ps.setString(2, entity.getDescription());
         } catch (SQLException e) {
             e.printStackTrace();
         }

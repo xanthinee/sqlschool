@@ -7,13 +7,4 @@ import sqltask.courses.*;
 
 class StudentsCourseDAOImplTest {
 
-    DataSource dsTest = new DataSource();
-    StudentsCourseDAOImplTest() throws SQLException {
-    }
-
-    @Test
-    void createStdCrsTable_() {
-
-    }
-
 }

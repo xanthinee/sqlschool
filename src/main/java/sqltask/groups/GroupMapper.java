@@ -22,8 +22,7 @@ public class GroupMapper implements Mapper<Group> {
     public void mapToRow(PreparedStatement ps, Group entity){
 
         try {
-            ps.setInt(1, entity.getId());
-            ps.setString(2, entity.getName());
+            ps.setString(1, entity.getName());
         } catch (SQLException e) {
             e.printStackTrace();
         }

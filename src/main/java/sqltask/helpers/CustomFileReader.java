@@ -13,11 +13,10 @@ public class CustomFileReader {
         ClassLoader classLoader = getClass().getClassLoader();
         URL url = classLoader.getResource(fileName);
         try {
-            if (url != null) {
-                return Files.lines(Path.of(url.toURI()));
-            } else {
-                throw new IllegalStateException("This URL is incorrect");
+            if (url == null) {
+                throw new IllegalStateException("The file is absent");
             }
+            return Files.lines(Path.of(url.toURI()));
         } catch (IOException | URISyntaxException e) {
             throw new IllegalStateException(e);
         }

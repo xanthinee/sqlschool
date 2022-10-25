@@ -41,7 +41,7 @@ public class StudentService {
         dao.save(student);
     }
 
-    private List<Student> generateStudents() {
+    public List<Student> generateStudents() {
 
         CustomFileReader fileCon = new CustomFileReader();
         List<String> names = fileCon.readFile("data/names.txt").toList();
@@ -56,21 +56,23 @@ public class StudentService {
         return students;
     }
 
-    public List<Student> setGroupsToStudents() {
+    public void setGroupsToStudents() {
 
         List<Student> students = dao.getAll();
         List<Group> groups = groupDAO.getAll();
         for (Group group : groups) {
             int groupMembers = rd.nextInt(10, 30);
                 for (int i = 0; i < groupMembers; i++) {
-                        Student student = students.get(rd.nextInt(0, students.size()));
-                        if (student.getGroupId() == null) {
-                            dao.updateGroupIdByStudId(student, group.getId());
-                        } else {
-                            i--;
+                    int studIndex = rd.nextInt(0, students.size());
+                    Student student = students.get(studIndex);
+                    if (student.getGroupId() == 0) {
+                        dao.updateGroupIdByStudId(student, group.getId());
+                        students.remove(studIndex);
+                        if (students.isEmpty()) {
+                            break;
                         }
+                    }
                 }
         }
-        return students;
     }
 }

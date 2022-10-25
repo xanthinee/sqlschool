@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class CourseDAOImpl implements CourseDAO {
 
@@ -19,10 +18,6 @@ public class CourseDAOImpl implements CourseDAO {
     private static final String MANYTOMANY_TABLE = "students_courses";
     private final CourseMapper courseMapper = new CourseMapper();
     private final StudentMapper studentMapper = new StudentMapper();
-    private static final String STUDENT_ID = "student_id";
-    private static final String STUDENT_NAME = "first_name";
-    private static final String STUDENT_SURNAME = "second_name";
-    private static final String GROUP_ID = "group_id";
 
     public CourseDAOImpl(DataSource ds) {
         this.ds = ds;
@@ -30,15 +25,27 @@ public class CourseDAOImpl implements CourseDAO {
 
 
     @Override
-    public void putCoursesInTable(List<Course> courses) {
+    public void saveAll(List<Course> courses) {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement st = con.prepareStatement("insert into " + COURSES_TABLE + " values (default,?,?)")) {
+             PreparedStatement ps = con.prepareStatement("insert into " + COURSES_TABLE + " values (default,?,?)")) {
             for (Course course : courses) {
-                courseMapper.mapToRow(st, course);
-                st.addBatch();
+                courseMapper.mapToRow(ps, course);
+                ps.addBatch();
             }
-            st.executeUpdate();
+            ps.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void saveCourse(Course course) {
+
+        try (Connection con = ds.getConnection();
+        PreparedStatement ps = con.prepareStatement("insert into " +  COURSES_TABLE + " values (default, ?,?)")) {
+            courseMapper.mapToRow(ps, course);
+            ps.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -210,7 +217,7 @@ public class CourseDAOImpl implements CourseDAO {
                     st.setInt(2, course.getId());
                     st.addBatch();
                 }
-                st.executeUpdate();
+                st.executeBatch();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
