@@ -9,10 +9,10 @@ public class DataSource {
 
     Properties properties;
 
-    public DataSource() {
+    public DataSource(String filePath) {
         try {
             this.properties = new Properties();
-            properties.load(getClass().getClassLoader().getResourceAsStream("data/connectioninfo.properties"));
+            properties.load(getClass().getClassLoader().getResourceAsStream(filePath));
         } catch (Exception e) {
             e.printStackTrace();
         }

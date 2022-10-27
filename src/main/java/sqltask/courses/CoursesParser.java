@@ -1,6 +1,6 @@
 package sqltask.courses;
 
-import org.apache.ibatis.jdbc.Null;
+
 import sqltask.helpers.*;
 
 public class CoursesParser implements Parser<Course> {

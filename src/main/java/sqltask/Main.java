@@ -17,7 +17,7 @@ import java.util.*;
 @SuppressWarnings("java:S106")
 public class Main {
 
-    private final DataSource ds = new DataSource();
+    private final DataSource ds = new DataSource("data/connectioninfo.properties");
     private final SQLScriptRunner sqlRunner = new SQLScriptRunner();
     private final StudentDAO studentDAO = new StudentDAOImpl(ds);
     private final GroupDAO groupDAO = new GroupDAOImpl(ds);
@@ -51,16 +51,17 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Main main = new Main();
-        main.startApp();
+        StudentDAO studentDAO1 = new StudentDAOImpl(new DataSource("data/connectioninfo.properties"));
+       studentDAO1.save(new Student(123456, null, "test", "test"));
 
-        MenuGroup menuGroup = new MenuGroup("SQL APP");
-        menuGroup.addItem(new AddStudentMenuItem(main.studentService));
-        menuGroup.addItem(new DeleteStudentMenuItem(main.studentService));
-        menuGroup.addItem(new GroupsByStudentCountMenuItem(main.groupService));
-        menuGroup.addItem(new SetCourseMenuItem(main.courseService));
-        menuGroup.addItem(new StudentsByCourseMenuItem(main.courseService));
-        menuGroup.addItem(new UnlinkCourseMenuItem(main.courseService));
-        menuGroup.doAction();
+
+//        MenuGroup menuGroup = new MenuGroup("SQL APP");
+//        menuGroup.addItem(new AddStudentMenuItem(main.studentService));
+//        menuGroup.addItem(new DeleteStudentMenuItem(main.studentService));
+//        menuGroup.addItem(new GroupsByStudentCountMenuItem(main.groupService));
+//        menuGroup.addItem(new SetCourseMenuItem(main.courseService));
+//        menuGroup.addItem(new StudentsByCourseMenuItem(main.courseService));
+//        menuGroup.addItem(new UnlinkCourseMenuItem(main.courseService));
+//        menuGroup.doAction();
     }
 }

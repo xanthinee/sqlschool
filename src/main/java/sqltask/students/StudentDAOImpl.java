@@ -75,7 +75,7 @@ public class StudentDAOImpl implements StudentDAO {
     public void save(Student student) {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement putStudent = con.prepareStatement("insert into students values (default,?,?,?)")) {
+             PreparedStatement putStudent = con.prepareStatement("insert into students values (default,null,?,?)")) {
             studentMapper.mapToRow(putStudent, student);
             putStudent.executeUpdate();
         } catch (SQLException e) {

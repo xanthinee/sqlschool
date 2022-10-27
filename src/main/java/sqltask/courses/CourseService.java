@@ -8,7 +8,6 @@ import java.util.*;
 
 public class CourseService {
 
-    private final DataSource ds = new DataSource();
     private final Random rd = new Random();
     private final CourseDAO courseDAO;
     private final StudentDAO studentDAO;
