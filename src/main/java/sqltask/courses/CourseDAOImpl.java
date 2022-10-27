@@ -45,7 +45,7 @@ public class CourseDAOImpl implements CourseDAO {
         try (Connection con = ds.getConnection();
         PreparedStatement ps = con.prepareStatement("insert into " +  COURSES_TABLE + " values (default, ?,?)")) {
             courseMapper.mapToRow(ps, course);
-            ps.executeQuery();
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -222,4 +222,5 @@ public class CourseDAOImpl implements CourseDAO {
                 e.printStackTrace();
             }
     }
+
 }
