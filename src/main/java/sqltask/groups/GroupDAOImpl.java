@@ -53,18 +53,6 @@ public class GroupDAOImpl implements GroupDAO{
     }
 
     @Override
-    public void deleteById(int id) {
-
-        try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("delete from groups where group_id = ?")) {
-            ps.setInt(1, id);
-            ps.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public List<Group> getAll() {
         List<Group> groups = new ArrayList<>();
         try (Connection con = ds.getConnection();
@@ -77,6 +65,35 @@ public class GroupDAOImpl implements GroupDAO{
             e.printStackTrace();
         }
         return groups;
+    }
+
+    @Override
+    public void deleteById(int id) {
+
+        try (Connection con = ds.getConnection();
+             PreparedStatement ps = con.prepareStatement("delete from groups where group_id = ?")) {
+            ps.setInt(1, id);
+            ps.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Group getById(int id) {
+
+        try (Connection con = ds.getConnection();
+             PreparedStatement ps = con.prepareStatement("select * from " + GROUPS_TABLE + " where group_id = ? ")) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return groupMapper.mapToEntity(rs);
+            }
+            throw new IllegalStateException("No data found for id " + id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -99,22 +116,5 @@ public class GroupDAOImpl implements GroupDAO{
             e.printStackTrace();
         }
         return groupMembers;
-    }
-
-    @Override
-    public Group getById(int id) {
-
-        try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("select * from " + GROUPS_TABLE + " where group_id = ? ")) {
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return groupMapper.mapToEntity(rs);
-            }
-            throw new IllegalStateException("No data found for id " + id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

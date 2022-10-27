@@ -1,7 +1,6 @@
 package sqltask.students;
 
 import org.junit.jupiter.api.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 import sqltask.connection.*;
 import sqltask.helpers.SQLScriptRunner;
@@ -49,8 +48,7 @@ class StudentDAOImplTest {
         students.add(student2);
 
         studentDAO.saveAll(students);
-        List<Student> retrievedStudents = studentDAO.getAll();
-        assertEquals(students, retrievedStudents);
+        assertEquals(students, studentDAO.getAll());
     }
 
     @Test
@@ -68,8 +66,7 @@ class StudentDAOImplTest {
 
         studentDAO.saveAll(studentsToAdd);
         studentDAO.deleteAll();
-        List<Student> finalList = studentDAO.getAll();
-        assertEquals(emptyList, finalList);
+        assertEquals(emptyList, studentDAO.getAll());
     }
 
     @Test
@@ -88,13 +85,14 @@ class StudentDAOImplTest {
     }
 
     @Test
-    void deleteById_whenTherePresenceStudWithSuchID_shouldThrowISE() {
+    void deleteById_whenStudentWithSuchIdDeleted_shouldThrowISE() {
 
         int studID = 1;
         Student student = new Student(studID,null,"a", "a");
         studentDAO.save(student);
         studentDAO.deleteById(studID);
-        Assertions.assertThrows(IllegalStateException.class, ()-> {studentDAO.getById(studID);}, "No data found for id 1");
+        Assertions.assertThrows(IllegalStateException.class, ()-> {studentDAO.getById(studID);},
+                "No data found for id " + studID);
     }
 
     @Test
@@ -130,6 +128,5 @@ class StudentDAOImplTest {
 
         studentDAO.saveAll(students);
         assertEquals(student1, studentDAO.getById(2));
-
     }
 }
