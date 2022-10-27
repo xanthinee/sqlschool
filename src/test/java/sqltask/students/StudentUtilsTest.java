@@ -37,4 +37,22 @@ class StudentUtilsTest {
         String expected = "Students which have desired course:";
         assertEquals(expected, StudentUtils.printStudentsPartly(testList));
     }
+
+    @Test
+    void printStudentsTable_whenThereAreStudents_shouldPrintThem() {
+
+        List<Student> students = new ArrayList<>();
+        Student student = new Student(1,1,"A", "B");
+        Student student1 = new Student(1,1,"A", "B");
+        Student student2 = new Student(1,1,"A", "B");
+        students.add(student);
+        students.add(student1);
+        students.add(student2);
+        String result = """
+                STUDENTS
+                1    |1    |A         |B
+                1    |1    |A         |B
+                1    |1    |A         |B""";
+        assertEquals(result, StudentUtils.printStudentsTable(students));
+    }
 }

@@ -31,7 +31,7 @@ public class GroupUtils {
     }
 
     public static String printResultOfComparison(List<Group> groups) {
-        StringBuilder sb = new StringBuilder(System.lineSeparator());
+        StringBuilder sb = new StringBuilder();
         sb.append("GROUPS with FEWER or EQUAL amount of STUDENTS: ");
         StringJoiner sjRequired = new StringJoiner(", ");
         for (Group groupName : groups) {

@@ -16,18 +16,6 @@ public class CourseUtils {
         return courses.map(cp::parse).toList();
     }
 
-    public static String printCoursesTable(List<Course> courses) {
-
-        StringJoiner sj = new StringJoiner(System.lineSeparator());
-        sj.add("COURSES:");
-        for (Course course : courses) {
-            sj.add(String.format("%5d. ",course.getId())
-                    + String.format("%-12s: ",course.getName())
-                    + course.getDescription());
-        }
-        return sj.toString();
-    }
-
     public static String printCoursesOfStud(List<Course> courses) {
         StringJoiner sjCourses = new StringJoiner(System.lineSeparator());
         sjCourses.add("Entered STUDENT has next COURSES: ");
@@ -43,7 +31,7 @@ public class CourseUtils {
         int numOfCourses = coursesOfStudent.size();
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         if (numOfCourses != 0) {
-            sj.add("You can give next COURSES to STUDENT1:");
+            sj.add("You can give next COURSES to STUDENT:");
             int index = 1;
             for (Course courseName : availableForStudentCourses) {
                 sj.add(index + ". " + courseName.getName());
@@ -51,7 +39,7 @@ public class CourseUtils {
             }
         } else {
             sj.add("Chosen STUDENT has no any COURSES");
-            sj.add("You can give next COURSES to STUDENT2:");
+            sj.add("You can give next COURSES to STUDENT:");
             int index = 1;
             for (Course courseName : availableForStudentCourses) {
                 sj.add(index + ". " + courseName.getName());
@@ -65,7 +53,7 @@ public class CourseUtils {
     public static String printMembers(List<Student> students) {
 
         StringJoiner sj = new StringJoiner(System.lineSeparator());
-        sj.add("STUDENTS which have this COURSE: ");
+        sj.add("STUDENTS which have this COURSE:");
         for (Student student : students) {
             sj.add(String.format("%-5d|", student.getStudentId())
                     + String.format("%-5d|", student.getGroupId())

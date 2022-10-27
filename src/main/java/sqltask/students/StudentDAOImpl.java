@@ -36,8 +36,8 @@ public class StudentDAOImpl implements StudentDAO {
     public void deleteAll() {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement st = con.prepareStatement("delete from students")) {
-            st.executeUpdate();
+             PreparedStatement ps = con.prepareStatement("delete from students")) {
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,11 +48,11 @@ public class StudentDAOImpl implements StudentDAO {
 
         List<Student> students = new ArrayList<>();
         try (Connection con = ds.getConnection();
-             PreparedStatement psStudents = con.prepareStatement("select * " +
+             PreparedStatement ps = con.prepareStatement("select * " +
                      " from students")) {
-            ResultSet rsStudents = psStudents.executeQuery();
-            while (rsStudents.next()) {
-                students.add(studentMapper.mapToEntity(rsStudents));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                students.add(studentMapper.mapToEntity(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();

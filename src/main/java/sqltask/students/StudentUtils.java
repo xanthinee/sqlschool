@@ -11,10 +11,10 @@ public class StudentUtils {
 
         for (Student student : students) {
             int idOfGroup = student.getGroupId();
-            sj.add(String.format("%-6d", student.getStudentId()) + " | "
-            + String.format("%-6d", idOfGroup) + " | "
-            + String.format("%-9s", student.getName()) + " | "
-            + String.format("%-12s", student.getSurname()));
+            sj.add(String.format("%-5d", student.getStudentId()) + "|"
+            + String.format("%-5d", idOfGroup) + "|"
+            + String.format("%-10s", student.getName()) + "|"
+            + String.format("%-12s", student.getSurname()).trim());
         }
         return sj.toString();
     }

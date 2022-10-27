@@ -19,9 +19,9 @@ public class GroupDAOImpl implements GroupDAO{
     @Override
     public void save(Group group) {
         try (Connection con = ds.getConnection();
-             PreparedStatement st = con.prepareStatement("INSERT INTO " + GROUPS_TABLE + " VALUES(default,?)")){
-                groupMapper.mapToRow(st,group);
-                st.executeUpdate();
+             PreparedStatement ps = con.prepareStatement("INSERT INTO " + GROUPS_TABLE + " VALUES(default,?)")){
+                groupMapper.mapToRow(ps,group);
+                ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -45,8 +45,8 @@ public class GroupDAOImpl implements GroupDAO{
     public void deleteAll() {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement st = con.prepareStatement("DELETE FROM public.groups");) {
-            st.executeUpdate();
+             PreparedStatement ps = con.prepareStatement("DELETE FROM public.groups");) {
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -56,9 +56,9 @@ public class GroupDAOImpl implements GroupDAO{
     public void deleteById(int id) {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement("delete from groups where group_id = ?")) {
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeQuery();
+             PreparedStatement ps = con.prepareStatement("delete from groups where group_id = ?")) {
+            ps.setInt(1, id);
+            ps.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -68,10 +68,10 @@ public class GroupDAOImpl implements GroupDAO{
     public List<Group> getAll() {
         List<Group> groups = new ArrayList<>();
         try (Connection con = ds.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement("select group_id, group_name FROM public.groups");) {
-            ResultSet groupsRS = preparedStatement.executeQuery();
-            while (groupsRS.next()) {
-                groups.add(groupMapper.mapToEntity(groupsRS));
+             PreparedStatement ps = con.prepareStatement("select group_id, group_name FROM public.groups");) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                groups.add(groupMapper.mapToEntity(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,14 +84,14 @@ public class GroupDAOImpl implements GroupDAO{
 
         List<Group> groupMembers = new ArrayList<>();
         try (Connection con = ds.getConnection();
-             PreparedStatement getGroupsMembers = con.prepareStatement("select g.group_id, g.group_name " +
+             PreparedStatement ps = con.prepareStatement("select g.group_id, g.group_name " +
                      "from groups g left join students s on g.group_id = s.group_id " +
                      "where g.group_id <> ? " +
                      "group by g.group_id, g.group_name " +
                      "having count(s.student_id) <= (select count(s2.student_id) from students s2 where s2.group_id = ?)")) {
-            getGroupsMembers.setInt(1, groupID);
-            getGroupsMembers.setInt(2, groupID);
-            ResultSet rs = getGroupsMembers.executeQuery();
+            ps.setInt(1, groupID);
+            ps.setInt(2, groupID);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 groupMembers.add(groupMapper.mapToEntity(rs));
             }

@@ -15,7 +15,7 @@ public class CourseDAOImpl implements CourseDAO {
 
     private final DataSource ds;
     private static final String COURSES_TABLE = "courses";
-    private static final String MANYTOMANY_TABLE = "students_courses";
+    private static final String MANY_TO_MANY_TABLE = "students_courses";
     private final CourseMapper courseMapper = new CourseMapper();
     private final StudentMapper studentMapper = new StudentMapper();
 
@@ -55,8 +55,8 @@ public class CourseDAOImpl implements CourseDAO {
     public void deleteAll() {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement st = con.prepareStatement("delete from " + COURSES_TABLE)) {
-            st.executeUpdate();
+             PreparedStatement ps = con.prepareStatement("delete from " + COURSES_TABLE)) {
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,11 +67,11 @@ public class CourseDAOImpl implements CourseDAO {
 
         List<Course> courses = new ArrayList<>();
         try (Connection con = ds.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement("select * " +
+             PreparedStatement ps = con.prepareStatement("select * " +
                      "FROM " + COURSES_TABLE)){
-            ResultSet coursesRS = preparedStatement.executeQuery();
-            while (coursesRS.next()) {
-                courses.add(courseMapper.mapToEntity(coursesRS));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                courses.add(courseMapper.mapToEntity(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,13 +84,13 @@ public class CourseDAOImpl implements CourseDAO {
 
         List<Course> coursesOfStudent = new ArrayList<>();
         try (Connection con = ds.getConnection();
-             PreparedStatement getCoursesOfStud = con.prepareStatement("select c.course_id, c.course_name, c.course_description" +
+             PreparedStatement ps = con.prepareStatement("select c.course_id, c.course_name, c.course_description" +
                      " from courses c inner join students_courses sc " +
                      "on c.course_id = sc.course_id where student_id = ?")) {
-            getCoursesOfStud.setInt(1, studentID);
-            ResultSet coursesOfStud = getCoursesOfStud.executeQuery();
-            while (coursesOfStud.next()) {
-                coursesOfStudent.add(courseMapper.mapToEntity(coursesOfStud));
+            ps.setInt(1, studentID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                coursesOfStudent.add(courseMapper.mapToEntity(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -103,13 +103,13 @@ public class CourseDAOImpl implements CourseDAO {
 
         List<Course> available = new ArrayList<>();
         try (Connection con = ds.getConnection();
-             PreparedStatement avbCourses = con.prepareStatement(" select c.course_id, c.course_name, c.course_description" +
+             PreparedStatement ps = con.prepareStatement(" select c.course_id, c.course_name, c.course_description" +
                 " from courses c " +
                 "where c.course_id not in (select sc.course_id from students_courses sc where sc.student_id = ?) ")){
-            avbCourses.setInt(1, studentID);
-            ResultSet avbCoursesRs = avbCourses.executeQuery();
-            while (avbCoursesRs.next()) {
-                available.add(courseMapper.mapToEntity(avbCoursesRs));
+            ps.setInt(1, studentID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                available.add(courseMapper.mapToEntity(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,15 +122,15 @@ public class CourseDAOImpl implements CourseDAO {
 
         List<Student> students = new ArrayList<>();
         try (Connection con = ds.getConnection();
-             PreparedStatement st = con.prepareStatement("select s.student_id, s.group_id, s.first_name, s.second_name \n" +
+             PreparedStatement ps = con.prepareStatement("select s.student_id, s.group_id, s.first_name, s.second_name \n" +
                      "from students s " +
                      "inner join students_courses sc on sc.student_id = s.student_id " +
                      "inner join courses c on sc.course_id = c.course_id " +
                      "where c.course_name = ?")) {
-            st.setString(1, courseName);
-            ResultSet studentsRS = st.executeQuery();
-            while (studentsRS.next()) {
-                students.add(studentMapper.mapToEntity(studentsRS));
+            ps.setString(1, courseName);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                students.add(studentMapper.mapToEntity(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -142,13 +142,13 @@ public class CourseDAOImpl implements CourseDAO {
     public void unlinkCourse(int studentID, String courseToDelete) {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement unlinkCourse = con.prepareStatement(" delete from " + MANYTOMANY_TABLE + " sc " +
+             PreparedStatement ps = con.prepareStatement(" delete from " + MANY_TO_MANY_TABLE + " sc " +
                      "using courses c " +
                      "where c.course_id = sc.course_id and " +
                      "sc.student_id = ? and c.course_name = ?")) {
-            unlinkCourse.setInt(1, studentID);
-            unlinkCourse.setString(2, courseToDelete);
-            unlinkCourse.executeUpdate();
+            ps.setInt(1, studentID);
+            ps.setString(2, courseToDelete);
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -157,11 +157,11 @@ public class CourseDAOImpl implements CourseDAO {
     @Override
     public void setNewCourse(int studentID, String courseName) {
         try (Connection con = ds.getConnection();
-             PreparedStatement addCourseToStudent = con.prepareStatement(" insert into " + MANYTOMANY_TABLE + " (student_id, course_id) " +
+             PreparedStatement ps = con.prepareStatement(" insert into " + MANY_TO_MANY_TABLE + " (student_id, course_id) " +
                      "select ?, course_id from courses where course_name = ?")) {
-            addCourseToStudent.setInt(1, studentID);
-            addCourseToStudent.setString(2, courseName);
-            addCourseToStudent.executeUpdate();
+            ps.setInt(1, studentID);
+            ps.setString(2, courseName);
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -200,8 +200,8 @@ public class CourseDAOImpl implements CourseDAO {
     public void deleteAllFromStudentsCourses() {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement st = con.prepareStatement("delete from students_courses")) {
-            st.executeUpdate();
+             PreparedStatement ps = con.prepareStatement("delete from students_courses")) {
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -211,13 +211,13 @@ public class CourseDAOImpl implements CourseDAO {
     public void save (Student student, List<Course> courses) {
 
             try (Connection con = ds.getConnection();
-                 PreparedStatement st = con.prepareStatement("insert into public.students_courses values (default,?,?)")) {
+                 PreparedStatement ps = con.prepareStatement("insert into public.students_courses values (default,?,?)")) {
                 for (Course course : courses) {
-                    st.setInt(1, student.getStudentId());
-                    st.setInt(2, course.getId());
-                    st.addBatch();
+                    ps.setInt(1, student.getStudentId());
+                    ps.setInt(2, course.getId());
+                    ps.addBatch();
                 }
-                st.executeBatch();
+                ps.executeBatch();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

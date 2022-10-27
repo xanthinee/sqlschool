@@ -2,6 +2,7 @@ package sqltask.groups;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,7 +37,7 @@ class GroupUtilsTest {
         Group testGroup = new Group(1,"AA--11");
         List<Group> testList = List.of(testGroup);
         String expected = "GROUPS:\n" +
-                "1      - AA--11";
+                "1     - AA--11";
         assertEquals(expected, GroupUtils.printGroupsTable(testList));
     }
 
@@ -55,5 +56,17 @@ class GroupUtilsTest {
                 100   - AA--11
                 1000  - AA--11""";
         assertEquals(expected, GroupUtils.printGroupsTable(testList));
+    }
+
+    @Test
+    void printResultOfComparison_whenThereAreGroups_shouldPrintThem() {
+
+        List<Group> groups = new ArrayList<>();
+        Group group = new Group(1, "AA--11");
+        Group group1 = new Group(1, "AA--11");
+        groups.add(group);
+        groups.add(group1);
+        String result = "GROUPS with FEWER or EQUAL amount of STUDENTS: AA--11, AA--11";
+        assertEquals(result, GroupUtils.printResultOfComparison(groups));
     }
 }
