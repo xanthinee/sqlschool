@@ -73,7 +73,7 @@ public class GroupDAOImpl implements GroupDAO{
         try (Connection con = ds.getConnection();
              PreparedStatement ps = con.prepareStatement("delete from groups where group_id = ?")) {
             ps.setInt(1, id);
-            ps.executeQuery();
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

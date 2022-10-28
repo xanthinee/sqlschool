@@ -62,5 +62,6 @@ public class Main {
         menuGroup.addItem(new StudentsByCourseMenuItem(main.courseService));
         menuGroup.addItem(new UnlinkCourseMenuItem(main.courseService));
         menuGroup.doAction();
+
     }
 }

@@ -13,7 +13,7 @@ public class GroupUtils {
         for(int i = 0; i < 2; i++) {
             sb.append((char)  rd.nextInt('A', 'Z'));
         }
-        sb.append("--");
+        sb.append("-");
         for(int i = 0; i < 2; i++) {
             sb.append(rd.nextInt(0,10));
         }

@@ -10,6 +10,9 @@ import sqltask.students.Student;
 import sqltask.students.StudentDAO;
 import sqltask.students.StudentDAOImpl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.*;
@@ -26,18 +29,7 @@ class GroupDAOImplTest {
     @BeforeEach
     public void init() {
         try {
-            DataSource ds = new DataSource("testdata/connectiontests.properties");
             sqlScriptRunner.executeScriptUsingScriptRunner("sqltestdata/test_table_creation.sql", ds.getConnection());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @AfterEach
-    public void destroy() {
-        try {
-            DataSource ds = new DataSource("testdata/connectiontests.properties");
-            sqlScriptRunner.executeScriptUsingScriptRunner("sqltestdata/test_table_delete.sql", ds.getConnection());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,8 +40,22 @@ class GroupDAOImplTest {
 
         int groupID = 1;
         Group group = new Group(groupID, "AA--11");
+        Group groupToCompare = new Group(null, null);
+
         groupDAO.save(group);
-        assertEquals(group, groupDAO.getById(groupID));
+
+        try (Connection con = ds.getConnection();
+             PreparedStatement ps = con.prepareStatement("select * from groups")) {
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                groupToCompare.setId(rs.getInt("group_id"));
+                groupToCompare.setName(rs.getString("group_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(group, groupToCompare);
     }
 
     @Test
@@ -59,13 +65,22 @@ class GroupDAOImplTest {
         Group group = new Group(1, "AA--11");
         Group group1 = new Group(2, "AA--11");
         Group group2 = new Group(3, "AA--11");
-
         groups.add(group);
         groups.add(group1);
         groups.add(group2);
-
         groupDAO.saveAll(groups);
-        assertEquals(groups, groupDAO.getAll());
+
+        List<Group> retrievedGroups = new ArrayList<>();
+        try (Connection connection = ds.getConnection();
+        PreparedStatement ps = connection.prepareStatement("select * from groups")) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                retrievedGroups.add(new Group(rs.getInt("group_id"), rs.getString("group_name")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        assertEquals(groups, retrievedGroups);
     }
 
     @Test
@@ -75,15 +90,36 @@ class GroupDAOImplTest {
         Group group = new Group(1, "AA--11");
         Group group1 = new Group(2, "AA--11");
         Group group2 = new Group(3, "AA--11");
-
         groups.add(group);
         groups.add(group1);
         groups.add(group2);
 
-        groupDAO.saveAll(groups);
+        try (Connection connection = ds.getConnection();
+        PreparedStatement ps = connection.prepareStatement("insert into groups values(default, ?)")) {
+            for (Group groupAdd : groups) {
+                ps.setString(1, groupAdd.getName());
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         groupDAO.deleteAll();
+
+        List<Group> retrievedGroups = new ArrayList<>();
+        try (Connection connection = ds.getConnection();
+             PreparedStatement ps = connection.prepareStatement("select * from groups")) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                retrievedGroups.add(new Group(rs.getInt("group_id"), rs.getString("group_name")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         List<Group> emptyList = new ArrayList<>();
-        assertEquals(emptyList, groupDAO.getAll());
+        assertEquals(emptyList, retrievedGroups);
     }
 
     @Test
@@ -93,12 +129,21 @@ class GroupDAOImplTest {
         Group group = new Group(1, "AA--11");
         Group group1 = new Group(2, "AA--11");
         Group group2 = new Group(3, "AA--11");
-
         groups.add(group);
         groups.add(group1);
         groups.add(group2);
 
-        groupDAO.saveAll(groups);
+        try (Connection connection = ds.getConnection();
+             PreparedStatement ps = connection.prepareStatement("insert into groups values(default, ?)")) {
+            for (Group groupAdd : groups) {
+                ps.setString(1, groupAdd.getName());
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         assertEquals(groups, groupDAO.getAll());
     }
 
@@ -109,12 +154,21 @@ class GroupDAOImplTest {
         Group group = new Group(1, "AA--11");
         Group group1 = new Group(2, "AA--11");
         Group group2 = new Group(3, "AA--11");
-
         groups.add(group);
         groups.add(group1);
         groups.add(group2);
 
-        groupDAO.saveAll(groups);
+        try (Connection connection = ds.getConnection();
+             PreparedStatement ps = connection.prepareStatement("insert into groups values(default, ?)")) {
+            for (Group groupAdd : groups) {
+                ps.setString(1, groupAdd.getName());
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         assertEquals(group1, groupDAO.getById(2));
     }
 
@@ -123,8 +177,18 @@ class GroupDAOImplTest {
 
         int groupID = 1;
         Group group = new Group(groupID, "AA--11");
-        groupDAO.save(group);
+
+        try (Connection connection = ds.getConnection();
+             PreparedStatement ps = connection.prepareStatement("insert into groups values(default, ?)")) {
+                ps.setString(1, group.getName());
+                ps.addBatch();
+            ps.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         groupDAO.deleteById(groupID);
+
         Assertions.assertThrows(IllegalStateException.class, ()-> {groupDAO.getById(groupID);},
                 "No data found for id " + groupID);
     }
@@ -145,8 +209,17 @@ class GroupDAOImplTest {
         new Student(10, 4, "a", "a")};
         students.addAll(Arrays.asList(studentsArray));
 
-        StudentDAO studentDAO = new StudentDAOImpl(ds);
-        studentDAO.saveAll(students);
+        try (Connection connection = ds.getConnection();
+             PreparedStatement ps = connection.prepareStatement("insert into students values (default,1,?,?)")) {
+            for (Student stud : students) {
+                ps.setString(1, stud.getName());
+                ps.setString(2, stud.getSurname());
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         List<Group> groups = new ArrayList<>();
         Group group = new Group(1,"AA-11");
@@ -157,7 +230,18 @@ class GroupDAOImplTest {
         groups.add(group1);
         groups.add(group2);
         groups.add(group3);
-        groupDAO.saveAll(groups);
+
+        try (Connection connection = ds.getConnection();
+             PreparedStatement ps = connection.prepareStatement("insert into groups values(default, ?)")) {
+            for (Group groupAdd : groups) {
+                ps.setString(1, groupAdd.getName());
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
         List<Group> groupsResult = new ArrayList<>();
         groupsResult.add(group);
