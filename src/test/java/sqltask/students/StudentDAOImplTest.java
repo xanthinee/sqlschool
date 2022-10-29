@@ -22,7 +22,7 @@ class StudentDAOImplTest {
     @BeforeEach
     public void init() {
         try {
-            sqlScriptRunner.executeScriptUsingScriptRunner("sqltestdata/test_table_creation.sql", ds.getConnection());
+            sqlScriptRunner.executeScriptUsingScriptRunner("sqldata/tables_creation.sql", ds.getConnection());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -33,8 +33,8 @@ class StudentDAOImplTest {
 
         List<Student> students = new ArrayList<>();
         Student student = new Student(1, 0, "a", "a");
-        Student student1 = new Student(2, 0, "a", "a");
-        Student student2 = new Student(3, 0, "a", "a");
+        Student student1 = new Student(2, 0, "b", "b");
+        Student student2 = new Student(3, 0, "c", "c");
         students.add(student);
         students.add(student1);
         students.add(student2);
@@ -61,8 +61,8 @@ class StudentDAOImplTest {
 
         List<Student> students = new ArrayList<>();
         Student student = new Student(1, 1, "a", "a");
-        Student student1 = new Student(2, 1, "a", "a");
-        Student student2 = new Student(3, 1, "a", "a");
+        Student student1 = new Student(2, 1, "b", "b");
+        Student student2 = new Student(3, 1, "c", "c");
         students.add(student);
         students.add(student1);
         students.add(student2);
@@ -102,8 +102,8 @@ class StudentDAOImplTest {
 
         List<Student> students = new ArrayList<>();
         Student student = new Student(1, 1, "a", "a");
-        Student student1 = new Student(2, 1, "a", "a");
-        Student student2 = new Student(3, 1, "a", "a");
+        Student student1 = new Student(2, 1, "b", "b");
+        Student student2 = new Student(3, 1, "c", "c");
         students.add(student);
         students.add(student1);
         students.add(student2);

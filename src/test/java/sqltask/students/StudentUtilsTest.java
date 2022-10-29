@@ -9,12 +9,12 @@ class StudentUtilsTest {
     @Test
     void printStudentsPartly_whenOneLine_shouldCorrectlyPrintThisLine() {
 
-        Student testStud = new Student(1,1,"a","a");
+        Student testStud = new Student(1, 1, "a", "a");
         List<Student> testList = List.of(testStud);
-        String expected = """
-                Students which have desired course:
-                1     |1     |a           |a\040\040\040\040\040\040\040\040\040\040\040\040\040\040""";
-        assertEquals(expected, StudentUtils.printStudentsPartly(testList));
+        StringJoiner sj = new StringJoiner(System.lineSeparator());
+        sj.add("Students which have desired course:")
+                .add("1     |1     |a           |a              ");
+        assertEquals(sj.toString(), StudentUtils.printStudentsPartly(testList));
     }
 
     @Test
@@ -24,13 +24,13 @@ class StudentUtilsTest {
         Student testStud2 = new Student(100,100," ","Aa");
         Student testStud3 = new Student(null,null,"","XAVI");
         List<Student> testList = List.of(testStud,testStud1,testStud2,testStud3);
-        String expected = """
-                Students which have desired course:
-                1     |10    |anthony     |abc\040\040\040\040\040\040\040\040\040\040\040\040
-                10    |1000  |a           |tomKins\040\040\040\040\040\040\040\040
-                100   |100   |            |Aa\040\040\040\040\040\040\040\040\040\040\040\040\040
-                null  |null  |            |XAVI\040\040\040\040\040\040\040\040\040\040\040""";
-        assertEquals(expected, StudentUtils.printStudentsPartly(testList));
+        StringJoiner sj = new StringJoiner(System.lineSeparator());
+        sj.add("Students which have desired course:")
+                .add("1     |10    |anthony     |abc            ")
+                .add("10    |1000  |a           |tomKins        ")
+                .add("100   |100   |            |Aa             ")
+                .add("null  |null  |            |XAVI           ");
+        assertEquals(sj.toString(), StudentUtils.printStudentsPartly(testList));
     }
 
     @Test
@@ -69,16 +69,16 @@ class StudentUtilsTest {
 
         List<Student> students = new ArrayList<>();
         Student student = new Student(1,1,"A", "B");
-        Student student1 = new Student(1,1,"A", "B");
-        Student student2 = new Student(1,1,"A", "B");
+        Student student1 = new Student(1,1,"C", "D");
+        Student student2 = new Student(1,1,"E", "F");
         students.add(student);
         students.add(student1);
         students.add(student2);
-        String result = """
-                STUDENTS
-                1    |1    |A           |B\040\040\040\040\040\040\040\040\040\040\040\040\040\040
-                1    |1    |A           |B\040\040\040\040\040\040\040\040\040\040\040\040\040\040
-                1    |1    |A           |B\040\040\040\040\040\040\040\040\040\040\040\040\040\040""";
-        assertEquals(result, StudentUtils.printStudentsTable(students));
+        StringJoiner sj = new StringJoiner(System.lineSeparator());
+        sj.add("STUDENTS")
+          .add("1    |1    |A           |B              ")
+          .add("1    |1    |C           |D              ")
+          .add("1    |1    |E           |F              ");
+        assertEquals(sj.toString(), StudentUtils.printStudentsTable(students));
     }
 }

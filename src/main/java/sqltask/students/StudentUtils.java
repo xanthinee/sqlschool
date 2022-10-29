@@ -4,10 +4,20 @@ import java.util.*;
 
 public class StudentUtils {
 
-    public static String printStudentsTable(List<Student> students) {
+    private static final int maxLengthNameColumn = 12;
+    private static final int maxLengthSurnameColumn = 15;
+    private static final String TRIM_MARKER = "...";
 
-        int maxLengthNameColumn = 12;
-        int maxLengthSurnameColumn = 15;
+
+    private static String trimToColumn(String value, int columnSize) {
+        int meaningfulLength = columnSize - TRIM_MARKER.length();
+        if (value.length() > columnSize) {
+            return value.substring(0, meaningfulLength) + TRIM_MARKER;
+        }
+        return value;
+    }
+
+    public static String printStudentsTable(List<Student> students) {
 
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         sj.add("STUDENTS");
@@ -15,11 +25,11 @@ public class StudentUtils {
         for (Student student : students) {
 
             if(student.getName().length() > maxLengthNameColumn) {
-                student.setName(student.getName().substring(0, maxLengthNameColumn - 3) + "...");
+                student.setName(trimToColumn(student.getName(), maxLengthNameColumn));
             }
 
             if(student.getSurname().length() > maxLengthSurnameColumn) {
-                student.setSurname(student.getSurname().substring(0, maxLengthSurnameColumn - 3) + "...");
+                student.setSurname(trimToColumn(student.getSurname(), maxLengthSurnameColumn));
             }
 
             int idOfGroup = student.getGroupId();
@@ -33,19 +43,16 @@ public class StudentUtils {
 
     public static String printStudentsPartly(List<Student> students) {
 
-        int maxLengthNameColumn = 12;
-        int maxLengthSurnameColumn = 15;
-
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         sj.add("Students which have desired course:");
         for (Student student : students) {
 
             if(student.getName().length() > maxLengthNameColumn) {
-                student.setName(student.getName().substring(0, maxLengthNameColumn - 3) + "...");
+                student.setName(trimToColumn(student.getName(), maxLengthNameColumn));
             }
 
             if(student.getSurname().length() > maxLengthSurnameColumn) {
-                student.setSurname(student.getSurname().substring(0, maxLengthSurnameColumn - 3) + "...");
+                student.setSurname(trimToColumn(student.getSurname(), maxLengthSurnameColumn));
             }
 
             sj.add(String.format("%-6d", student.getStudentId()) + "|"

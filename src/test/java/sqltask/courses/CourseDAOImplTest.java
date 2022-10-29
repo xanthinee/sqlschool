@@ -20,12 +20,11 @@ class CourseDAOImplTest {
     SQLScriptRunner sqlScriptRunner = new SQLScriptRunner();
 
     CourseDAO courseDAO = new CourseDAOImpl(ds);
-    StudentDAO studentDAO = new StudentDAOImpl(ds);
 
     @BeforeEach
     public void init() {
         try {
-            sqlScriptRunner.executeScriptUsingScriptRunner("sqltestdata/test_table_creation.sql", ds.getConnection());
+            sqlScriptRunner.executeScriptUsingScriptRunner("sqldata/tables_creation.sql", ds.getConnection());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -58,8 +57,8 @@ class CourseDAOImplTest {
 
         List<Course> courses = new ArrayList<>();
         Course course = new Course(1,"a","a");
-        Course course1 = new Course(2,"a","a");
-        Course course2 = new Course(3,"a","a");
+        Course course1 = new Course(2,"b","b");
+        Course course2 = new Course(3,"c","c");
         courses.add(course);
         courses.add(course1);
         courses.add(course2);
@@ -86,8 +85,8 @@ class CourseDAOImplTest {
 
         List<sqltask.courses.Course> courses = new ArrayList<>();
         Course course = new Course(1,"a","a");
-        Course course1 = new Course(2,"a","a");
-        Course course2 = new Course(3,"a","a");
+        Course course1 = new Course(2,"b","b");
+        Course course2 = new Course(3,"c","c");
         courses.add(course);
         courses.add(course1);
         courses.add(course2);
@@ -126,8 +125,8 @@ class CourseDAOImplTest {
 
         List<Course> courses = new ArrayList<>();
         Course course = new Course(1,"a","a");
-        Course course1 = new Course(2,"a","a");
-        Course course2 = new Course(3,"a","a");
+        Course course1 = new Course(2,"b","b");
+        Course course2 = new Course(3,"c","c");
         courses.add(course);
         courses.add(course1);
         courses.add(course2);
@@ -151,8 +150,8 @@ class CourseDAOImplTest {
 
         List<Course> courses = new ArrayList<>();
         Course course = new Course(1,"a","a");
-        Course course1 = new Course(2,"a","a");
-        Course course2 = new Course(3,"a","a");
+        Course course1 = new Course(2,"b","b");
+        Course course2 = new Course(3,"c","c");
         courses.add(course);
         courses.add(course1);
         courses.add(course2);
@@ -459,8 +458,8 @@ class CourseDAOImplTest {
 
         List<Student> students = new ArrayList<>();
         Student student = new Student(1,0,"a","a");
-        Student student1 = new Student(2,0,"a","a");
-        Student student2 = new Student(3,0,"a","a");
+        Student student1 = new Student(2,0,"b","b");
+        Student student2 = new Student(3,0,"c","c");
         students.add(student);
         students.add(student1);
         students.add(student2);

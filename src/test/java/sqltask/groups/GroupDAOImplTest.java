@@ -1,14 +1,11 @@
 package sqltask.groups;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sqltask.connection.DataSource;
 import sqltask.helpers.SQLScriptRunner;
 import sqltask.students.Student;
-import sqltask.students.StudentDAO;
-import sqltask.students.StudentDAOImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +26,7 @@ class GroupDAOImplTest {
     @BeforeEach
     public void init() {
         try {
-            sqlScriptRunner.executeScriptUsingScriptRunner("sqltestdata/test_table_creation.sql", ds.getConnection());
+            sqlScriptRunner.executeScriptUsingScriptRunner("sqldata/tables_creation.sql", ds.getConnection());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -63,8 +60,8 @@ class GroupDAOImplTest {
 
         List<Group> groups = new ArrayList<>();
         Group group = new Group(1, "AA--11");
-        Group group1 = new Group(2, "AA--11");
-        Group group2 = new Group(3, "AA--11");
+        Group group1 = new Group(2, "AB--12");
+        Group group2 = new Group(3, "AC--13");
         groups.add(group);
         groups.add(group1);
         groups.add(group2);
@@ -88,8 +85,8 @@ class GroupDAOImplTest {
 
         List<Group> groups = new ArrayList<>();
         Group group = new Group(1, "AA--11");
-        Group group1 = new Group(2, "AA--11");
-        Group group2 = new Group(3, "AA--11");
+        Group group1 = new Group(2, "AB--12");
+        Group group2 = new Group(3, "AC--13");
         groups.add(group);
         groups.add(group1);
         groups.add(group2);
@@ -126,9 +123,9 @@ class GroupDAOImplTest {
     void getAll_whenThereSomeGroups_shouldRetrieveThemAll() {
 
         List<Group> groups = new ArrayList<>();
-        Group group = new Group(1, "AA--11");
-        Group group1 = new Group(2, "AA--11");
-        Group group2 = new Group(3, "AA--11");
+        Group group = new Group(1, "AA--12");
+        Group group1 = new Group(2, "AB--13");
+        Group group2 = new Group(3, "AC--14");
         groups.add(group);
         groups.add(group1);
         groups.add(group2);
@@ -151,9 +148,9 @@ class GroupDAOImplTest {
     void getById_whenIDisDetermined_shouldRetrieveGroupWithSuchID() {
 
         List<Group> groups = new ArrayList<>();
-        Group group = new Group(1, "AA--11");
-        Group group1 = new Group(2, "AA--11");
-        Group group2 = new Group(3, "AA--11");
+        Group group = new Group(1, "AA--12");
+        Group group1 = new Group(2, "AB--13");
+        Group group2 = new Group(3, "AC--14");
         groups.add(group);
         groups.add(group1);
         groups.add(group2);
@@ -200,13 +197,13 @@ class GroupDAOImplTest {
         Student[] studentsArray = {new Student(1, 1, "a", "a"),
                 new Student(2, 2, "a", "a"),
         new Student(3, 2, "a", "a"),
-        new Student(4, 3, "a", "a"),
-        new Student(5, 3, "a", "a"),
-        new Student(6, 3, "a", "a"),
-        new Student(7, 4, "a", "a"),
-        new Student(8, 4, "a", "a"),
-        new Student(9, 4, "a", "a"),
-        new Student(10, 4, "a", "a")};
+        new Student(4, 3, "b", "b"),
+        new Student(5, 3, "c", "c"),
+        new Student(6, 3, "d", "d"),
+        new Student(7, 4, "e", "e"),
+        new Student(8, 4, "f", "f"),
+        new Student(9, 4, "g", "g"),
+        new Student(10, 4, "h", "h")};
         students.addAll(Arrays.asList(studentsArray));
 
         try (Connection connection = ds.getConnection();
