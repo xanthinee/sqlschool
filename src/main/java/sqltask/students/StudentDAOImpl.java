@@ -21,7 +21,7 @@ public class StudentDAOImpl implements StudentDAO {
     @Override
     public void saveAll(List<Student> students) {
         try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("insert into public.students values (default,null,?,?)")){
+             PreparedStatement ps = con.prepareStatement("insert into " + STUDENTS_TABLE + " values (default,null,?,?)")){
             for (Student student : students) {
                 studentMapper.mapToRow(ps, student);
                 ps.addBatch();
@@ -36,7 +36,7 @@ public class StudentDAOImpl implements StudentDAO {
     public void deleteAll() {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("delete from students")) {
+             PreparedStatement ps = con.prepareStatement("delete from " + STUDENTS_TABLE)) {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -49,7 +49,7 @@ public class StudentDAOImpl implements StudentDAO {
         List<Student> students = new ArrayList<>();
         try (Connection con = ds.getConnection();
              PreparedStatement ps = con.prepareStatement("select * " +
-                     " from students")) {
+                     " from " + STUDENTS_TABLE)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 students.add(studentMapper.mapToEntity(rs));
@@ -64,9 +64,9 @@ public class StudentDAOImpl implements StudentDAO {
     public void deleteById(int studentID) {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement deleteFromStudents = con.prepareStatement("delete from students where student_id = ?")) {
-            deleteFromStudents.setInt(1, studentID);
-            deleteFromStudents.executeUpdate();
+             PreparedStatement ps = con.prepareStatement("delete from " + STUDENTS_TABLE + " where student_id = ?")) {
+            ps.setInt(1, studentID);
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,9 +75,9 @@ public class StudentDAOImpl implements StudentDAO {
     public void save(Student student) {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement putStudent = con.prepareStatement("insert into students values (default,null,?,?)")) {
-            studentMapper.mapToRow(putStudent, student);
-            putStudent.executeUpdate();
+             PreparedStatement ps = con.prepareStatement("insert into " + STUDENTS_TABLE + " values (default,null,?,?)")) {
+            studentMapper.mapToRow(ps, student);
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -87,7 +87,7 @@ public class StudentDAOImpl implements StudentDAO {
     public void updateGroupIdByStudId(Student student, int groupID) {
 
         try (Connection con = ds.getConnection();
-        PreparedStatement ps = con.prepareStatement("update public.students set group_id = ? where student_id = " +
+        PreparedStatement ps = con.prepareStatement("update " + STUDENTS_TABLE + " set group_id = ? where student_id = " +
                 student.getStudentId())) {
             ps.setInt(1, groupID);
             ps.executeUpdate();

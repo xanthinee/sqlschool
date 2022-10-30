@@ -10,6 +10,7 @@ public class GroupDAOImpl implements GroupDAO{
 
     DataSource ds;
     private static final String GROUPS_TABLE = "groups";
+    private static final String STUDENTS_TABLE = "students";
     GroupMapper groupMapper = new GroupMapper();
 
     public GroupDAOImpl(DataSource ds) {
@@ -45,7 +46,7 @@ public class GroupDAOImpl implements GroupDAO{
     public void deleteAll() {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("DELETE FROM public.groups");) {
+             PreparedStatement ps = con.prepareStatement("DELETE FROM " + GROUPS_TABLE);) {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,7 +57,7 @@ public class GroupDAOImpl implements GroupDAO{
     public List<Group> getAll() {
         List<Group> groups = new ArrayList<>();
         try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("select group_id, group_name FROM public.groups");) {
+             PreparedStatement ps = con.prepareStatement("select group_id, group_name FROM " + GROUPS_TABLE );) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 groups.add(groupMapper.mapToEntity(rs));
@@ -71,7 +72,7 @@ public class GroupDAOImpl implements GroupDAO{
     public void deleteById(int id) {
 
         try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("delete from groups where group_id = ?")) {
+             PreparedStatement ps = con.prepareStatement("delete from " + GROUPS_TABLE +" where group_id = ?")) {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -102,10 +103,11 @@ public class GroupDAOImpl implements GroupDAO{
         List<Group> groupMembers = new ArrayList<>();
         try (Connection con = ds.getConnection();
              PreparedStatement ps = con.prepareStatement("select g.group_id, g.group_name " +
-                     "from groups g left join students s on g.group_id = s.group_id " +
+                     "from " + GROUPS_TABLE + " g left join " + STUDENTS_TABLE +" s on g.group_id = s.group_id " +
                      "where g.group_id <> ? " +
                      "group by g.group_id, g.group_name " +
-                     "having count(s.student_id) <= (select count(s2.student_id) from students s2 where s2.group_id = ?)")) {
+                     "having count(s.student_id) <= (select count(s2.student_id) from " + STUDENTS_TABLE
+                     + " s2 where s2.group_id = ?)")) {
             ps.setInt(1, groupID);
             ps.setInt(2, groupID);
             ResultSet rs = ps.executeQuery();

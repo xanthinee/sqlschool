@@ -4,8 +4,8 @@ import java.util.*;
 
 public class StudentUtils {
 
-    private static final int maxLengthNameColumn = 12;
-    private static final int maxLengthSurnameColumn = 15;
+    private static final int MAX_LENGTH_NAME_COLUMN = 12;
+    private static final int MAX_LENGTH_SURNAME_COLUMN = 15;
     private static final String TRIM_MARKER = "...";
 
 
@@ -24,19 +24,19 @@ public class StudentUtils {
 
         for (Student student : students) {
 
-            if(student.getName().length() > maxLengthNameColumn) {
-                student.setName(trimToColumn(student.getName(), maxLengthNameColumn));
+            if(student.getName().length() > MAX_LENGTH_NAME_COLUMN) {
+                student.setName(trimToColumn(student.getName(), MAX_LENGTH_NAME_COLUMN));
             }
 
-            if(student.getSurname().length() > maxLengthSurnameColumn) {
-                student.setSurname(trimToColumn(student.getSurname(), maxLengthSurnameColumn));
+            if(student.getSurname().length() > MAX_LENGTH_SURNAME_COLUMN) {
+                student.setSurname(trimToColumn(student.getSurname(), MAX_LENGTH_SURNAME_COLUMN));
             }
 
             int idOfGroup = student.getGroupId();
             sj.add(String.format("%-5d", student.getStudentId()) + "|"
                     + String.format("%-5d", idOfGroup) + "|"
-                    + String.format("%-" + maxLengthNameColumn + "s", student.getName()) + "|"
-                    + String.format("%-" + maxLengthSurnameColumn + "s", student.getSurname()));
+                    + String.format("%-" + MAX_LENGTH_NAME_COLUMN + "s", student.getName()) + "|"
+                    + String.format("%-" + MAX_LENGTH_SURNAME_COLUMN + "s", student.getSurname()));
         }
         return sj.toString();
     }
@@ -47,18 +47,18 @@ public class StudentUtils {
         sj.add("Students which have desired course:");
         for (Student student : students) {
 
-            if(student.getName().length() > maxLengthNameColumn) {
-                student.setName(trimToColumn(student.getName(), maxLengthNameColumn));
+            if(student.getName().length() > MAX_LENGTH_NAME_COLUMN) {
+                student.setName(trimToColumn(student.getName(), MAX_LENGTH_NAME_COLUMN));
             }
 
-            if(student.getSurname().length() > maxLengthSurnameColumn) {
-                student.setSurname(trimToColumn(student.getSurname(), maxLengthSurnameColumn));
+            if(student.getSurname().length() > MAX_LENGTH_SURNAME_COLUMN) {
+                student.setSurname(trimToColumn(student.getSurname(), MAX_LENGTH_SURNAME_COLUMN));
             }
 
             sj.add(String.format("%-6d", student.getStudentId()) + "|"
                     + String.format("%-6d", student.getGroupId()) + "|"
-                    + String.format("%-" + maxLengthNameColumn + "s", student.getName()) + "|"
-                    + String.format("%-" + maxLengthSurnameColumn + "s", student.getSurname()));
+                    + String.format("%-" + MAX_LENGTH_NAME_COLUMN + "s", student.getName()) + "|"
+                    + String.format("%-" + MAX_LENGTH_SURNAME_COLUMN + "s", student.getSurname()));
         }
         return sj.toString();
     }
