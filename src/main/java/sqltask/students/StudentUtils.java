@@ -24,19 +24,14 @@ public class StudentUtils {
 
         for (Student student : students) {
 
-            if(student.getName().length() > MAX_LENGTH_NAME_COLUMN) {
-                student.setName(trimToColumn(student.getName(), MAX_LENGTH_NAME_COLUMN));
-            }
-
-            if(student.getSurname().length() > MAX_LENGTH_SURNAME_COLUMN) {
-                student.setSurname(trimToColumn(student.getSurname(), MAX_LENGTH_SURNAME_COLUMN));
-            }
-
             int idOfGroup = student.getGroupId();
             sj.add(String.format("%-5d", student.getStudentId()) + "|"
                     + String.format("%-5d", idOfGroup) + "|"
-                    + String.format("%-" + MAX_LENGTH_NAME_COLUMN + "s", student.getName()) + "|"
-                    + String.format("%-" + MAX_LENGTH_SURNAME_COLUMN + "s", student.getSurname()));
+                    + String.format("%-" + MAX_LENGTH_NAME_COLUMN + "s", trimToColumn(student.getName(),
+                    MAX_LENGTH_NAME_COLUMN)) + "|"
+                    + String.format("%-" + MAX_LENGTH_SURNAME_COLUMN + "s",
+                    trimToColumn(student.getSurname(),
+                    MAX_LENGTH_SURNAME_COLUMN)));
         }
         return sj.toString();
     }
@@ -47,18 +42,12 @@ public class StudentUtils {
         sj.add("Students which have desired course:");
         for (Student student : students) {
 
-            if(student.getName().length() > MAX_LENGTH_NAME_COLUMN) {
-                student.setName(trimToColumn(student.getName(), MAX_LENGTH_NAME_COLUMN));
-            }
-
-            if(student.getSurname().length() > MAX_LENGTH_SURNAME_COLUMN) {
-                student.setSurname(trimToColumn(student.getSurname(), MAX_LENGTH_SURNAME_COLUMN));
-            }
-
             sj.add(String.format("%-6d", student.getStudentId()) + "|"
                     + String.format("%-6d", student.getGroupId()) + "|"
-                    + String.format("%-" + MAX_LENGTH_NAME_COLUMN + "s", student.getName()) + "|"
-                    + String.format("%-" + MAX_LENGTH_SURNAME_COLUMN + "s", student.getSurname()));
+                    + String.format("%-" + MAX_LENGTH_NAME_COLUMN + "s", trimToColumn(student.getName(),
+                    MAX_LENGTH_NAME_COLUMN)) + "|"
+                    + String.format("%-" + MAX_LENGTH_SURNAME_COLUMN + "s", trimToColumn(student.getSurname(),
+                    MAX_LENGTH_SURNAME_COLUMN)));
         }
         return sj.toString();
     }

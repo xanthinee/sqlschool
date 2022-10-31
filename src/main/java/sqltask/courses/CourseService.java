@@ -1,6 +1,5 @@
 package sqltask.courses;
 
-import sqltask.connection.DataSource;
 import sqltask.students.Student;
 import sqltask.students.StudentDAO;
 
@@ -11,6 +10,7 @@ public class CourseService {
     private final Random rd = new Random();
     private final CourseDAO courseDAO;
     private final StudentDAO studentDAO;
+    private static final int MAX_COURSES_PER_STUDENT = 3;
 
     public CourseService(CourseDAO courseDAO, StudentDAO studentDAO) {
         this.courseDAO = courseDAO;
@@ -56,7 +56,7 @@ public class CourseService {
     private List<Course> selectRandomCourses(List<Course> allCourses) {
 
         List<Course> courses = new ArrayList<>();
-        for (int i = 0; i < rd.nextInt(1,4); i++) {
+        for (int i = 0; i < MAX_COURSES_PER_STUDENT + 1; i++) {
             courses.add(allCourses.get(rd.nextInt(0, allCourses.size())));
         }
         return courses;

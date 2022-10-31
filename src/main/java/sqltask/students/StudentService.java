@@ -14,6 +14,8 @@ public class StudentService {
     private final StudentDAO dao;
     private final GroupDAO groupDAO;
     private static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
+    private static final int MIN_AMOUNT_OF_STUDENTS_IN_GROUP = 10;
+    private static final int MAX_AMOUNT_OF_STUDENTS_IN_GROUP = 30;
     private static final Random rd = new Random();
 
     public StudentService(StudentDAO dao, GroupDAO groupDAO) {
@@ -61,7 +63,7 @@ public class StudentService {
         List<Student> students = dao.getAll();
         List<Group> groups = groupDAO.getAll();
         for (Group group : groups) {
-            int groupMembers = rd.nextInt(10, 30);
+            int groupMembers = rd.nextInt(MIN_AMOUNT_OF_STUDENTS_IN_GROUP, MAX_AMOUNT_OF_STUDENTS_IN_GROUP + 1);
                 for (int i = 0; i < groupMembers; i++) {
                     int studIndex = rd.nextInt(0, students.size());
                     Student student = students.get(studIndex);
