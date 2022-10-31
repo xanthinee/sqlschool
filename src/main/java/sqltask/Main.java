@@ -1,5 +1,7 @@
 package sqltask;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import sqltask.connection.DataSource;
 import sqltask.courses.*;
 import sqltask.groups.Group;
@@ -14,6 +16,7 @@ import sqltask.applicationmenu.menufunctions.*;
 import java.sql.SQLException;
 import java.util.*;
 
+@SpringBootApplication
 @SuppressWarnings("java:S106")
 public class Main {
 
@@ -50,6 +53,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
 
         Main main = new Main();
         main.startApp();
