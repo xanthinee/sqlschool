@@ -5,14 +5,18 @@ import sqltask.applicationmenu.Mapper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.*;
 
 public class GroupMapper implements Mapper<Group> {
+
+    private static final String ID_COLUMN = "group_id";
+    private static final String NAME_COLUMN = "group_name";
 
     @Override
     public Group mapToEntity(ResultSet rs) {
 
         try {
-            return new Group(rs.getInt("group_id"), rs.getString("group_name"));
+            return new Group(rs.getInt(ID_COLUMN), rs.getString(NAME_COLUMN));
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -26,5 +30,15 @@ public class GroupMapper implements Mapper<Group> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Map<String, Object> mapToInsert(Group group) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put(ID_COLUMN, group.getId());
+        map.put(NAME_COLUMN, group.getName());
+
+        return map;
     }
 }
