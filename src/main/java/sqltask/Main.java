@@ -53,7 +53,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
+//        SpringApplication.run(Main.class, args);
 
         Main main = new Main();
         main.startApp();
