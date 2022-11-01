@@ -1,8 +1,10 @@
 package sqltask.connection;
 
 import org.springframework.context.annotation.*;
-import org.flywaydb.core.internal.jdbc.JdbcTemplate;
+//import org.flywaydb.core.internal.jdbc.JdbcTemplate;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import javax.sql.DataSource;
 
 import java.sql.Connection;
@@ -43,11 +45,6 @@ public class SpringJdbcConfig {
     }
     @Bean
     public JdbcTemplate jdbcTemplate(){
-        try {
-            return new JdbcTemplate(getJDBCConnection());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return new JdbcTemplate(getDataSource());
     }
 }

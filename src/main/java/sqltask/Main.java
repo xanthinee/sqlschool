@@ -66,10 +66,10 @@ public class Main {
 //        menuGroup.doAction();
 
         SpringJdbcConfig springJdbcConfig = new SpringJdbcConfig();
-         CourseDAOJdbc daoJdbc = new CourseDAOJdbc(springJdbcConfig.jdbcTemplate());
-         Course course = daoJdbc.getById(11);
-         daoJdbc.saveCourse(course);
-
+         CourseDAOJdbc daoJdbc = new CourseDAOJdbc(springJdbcConfig.jdbcTemplate(), springJdbcConfig.getDataSource());
+         StudentDAOJdbc studentDAOJdbc = new StudentDAOJdbc(springJdbcConfig.jdbcTemplate(), springJdbcConfig.getDataSource());
+         Student student = studentDAOJdbc.getById(101);
+        System.out.println(student.toString());
         }
     }
 
