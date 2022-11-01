@@ -2,7 +2,7 @@ package sqltask.courses;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sqltask.connection.DataSource;
+import sqltask.connection.DataConnection;
 import sqltask.students.*;
 import sqltask.helpers.SQLScriptRunner;
 
@@ -16,7 +16,7 @@ import java.sql.ResultSet;
 
 class CourseDAOImplTest {
 
-    DataSource ds = new DataSource("testdata/connectiontests.properties");
+    DataConnection ds = new DataConnection("testdata/connectiontests.properties");
     SQLScriptRunner sqlScriptRunner = new SQLScriptRunner();
 
     CourseDAO courseDAO = new CourseDAOImpl(ds);

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 class StudentDAOImplTest {
 
-    DataSource ds = new DataSource("testdata/connectiontests.properties");
+    DataConnection ds = new DataConnection("testdata/connectiontests.properties");
     SQLScriptRunner sqlScriptRunner = new SQLScriptRunner();
 
     StudentDAO studentDAO = new StudentDAOImpl(ds);

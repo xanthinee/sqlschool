@@ -1,6 +1,6 @@
 package sqltask.courses;
 
-import sqltask.connection.DataSource;
+import sqltask.connection.DataConnection;
 import sqltask.students.Student;
 import sqltask.students.StudentMapper;
 
@@ -13,14 +13,14 @@ import java.util.List;
 
 public class CourseDAOImpl implements CourseDAO {
 
-    private final DataSource ds;
+    private final DataConnection ds;
     private static final String COURSES_TABLE = "courses";
     private static final String STUDENTS_COURSES_TABLE = "students_courses";
     private static final String STUDENTS_TABLE = "students";
     private final CourseMapper courseMapper = new CourseMapper();
     private final StudentMapper studentMapper = new StudentMapper();
 
-    public CourseDAOImpl(DataSource ds) {
+    public CourseDAOImpl(DataConnection ds) {
         this.ds = ds;
     }
 

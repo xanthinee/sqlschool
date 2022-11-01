@@ -1,6 +1,7 @@
 package sqltask.students;
 
 import sqltask.applicationmenu.Mapper;
+import sqltask.courses.Course;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,5 +45,11 @@ public class StudentMapper implements Mapper<Student> {
         map.put(SURNAME_COLUMN, student.getSurname());
 
         return map;
+    }
+
+    @Override
+    public Student jdbcMapToEntity(Map<String, Object> map) {
+        return new Student((Integer) map.get(ID_COLUMN), (Integer) map.get(GROUP_ID_COLUMN),
+                (String) map.get(NAME_COLUMN), (String) map.get(SURNAME_COLUMN));
     }
 }

@@ -5,11 +5,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DataSource {
+public class DataConnection {
 
     Properties properties;
 
-    public DataSource(String filePath) {
+    public DataConnection(String filePath) {
         try {
             this.properties = new Properties();
             properties.load(getClass().getClassLoader().getResourceAsStream(filePath));

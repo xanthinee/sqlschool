@@ -1,6 +1,6 @@
 package sqltask.groups;
 
-import sqltask.connection.DataSource;
+import sqltask.connection.DataConnection;
 
 import java.sql.*;
 import java.util.*;
@@ -8,12 +8,12 @@ import java.util.*;
 @SuppressWarnings("java:S106")
 public class GroupDAOImpl implements GroupDAO{
 
-    DataSource ds;
+    DataConnection ds;
     private static final String GROUPS_TABLE = "groups";
     private static final String STUDENTS_TABLE = "students";
     GroupMapper groupMapper = new GroupMapper();
 
-    public GroupDAOImpl(DataSource ds) {
+    public GroupDAOImpl(DataConnection ds) {
         this.ds = ds;
     }
 

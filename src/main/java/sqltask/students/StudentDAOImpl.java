@@ -1,6 +1,6 @@
 package sqltask.students;
 
-import sqltask.connection.DataSource;
+import sqltask.connection.DataConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,10 +11,10 @@ public class StudentDAOImpl implements StudentDAO {
 
     private static final String STUDENTS_TABLE = "students";
     private final StudentMapper studentMapper = new StudentMapper();
-    private final DataSource ds;
+    private final DataConnection ds;
 
 
-    public StudentDAOImpl(DataSource ds) {
+    public StudentDAOImpl(DataConnection ds) {
         this.ds = ds;
     }
 

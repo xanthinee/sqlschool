@@ -3,7 +3,7 @@ package sqltask.groups;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sqltask.connection.DataSource;
+import sqltask.connection.DataConnection;
 import sqltask.helpers.SQLScriptRunner;
 import sqltask.students.Student;
 
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GroupDAOImplTest {
 
-    DataSource ds = new DataSource("testdata/connectiontests.properties");
+    DataConnection ds = new DataConnection("testdata/connectiontests.properties");
     SQLScriptRunner sqlScriptRunner = new SQLScriptRunner();
     GroupDAO groupDAO = new GroupDAOImpl(ds);
 

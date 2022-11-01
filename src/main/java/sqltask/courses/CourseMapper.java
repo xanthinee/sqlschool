@@ -45,4 +45,9 @@ public class CourseMapper implements Mapper<Course> {
 
         return map;
     }
+
+    @Override
+    public Course jdbcMapToEntity(Map<String, Object> map) {
+        return new Course((Integer) map.get(ID_COLUMN),(String) map.get(NAME_COLUMN), (String) map.get(DESCRIPTION_COLUMN));
+    }
 }

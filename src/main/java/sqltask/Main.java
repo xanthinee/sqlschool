@@ -1,8 +1,9 @@
 package sqltask;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import sqltask.connection.DataSource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import sqltask.connection.DataConnection;
+import sqltask.connection.SpringJdbcConfig;
 import sqltask.courses.*;
 import sqltask.groups.Group;
 import sqltask.groups.GroupDAO;
@@ -10,8 +11,6 @@ import sqltask.groups.GroupService;
 import sqltask.groups.GroupDAOImpl;
 import sqltask.helpers.SQLScriptRunner;
 import sqltask.students.*;
-import sqltask.applicationmenu.*;
-import sqltask.applicationmenu.menufunctions.*;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -20,7 +19,7 @@ import java.util.*;
 @SuppressWarnings("java:S106")
 public class Main {
 
-    private final DataSource ds = new DataSource("data/connectioninfo.properties");
+    private final DataConnection ds = new DataConnection("data/connectioninfo.properties");
     private final SQLScriptRunner sqlRunner = new SQLScriptRunner();
     private final StudentDAO studentDAO = new StudentDAOImpl(ds);
     private final GroupDAO groupDAO = new GroupDAOImpl(ds);
@@ -54,16 +53,23 @@ public class Main {
 
     public static void main(String[] args) {
 //        SpringApplication.run(Main.class, args);
-        Main main = new Main();
-        main.startApp();
+//        Main main = new Main();
+//        main.startApp();
+//
+//        MenuGroup menuGroup = new MenuGroup("SQL APP");
+//        menuGroup.addItem(new AddStudentMenuItem(main.studentService));
+//        menuGroup.addItem(new DeleteStudentMenuItem(main.studentService));
+//        menuGroup.addItem(new GroupsByStudentCountMenuItem(main.groupService));
+//        menuGroup.addItem(new SetCourseMenuItem(main.courseService));
+//        menuGroup.addItem(new StudentsByCourseMenuItem(main.courseService));
+//        menuGroup.addItem(new UnlinkCourseMenuItem(main.courseService));
+//        menuGroup.doAction();
 
-        MenuGroup menuGroup = new MenuGroup("SQL APP");
-        menuGroup.addItem(new AddStudentMenuItem(main.studentService));
-        menuGroup.addItem(new DeleteStudentMenuItem(main.studentService));
-        menuGroup.addItem(new GroupsByStudentCountMenuItem(main.groupService));
-        menuGroup.addItem(new SetCourseMenuItem(main.courseService));
-        menuGroup.addItem(new StudentsByCourseMenuItem(main.courseService));
-        menuGroup.addItem(new UnlinkCourseMenuItem(main.courseService));
-        menuGroup.doAction();
+        SpringJdbcConfig springJdbcConfig = new SpringJdbcConfig();
+         CourseDAOJdbc daoJdbc = new CourseDAOJdbc(springJdbcConfig.jdbcTemplate());
+         Course course = daoJdbc.getById(11);
+         daoJdbc.saveCourse(course);
+
+        }
     }
-}
+

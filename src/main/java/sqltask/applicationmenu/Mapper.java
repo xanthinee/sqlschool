@@ -12,4 +12,6 @@ public interface Mapper<T> {
 
     Map<String, Object> mapToInsert(T entity);
 
+    T jdbcMapToEntity(Map<String, Object> map);
+
 }

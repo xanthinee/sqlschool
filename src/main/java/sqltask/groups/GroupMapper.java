@@ -1,6 +1,7 @@
 package sqltask.groups;
 
 import sqltask.applicationmenu.Mapper;
+import sqltask.courses.Course;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,5 +41,10 @@ public class GroupMapper implements Mapper<Group> {
         map.put(NAME_COLUMN, group.getName());
 
         return map;
+    }
+
+    @Override
+    public Group jdbcMapToEntity(Map<String, Object> map) {
+        return new Group((Integer) map.get(ID_COLUMN), (String) map.get(NAME_COLUMN));
     }
 }
