@@ -1,9 +1,12 @@
 package sqltask.connection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 //import org.flywaydb.core.internal.jdbc.JdbcTemplate;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.jdbc.core.JdbcTemplate;
+import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 
@@ -16,7 +19,7 @@ import java.util.Properties;
 @ComponentScan("sqltask")
 public class SpringJdbcConfig {
 
-    private static final String PATH_FOR_DATA_SOURCE = "data/application.properties";
+    private static final String PATH_FOR_DATA_SOURCE = "application.properties";
 
     Properties properties;
     public SpringJdbcConfig() {
@@ -26,25 +29,5 @@ public class SpringJdbcConfig {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Bean
-    public DataSource getDataSource() {
-
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.driverClassName(properties.getProperty("spring.datasource.driver-class-name"));
-        dataSourceBuilder.url(properties.getProperty("spring.datasource.url"));
-        dataSourceBuilder.username(properties.getProperty("spring.datasource.username"));
-        dataSourceBuilder.password(properties.getProperty("spring.datasource.password"));
-        return dataSourceBuilder.build();
-    }
-
-    public Connection getJDBCConnection() throws SQLException {
-        return DriverManager.getConnection(properties.getProperty("spring.datasource.url"), properties.getProperty("spring.datasource.username")
-                , properties.getProperty("spring.datasource.password"));
-    }
-    @Bean
-    public JdbcTemplate jdbcTemplate(){
-        return new JdbcTemplate(getDataSource());
     }
 }

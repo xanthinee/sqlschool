@@ -1,6 +1,6 @@
 package sqltask.courses;
 
-import org.flywaydb.core.internal.jdbc.RowMapper;
+//import org.flywaydb.core.internal.jdbc.RowMapper;
 import sqltask.applicationmenu.Mapper;
 
 import java.sql.PreparedStatement;

@@ -223,5 +223,4 @@ public class CourseDAOImpl implements CourseDAO {
                 e.printStackTrace();
             }
     }
-
 }
