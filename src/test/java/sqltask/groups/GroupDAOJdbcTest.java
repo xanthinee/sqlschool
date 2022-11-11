@@ -3,8 +3,10 @@ package sqltask.groups;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
@@ -16,6 +18,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import sqltask.JdbcDaoTestConfig;
+import sqltask.Main;
 import sqltask.students.StudentDAOJdbc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,6 +28,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @Testcontainers
 public class GroupDAOJdbcTest {
+
+    @Autowired
+    ApplicationContext ctx;
 
     @Autowired
     GroupDaoJdbc dao;
