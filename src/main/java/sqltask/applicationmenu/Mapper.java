@@ -9,9 +9,4 @@ public interface Mapper<T> {
 
     T mapToEntity(ResultSet rs);
     void mapToRow(PreparedStatement ps, T entity);
-
-    Map<String, Object> mapToInsert(T entity);
-
-    T jdbcMapToEntity(Map<String, Object> map);
-
 }

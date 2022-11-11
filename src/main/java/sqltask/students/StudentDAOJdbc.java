@@ -2,6 +2,7 @@ package sqltask.students;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -20,7 +21,6 @@ public class StudentDAOJdbc implements StudentDAO {
     private static final String UPGRADE_GROUP_ID_OF_STUDENT = "update " + STUDENT_TABLE + " set group_id = ? where student_id = ?";
     private final StudentRowMapper studentsRowMapper = new StudentRowMapper();
 
-    @Autowired
     public StudentDAOJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

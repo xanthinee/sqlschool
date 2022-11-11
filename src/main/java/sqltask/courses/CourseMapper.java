@@ -35,20 +35,4 @@ public class CourseMapper implements Mapper<Course> {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public Map<String, Object> mapToInsert(Course course) {
-
-        Map<String, Object> map = new HashMap<>();
-        map.put(ID_COLUMN, course.getId());
-        map.put(NAME_COLUMN, course.getName());
-        map.put(DESCRIPTION_COLUMN, course.getDescription());
-
-        return map;
-    }
-
-    @Override
-    public Course jdbcMapToEntity(Map<String, Object> map) {
-        return new Course((Integer) map.get(ID_COLUMN),(String) map.get(NAME_COLUMN), (String) map.get(DESCRIPTION_COLUMN));
-    }
 }

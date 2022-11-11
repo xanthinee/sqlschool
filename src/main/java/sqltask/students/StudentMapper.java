@@ -34,22 +34,4 @@ public class StudentMapper implements Mapper<Student> {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public Map<String, Object> mapToInsert(Student student) {
-
-        Map<String, Object> map = new HashMap<>();
-        map.put(ID_COLUMN, student.getStudentId());
-        map.put(GROUP_ID_COLUMN, student.getGroupId());
-        map.put(NAME_COLUMN, student.getName());
-        map.put(SURNAME_COLUMN, student.getSurname());
-
-        return map;
-    }
-
-    @Override
-    public Student jdbcMapToEntity(Map<String, Object> map) {
-        return new Student((Integer) map.get(ID_COLUMN), (Integer) map.get(GROUP_ID_COLUMN),
-                (String) map.get(NAME_COLUMN), (String) map.get(SURNAME_COLUMN));
-    }
 }

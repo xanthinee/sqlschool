@@ -32,19 +32,4 @@ public class GroupMapper implements Mapper<Group> {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public Map<String, Object> mapToInsert(Group group) {
-
-        Map<String, Object> map = new HashMap<>();
-        map.put(ID_COLUMN, group.getId());
-        map.put(NAME_COLUMN, group.getName());
-
-        return map;
-    }
-
-    @Override
-    public Group jdbcMapToEntity(Map<String, Object> map) {
-        return new Group((Integer) map.get(ID_COLUMN), (String) map.get(NAME_COLUMN));
-    }
 }

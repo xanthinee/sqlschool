@@ -27,8 +27,6 @@ public class GroupDaoJdbc implements GroupDAO {
             + STUDENTS_TABLE + " s2 where s2.group_id = ?)";
     private final GroupRowMapper groupRowMapper = new GroupRowMapper();
 
-
-    @Autowired
     public GroupDaoJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
