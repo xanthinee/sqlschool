@@ -20,32 +20,32 @@ public class SpringJdbcConfig {
 
     Properties properties;
 
-    @Value("${jdbc.driver-class-name:org.postgresql.Driver}")
-    private String jdbcDriver;
-
-    @Value( "${jdbc.url:jdbc:postgresql://localhost:5432/postgreSQLTaskFoxminded}" )
-    private String jdbcUrl;
-
-    @Value( "${jdbc.username:postgres}")
-    private String jdbcUser;
-
-    @Value( "${jdbc.password:7777}")
-    private String jdbcPassword;
-
-    @Autowired
-    private Environment env;
-
-    @Bean
-    public DataSource getDataSource() {
-
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty(jdbcDriver));
-        dataSource.setUrl(env.getProperty(jdbcUrl));
-        dataSource.setUsername(env.getProperty(jdbcUser));
-        dataSource.setPassword(env.getProperty(jdbcPassword));
-
-        return dataSource;
-    }
+//    @Value("${jdbc.driver-class-name:org.postgresql.Driver}")
+//    private String jdbcDriver;
+//
+//    @Value( "${jdbc.url:jdbc:postgresql://localhost:5432/postgreSQLTaskFoxminded}" )
+//    private String jdbcUrl;
+//
+//    @Value( "${jdbc.username:postgres}")
+//    private String jdbcUser;
+//
+//    @Value( "${jdbc.password:7777}")
+//    private String jdbcPassword;
+//
+//    @Autowired
+//    private Environment env;
+//
+//    @Bean
+//    public DataSource getDataSource() {
+//
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        dataSource.setDriverClassName(env.getProperty(jdbcDriver));
+//        dataSource.setUrl(env.getProperty(jdbcUrl));
+//        dataSource.setUsername(env.getProperty(jdbcUser));
+//        dataSource.setPassword(env.getProperty(jdbcPassword));
+//
+//        return dataSource;
+//    }
 
 //    @Bean
 //    public DataSource getDataSource() {

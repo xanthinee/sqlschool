@@ -54,12 +54,4 @@ public class GroupDAOJdbcTest {
         dao.deleteById(1);
         assertEquals(0, JdbcTestUtils.countRowsInTable(jdbc, "groups"));
     }
-
-    @Test
-    public void abc() {
-        StudentDAOJdbc studentDAOJdbc = new StudentDAOJdbc(jdbc);
-        System.out.println(studentDAOJdbc.getById(10));
-        assertEquals(4, studentDAOJdbc.getById(10).getGroupId());
-    }
-
 }

@@ -67,9 +67,12 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
-        StudentDAOJdbc studentDAOJdbc = new StudentDAOJdbc(new JdbcTemplate());
-        System.out.println(studentDAOJdbc.getById(10));
+        ApplicationContext ctx = SpringApplication.run(Main.class, args);
+        StudentDAOJdbc studentDAO = ctx.getBean(StudentDAOJdbc.class);
+        System.out.println(studentDAO.getById(11));
+        CourseDAOJdbc courseDAO = ctx.getBean(CourseDAOJdbc.class);
+        System.out.println(courseDAO.getById(8));
+
 
 //        main.startApp();
 //
