@@ -16,7 +16,6 @@ import javax.sql.DataSource;
 
 @SpringBootTest
 @TestConfiguration
-//@ComponentScan("sqltask.students")
 public class JdbcDaoTestConfig {
 
     @Bean
