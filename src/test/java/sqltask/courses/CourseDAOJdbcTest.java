@@ -3,17 +3,13 @@ package sqltask.courses;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.jdbc.JdbcTestUtils;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import sqltask.JdbcDaoTestConfig;
 import sqltask.students.Student;
@@ -27,9 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-@ContextConfiguration(initializers = {CourseDAOJdbcTest.Initializer.class})
-@Import(JdbcDaoTestConfig.class)
-@SpringBootTest
+@ContextConfiguration(initializers = {JdbcDaoTestConfig.Initializer.class})
+@SpringBootTest(classes = {JdbcDaoTestConfig.class})
 @Testcontainers
 class CourseDAOJdbcTest {
 
@@ -44,39 +39,23 @@ class CourseDAOJdbcTest {
 
     private static final String COURSE_TABLE = "courses";
     private static final String STUDENT_COURSE = "students_courses";
-
-
-    @Container
-    static public PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13")
-            .withDatabaseName("jdbc:tc:postgresql://localhost:5432/postgreSQLTaskFoxmindedTests")
-            .withUsername("postgres")
-            .withPassword("7777");
-
-    static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-            TestPropertyValues.of(
-                    "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
-                    "spring.datasource.username=" + postgreSQLContainer.getUsername(),
-                    "spring.datasource.password=" + postgreSQLContainer.getPassword()
-            ).applyTo(configurableApplicationContext.getEnvironment());
-        }
-    }
+    private static final String STUDENT_TABLE = "students";
 
     @BeforeEach
     public void clearContainer() {
-        dao.deleteAll();
-        studentDao.deleteAll();
-        dao.deleteAllFromStudentsCourses();
+        JdbcTestUtils.deleteFromTables(jdbc, STUDENT_TABLE);
+        JdbcTestUtils.deleteFromTables(jdbc, STUDENT_COURSE);
+        JdbcTestUtils.deleteFromTables(jdbc, COURSE_TABLE);
     }
 
     @Test
-    void saveCourse_shouldRetrieveOnlyOneLine() {
+    void saveCourse_shouldSaveOnlyOneLine() {
         dao.saveCourse(new Course(1,"a", "a"));
         assertEquals(1, JdbcTestUtils.countRowsInTable(jdbc, COURSE_TABLE));
     }
 
     @Test
-    void saveAll_shouldRetrieveSeveralRows() {
+    void saveAll_shouldSaveSeveralRows() {
 
         List<Course> courses = new ArrayList<>();
         Course course = new Course(1,"a","a");
@@ -159,7 +138,7 @@ class CourseDAOJdbcTest {
         courses.add(course);
         courses.add(course1);
 
-        jdbc.update("insert into students values (?,?,?,?)", student.getStudentId(), student.getGroupId(),
+        jdbc.update("insert into " + STUDENT_TABLE + " values (?,?,?,?)", student.getStudentId(), student.getGroupId(),
                 student.getName(), student.getSurname());
 
         jdbc.batchUpdate("insert into " + COURSE_TABLE + " values (default,?,?)", courses, courses.size(),
@@ -183,7 +162,7 @@ class CourseDAOJdbcTest {
         courses.add(course);
         courses.add(course1);
 
-        jdbc.update("insert into students values (?,?,?,?)", student.getStudentId(), student.getGroupId(),
+        jdbc.update("insert into " + STUDENT_TABLE + " values (?,?,?,?)", student.getStudentId(), student.getGroupId(),
                 student.getName(), student.getSurname());
 
         jdbc.batchUpdate("insert into " + COURSE_TABLE + " values (default,?,?)", courses, courses.size(),
@@ -212,7 +191,7 @@ class CourseDAOJdbcTest {
         courses.add(course);
         courses.add(course1);
 
-        jdbc.update("insert into students values (?,?,?,?)", student.getStudentId(), student.getGroupId(),
+        jdbc.update("insert into " + STUDENT_TABLE + " values (?,?,?,?)", student.getStudentId(), student.getGroupId(),
                 student.getName(), student.getSurname());
 
         jdbc.batchUpdate("insert into " + COURSE_TABLE + " values (default,?,?)", courses, courses.size(),
@@ -247,7 +226,7 @@ class CourseDAOJdbcTest {
         courses.add(course);
         courses.add(course1);
 
-        jdbc.update("insert into students values (?,?,?,?)", student.getStudentId(), student.getGroupId(),
+        jdbc.update("insert into " + STUDENT_TABLE + " values (?,?,?,?)", student.getStudentId(), student.getGroupId(),
                 student.getName(), student.getSurname());
 
         jdbc.batchUpdate("insert into " + COURSE_TABLE + " values (?,?,?)", courses, courses.size(),
@@ -285,7 +264,7 @@ class CourseDAOJdbcTest {
         courses.add(course1);
         courses.add(newCourse);
 
-        jdbc.batchUpdate("insert into students values (?,?,?,?)", students, students.size(),
+        jdbc.batchUpdate("insert into " + STUDENT_TABLE + " values (?,?,?,?)", students, students.size(),
                 (PreparedStatement ps, Student studentJdbc) -> {
                     ps.setInt(1, studentJdbc.getStudentId());
                     ps.setInt(2, studentJdbc.getGroupId());
@@ -330,7 +309,7 @@ class CourseDAOJdbcTest {
         courses.add(course1);
         courses.add(course2);
 
-        jdbc.update("insert into students values (?,?,?,?)", student.getStudentId(), student.getGroupId(),
+        jdbc.update("insert into " + STUDENT_TABLE + " values (?,?,?,?)", student.getStudentId(), student.getGroupId(),
                 student.getName(), student.getSurname());
 
         jdbc.batchUpdate("insert into " + COURSE_TABLE + " values (?,?,?)", courses, courses.size(),

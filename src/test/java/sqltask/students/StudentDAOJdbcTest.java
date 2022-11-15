@@ -4,16 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.jdbc.JdbcTestUtils;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import sqltask.JdbcDaoTestConfig;
 
@@ -24,9 +19,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ContextConfiguration(initializers = {StudentDAOJdbcTest.Initializer.class})
-@Import(JdbcDaoTestConfig.class)
-@SpringBootTest
+@ContextConfiguration(initializers = {JdbcDaoTestConfig.Initializer.class})
+@SpringBootTest(classes = JdbcDaoTestConfig.class)
 @Testcontainers
 class StudentDAOJdbcTest {
 
@@ -39,35 +33,19 @@ class StudentDAOJdbcTest {
 
     private static final String STUDENTS_TABLE = "students";
 
-    @Container
-    static public PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13")
-            .withDatabaseName("jdbc:tc:postgresql://localhost:5432/postgreSQLTaskFoxmindedTests")
-            .withUsername("postgres")
-            .withPassword("7777");
-
-    static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-            TestPropertyValues.of(
-                    "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
-                    "spring.datasource.username=" + postgreSQLContainer.getUsername(),
-                    "spring.datasource.password=" + postgreSQLContainer.getPassword()
-            ).applyTo(configurableApplicationContext.getEnvironment());
-        }
-    }
-
     @BeforeEach
     public void clearContainer() {
-        dao.deleteAll();
+        JdbcTestUtils.deleteFromTables(jdbc, STUDENTS_TABLE);
     }
 
     @Test
-    void save_shouldRetrieveOnlyOneLine() {
+    void save_shouldSaveOnlyOneLine() {
         dao.save(new Student(1,1,"a", "a"));
         assertEquals(1, JdbcTestUtils.countRowsInTable(jdbc, STUDENTS_TABLE));
     }
 
     @Test
-    void saveAll_shouldRetrieveSeveralRows() {
+    void saveAll_shouldSaveSeveralRows() {
 
         List<Student> students = new ArrayList<>(Arrays.asList(
                 new Student(1, 1,"a", "a"),

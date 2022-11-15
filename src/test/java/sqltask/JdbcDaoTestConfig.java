@@ -1,37 +1,30 @@
 package sqltask;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import sqltask.students.StudentDAOJdbc;
+import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.testcontainers.containers.PostgreSQLContainer;
 
-import java.util.Properties;
-
-import javax.sql.DataSource;
-
-@SpringBootTest
 @TestConfiguration
 public class JdbcDaoTestConfig {
 
-    @Bean
-    public DataSource getDataSource() {
-
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/postgreSQLTaskFoxmindedTests");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("7777");
-
-        return dataSource;
+    static public PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13")
+            .withDatabaseName("postgreSQLTaskFoxmindedTests")
+            .withUsername("postgres")
+            .withPassword("7777")
+            .withInitScript("sqldata/tables_creation.sql");
+    static {
+        postgreSQLContainer.start();
     }
 
-    @Bean
-    public JdbcTemplate JdbcTemplate() {
-        return new JdbcTemplate(getDataSource());
+    public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+            TestPropertyValues.of(
+                    "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
+                    "spring.datasource.username=" + postgreSQLContainer.getUsername(),
+                    "spring.datasource.password=" + postgreSQLContainer.getPassword()
+            ).applyTo(configurableApplicationContext.getEnvironment());
+        }
     }
 }
