@@ -9,7 +9,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 @TestConfiguration
 public class JdbcDaoTestConfig {
 
-    static public PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13")
+    private final static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13")
             .withDatabaseName("postgreSQLTaskFoxmindedTests")
             .withUsername("postgres")
             .withPassword("7777")

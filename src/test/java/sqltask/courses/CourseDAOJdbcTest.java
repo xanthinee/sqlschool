@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ContextConfiguration(initializers = {JdbcDaoTestConfig.Initializer.class})
 @SpringBootTest(classes = {JdbcDaoTestConfig.class})
-@Testcontainers
 class CourseDAOJdbcTest {
 
     @Autowired
@@ -43,9 +42,7 @@ class CourseDAOJdbcTest {
 
     @BeforeEach
     public void clearContainer() {
-        JdbcTestUtils.deleteFromTables(jdbc, STUDENT_TABLE);
-        JdbcTestUtils.deleteFromTables(jdbc, STUDENT_COURSE);
-        JdbcTestUtils.deleteFromTables(jdbc, COURSE_TABLE);
+        JdbcTestUtils.deleteFromTables(jdbc, STUDENT_TABLE, COURSE_TABLE, STUDENT_COURSE);
     }
 
     @Test

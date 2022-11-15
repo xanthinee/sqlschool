@@ -13,7 +13,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import sqltask.applicationmenu.MenuGroup;
 import sqltask.applicationmenu.menufunctions.*;
 import sqltask.connection.DataConnection;
-import sqltask.connection.SpringJdbcConfig;
 import sqltask.courses.*;
 import sqltask.groups.GroupDAO;
 import sqltask.groups.GroupDaoJdbc;

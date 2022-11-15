@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ContextConfiguration(initializers = {JdbcDaoTestConfig.Initializer.class})
 @SpringBootTest(classes = JdbcDaoTestConfig.class)
-@Testcontainers
 class StudentDAOJdbcTest {
 
     @Autowired
