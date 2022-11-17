@@ -83,6 +83,7 @@ public class StudentService {
                 }
             }
         }
+        groupedStudents.addAll(students);
         return groupedStudents;
     }
 }

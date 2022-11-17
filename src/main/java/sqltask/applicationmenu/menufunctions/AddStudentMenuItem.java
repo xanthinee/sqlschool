@@ -38,8 +38,13 @@ public class AddStudentMenuItem implements Menu {
         outputStream.println("Enter SURNAME of student");
         String studentSurname = sc.next();
         outputStream.println("Enter ID of GROUP which new STUDENT will have bellow: ");
-        int groupId = sc.nextInt();
-        service.save(new Student(null, groupId, studentName, studentSurname));
+        outputStream.println("If new STUDENT has no GROUP then type 'null'");
+        outputStream.println("If you want randomly assign GROUP to STUDENT type 'random'");
+        String groupId = sc.next();
+        if (groupId.equals("null")) {
+            service.save(new Student(null, null, studentName, studentSurname));
+        } else {
+            service.save(new Student(null, Integer.valueOf(groupId), studentName, studentSurname));
+        }
     }
-
 }

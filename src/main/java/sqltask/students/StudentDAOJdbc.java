@@ -1,11 +1,13 @@
 package sqltask.students;
 
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.sql.Types;
 import java.util.*;
 
 @Repository
@@ -34,7 +36,11 @@ public class StudentDAOJdbc implements StudentDAO {
     public void saveAll(List<Student> students) {
         jdbcTemplate.batchUpdate(SAVE_STUDENT, students, students.size(),
                 (PreparedStatement ps, Student student) -> {
-            ps.setInt(1, student.getGroupId());
+            if (student.getGroupId() == null) {
+                ps.setNull(1, Types.NULL);
+            } else {
+                ps.setInt(1, student.getGroupId());
+            }
             ps.setString(2, student.getName());
             ps.setString(3, student.getSurname());
                 });
