@@ -1,58 +1,62 @@
 package sqltask.courses;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import sqltask.students.Student;
-import sqltask.students.StudentDAO;
+import sqltask.students.StudentDAOJdbc;
 
 import java.util.*;
 
+@Service
 public class CourseService {
 
     private final Random rd = new Random();
-    private final CourseDAO courseDAO;
-    private final StudentDAO studentDAO;
+    @Autowired
+    private final CourseDAOJdbc courseDAOJdbc;
+    @Autowired
+    private final StudentDAOJdbc studentDAOJdbc;
     private static final int MAX_COURSES_PER_STUDENT = 3;
 
-    public CourseService(CourseDAO courseDAO, StudentDAO studentDAO) {
-        this.courseDAO = courseDAO;
-        this.studentDAO = studentDAO;
+    public CourseService(CourseDAOJdbc courseDAOJdbc, StudentDAOJdbc studentDAOJdbc) {
+        this.courseDAOJdbc = courseDAOJdbc;
+        this.studentDAOJdbc = studentDAOJdbc;
     }
 
     public void deleteAll() {
-        courseDAO.deleteAll();
+        courseDAOJdbc.deleteAll();
     }
 
     public List<Course> getAll() {
-        return courseDAO.getAll();
+        return courseDAOJdbc.getAll();
     }
 
     public List<Course> getCoursesOfStudent(int studID) {
-        return courseDAO.getCoursesOfStudent(studID);
+        return courseDAOJdbc.getCoursesOfStudent(studID);
     }
 
     public List<Course> findAvailableCourses(int studentID) {
-        return courseDAO.findAvailableCourses(studentID);
+        return courseDAOJdbc.findAvailableCourses(studentID);
     }
 
     public List<Student> getCourseMembers(String courseName) {
-        return courseDAO.getCourseMembers(courseName);
+        return courseDAOJdbc.getCourseMembers(courseName);
     }
 
     public void unlinkCourse(int studentID, String courseToDelete) {
-        courseDAO.unlinkCourse(studentID, courseToDelete);
+        courseDAOJdbc.unlinkCourse(studentID, courseToDelete);
     }
 
     public void setNewCourse(int studentID, String courseName) {
-        courseDAO.setNewCourse(studentID, courseName);
+        courseDAOJdbc.setNewCourse(studentID, courseName);
     }
 
     public Course getById(int id) {
-        return courseDAO.getById(id);
+        return courseDAOJdbc.getById(id);
     }
 
     public void deleteById(int id) {
-        courseDAO.deleteById(id);
+        courseDAOJdbc.deleteById(id);
     }
-
     private List<Course> selectRandomCourses(List<Course> allCourses) {
 
         List<Course> courses = new ArrayList<>();
@@ -64,11 +68,11 @@ public class CourseService {
 
     public void createStdCrsTable() {
 
-        List<Student> students = studentDAO.getAll();
-        List<Course> courses = courseDAO.getAll();
+        List<Student> students = studentDAOJdbc.getAll();
+        List<Course> courses = courseDAOJdbc.getAll();
 
         for (Student student : students) {
-            courseDAO.save(student, selectRandomCourses(courses));
+            courseDAOJdbc.save(student, selectRandomCourses(courses));
         }
     }
 

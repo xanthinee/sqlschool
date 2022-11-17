@@ -14,7 +14,7 @@ public class StudentDAOJdbc implements StudentDAO {
     private final JdbcTemplate jdbcTemplate;
     private static final String STUDENT_TABLE = "students";
     private static final String GET_BY_ID = "select * from " + STUDENT_TABLE + " where student_id=?";
-    private static final String SAVE_STUDENT = "insert into " + STUDENT_TABLE + " values(default,null,?,?)";
+    private static final String SAVE_STUDENT = "insert into " + STUDENT_TABLE + " values(default,?,?,?)";
     private static final String DELETE_BY_ID = "delete from " + STUDENT_TABLE + " where student_id = ?";
     private static final String DELETE_ALL = "delete from " + STUDENT_TABLE;
     private static final String GET_ALL = "select * from " + STUDENT_TABLE;
@@ -27,15 +27,16 @@ public class StudentDAOJdbc implements StudentDAO {
 
     @Override
     public void save(Student student) {
-        jdbcTemplate.update(SAVE_STUDENT, student.getName(), student.getSurname());
+        jdbcTemplate.update(SAVE_STUDENT, student.getGroupId(), student.getName(), student.getSurname());
     }
 
     @Override
     public void saveAll(List<Student> students) {
         jdbcTemplate.batchUpdate(SAVE_STUDENT, students, students.size(),
                 (PreparedStatement ps, Student student) -> {
-            ps.setString(1, student.getName());
-            ps.setString(2, student.getSurname());
+            ps.setInt(1, student.getGroupId());
+            ps.setString(2, student.getName());
+            ps.setString(3, student.getSurname());
                 });
     }
 

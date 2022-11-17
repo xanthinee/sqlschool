@@ -1,46 +1,51 @@
 package sqltask.students;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import sqltask.groups.Group;
-import sqltask.groups.GroupDAO;
+import sqltask.groups.GroupDaoJdbc;
 import sqltask.helpers.CustomFileReader;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@Service
 @SuppressWarnings("java:S106")
 public class StudentService {
 
-    private final StudentDAO dao;
-    private final GroupDAO groupDAO;
+    @Autowired
+    private final StudentDAOJdbc studentDAOJdbc;
+    @Autowired
+    private final GroupDaoJdbc groupDaoJdbc;
     private static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
     private static final int MIN_AMOUNT_OF_STUDENTS_IN_GROUP = 10;
     private static final int MAX_AMOUNT_OF_STUDENTS_IN_GROUP = 30;
     private static final Random rd = new Random();
 
-    public StudentService(StudentDAO dao, GroupDAO groupDAO) {
-        this.dao = dao;
-        this.groupDAO = groupDAO;
+    public StudentService(StudentDAOJdbc studentDAOJdbc, GroupDaoJdbc groupDaoJdbc) {
+        this.studentDAOJdbc = studentDAOJdbc;
+        this.groupDaoJdbc = groupDaoJdbc;
     }
 
     public void deleteAll() {
-        dao.deleteAll();
+        studentDAOJdbc.deleteAll();
     }
 
     public List<Student> getAll() {
-        return dao.getAll();
+        return studentDAOJdbc.getAll();
     }
 
     public Student getById(int id) {
-        return dao.getById(id);
+        return studentDAOJdbc.getById(id);
     }
 
     public void deleteById(int id) {
-        dao.deleteById(id);
+        studentDAOJdbc.deleteById(id);
     }
 
     public void save(Student student) {
-        dao.save(student);
+        studentDAOJdbc.save(student);
     }
 
     public List<Student> generateStudents() {
@@ -58,23 +63,26 @@ public class StudentService {
         return students;
     }
 
-    public void setGroupsToStudents() {
+    public List<Student> setGroupsId(List<Student> students) {
 
-        List<Student> students = dao.getAll();
-        List<Group> groups = groupDAO.getAll();
+        List<Group> groups = groupDaoJdbc.getAll();
+        List<Student> groupedStudents = new ArrayList<>();
+
         for (Group group : groups) {
-            int groupMembers = rd.nextInt(MIN_AMOUNT_OF_STUDENTS_IN_GROUP, MAX_AMOUNT_OF_STUDENTS_IN_GROUP + 1);
+            int groupMembers = rd.nextInt(0, MAX_AMOUNT_OF_STUDENTS_IN_GROUP + 1);
+            if (groupMembers >= MIN_AMOUNT_OF_STUDENTS_IN_GROUP) {
                 for (int i = 0; i < groupMembers; i++) {
                     int studIndex = rd.nextInt(0, students.size());
                     Student student = students.get(studIndex);
-                    if (student.getGroupId() == 0) {
-                        dao.updateGroupIdByStudId(student, group.getId());
-                        students.remove(studIndex);
-                        if (students.isEmpty()) {
-                            break;
-                        }
+                    student.setGroupId(group.getId());
+                    groupedStudents.add(student);
+                    students.remove(studIndex);
+                    if (students.isEmpty()) {
+                        break;
                     }
                 }
+            }
         }
+        return groupedStudents;
     }
 }

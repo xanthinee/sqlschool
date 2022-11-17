@@ -1,35 +1,38 @@
 package sqltask.groups;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupService {
 
-    private final GroupDAO dao;
+    @Autowired
+    private final GroupDaoJdbc groupDaoJdbc;
     private static final int TOTAL_AMOUNT_OF_GROUPS = 10;
 
-    public GroupService(GroupDAO dao) {
-        this.dao = dao;
+    public GroupService(GroupDaoJdbc groupDaoJdbc) {
+        this.groupDaoJdbc = groupDaoJdbc;
     }
 
     public void deleteAll() {
-        dao.deleteAll();
+        groupDaoJdbc.deleteAll();
     }
 
     public List<Group> getAll() {
-        return dao.getAll();
+        return groupDaoJdbc.getAll();
     }
 
     public Group getById(int id) {
-        return dao.getById(id);
+        return groupDaoJdbc.getById(id);
     }
 
     public void deleteById(int id) {
-        dao.deleteById(id);
+        groupDaoJdbc.deleteById(id);
     }
 
     public List<Group> compareGroups(int groupID) {
-        return dao.compareGroups(groupID);
+        return groupDaoJdbc.compareGroups(groupID);
     }
 
     public List<Group> generateGroups() {
