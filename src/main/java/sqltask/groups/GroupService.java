@@ -1,17 +1,18 @@
 package sqltask.groups;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class GroupService {
 
-    @Autowired
-    private final GroupDaoJdbc groupDaoJdbc;
+    private final GroupDAO groupDaoJdbc;
     private static final int TOTAL_AMOUNT_OF_GROUPS = 10;
 
-    public GroupService(GroupDaoJdbc groupDaoJdbc) {
+    public GroupService(GroupDAO groupDaoJdbc) {
         this.groupDaoJdbc = groupDaoJdbc;
     }
 

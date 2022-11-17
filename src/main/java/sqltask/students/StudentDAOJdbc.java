@@ -37,7 +37,7 @@ public class StudentDAOJdbc implements StudentDAO {
         jdbcTemplate.batchUpdate(SAVE_STUDENT, students, students.size(),
                 (PreparedStatement ps, Student student) -> {
             if (student.getGroupId() == null) {
-                ps.setNull(1, Types.NULL);
+                ps.setNull(1, Types.INTEGER);
             } else {
                 ps.setInt(1, student.getGroupId());
             }

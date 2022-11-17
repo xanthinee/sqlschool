@@ -3,6 +3,7 @@ package sqltask.students;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sqltask.groups.Group;
+import sqltask.groups.GroupDAO;
 import sqltask.groups.GroupDaoJdbc;
 import sqltask.helpers.CustomFileReader;
 
@@ -14,16 +15,14 @@ import java.util.Random;
 @SuppressWarnings("java:S106")
 public class StudentService {
 
-    @Autowired
-    private final StudentDAOJdbc studentDAOJdbc;
-    @Autowired
-    private final GroupDaoJdbc groupDaoJdbc;
+    private final StudentDAO studentDAOJdbc;
+    private final GroupDAO groupDaoJdbc;
     private static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
     private static final int MIN_AMOUNT_OF_STUDENTS_IN_GROUP = 10;
     private static final int MAX_AMOUNT_OF_STUDENTS_IN_GROUP = 30;
     private static final Random rd = new Random();
 
-    public StudentService(StudentDAOJdbc studentDAOJdbc, GroupDaoJdbc groupDaoJdbc) {
+    public StudentService(StudentDAO studentDAOJdbc, GroupDAO groupDaoJdbc) {
         this.studentDAOJdbc = studentDAOJdbc;
         this.groupDaoJdbc = groupDaoJdbc;
     }
@@ -69,19 +68,16 @@ public class StudentService {
         List<Student> groupedStudents = new ArrayList<>();
 
         for (Group group : groups) {
-            int groupMembers = rd.nextInt(0, MAX_AMOUNT_OF_STUDENTS_IN_GROUP + 1);
-            if (groupMembers >= MIN_AMOUNT_OF_STUDENTS_IN_GROUP) {
+            int groupMembers = rd.nextInt(MIN_AMOUNT_OF_STUDENTS_IN_GROUP, MAX_AMOUNT_OF_STUDENTS_IN_GROUP + 1);
                 for (int i = 0; i < groupMembers; i++) {
                     int studIndex = rd.nextInt(0, students.size());
-                    Student student = students.get(studIndex);
+                    Student student = students.remove(studIndex);
                     student.setGroupId(group.getId());
                     groupedStudents.add(student);
-                    students.remove(studIndex);
                     if (students.isEmpty()) {
                         break;
                     }
                 }
-            }
         }
         groupedStudents.addAll(students);
         return groupedStudents;

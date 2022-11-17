@@ -4,6 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import sqltask.applicationmenu.MenuGroup;
 import sqltask.applicationmenu.menufunctions.*;
+import sqltask.connection.DataConnection;
 import sqltask.courses.*;
 import sqltask.groups.GroupDaoJdbc;
 import sqltask.groups.GroupService;
@@ -16,15 +17,9 @@ public class Main {
     public static void main(String[] args) {
 
         ApplicationContext ctx = SpringApplication.run(Main.class, args);
-
-        StudentDAOJdbc studentDAO = ctx.getBean(StudentDAOJdbc.class);
-        System.out.println(studentDAO.getById(11));
-        CourseDAOJdbc courseDAO = ctx.getBean(CourseDAOJdbc.class);
-        System.out.println(courseDAO.getById(8));
-        GroupDaoJdbc groupDAO = ctx.getBean(GroupDaoJdbc.class);
-        StudentService studentService = new StudentService(studentDAO, groupDAO);
-        GroupService groupService = new GroupService(groupDAO);
-        CourseService courseService = new CourseService(courseDAO, studentDAO);
+        StudentService studentService = ctx.getBean(StudentService.class);
+        GroupService groupService = ctx.getBean(GroupService.class);
+        CourseService courseService = ctx.getBean(CourseService.class);
 
         MenuGroup appMenu = new MenuGroup("SQL APP");
         appMenu.addItem(new AddStudentMenuItem(studentService));

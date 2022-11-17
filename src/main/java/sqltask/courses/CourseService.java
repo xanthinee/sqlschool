@@ -1,9 +1,8 @@
 package sqltask.courses;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sqltask.students.Student;
-import sqltask.students.StudentDAOJdbc;
+import sqltask.students.StudentDAO;
 
 import java.util.*;
 
@@ -11,13 +10,11 @@ import java.util.*;
 public class CourseService {
 
     private final Random rd = new Random();
-    @Autowired
-    private final CourseDAOJdbc courseDAOJdbc;
-    @Autowired
-    private final StudentDAOJdbc studentDAOJdbc;
+    private final CourseDAO courseDAOJdbc;
+    private final StudentDAO studentDAOJdbc;
     private static final int MAX_COURSES_PER_STUDENT = 3;
 
-    public CourseService(CourseDAOJdbc courseDAOJdbc, StudentDAOJdbc studentDAOJdbc) {
+    public CourseService(CourseDAO courseDAOJdbc, StudentDAO studentDAOJdbc) {
         this.courseDAOJdbc = courseDAOJdbc;
         this.studentDAOJdbc = studentDAOJdbc;
     }
