@@ -3,6 +3,7 @@ package sqltask;
 import org.springframework.boot.ApplicationArguments;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Service;

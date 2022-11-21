@@ -33,10 +33,11 @@ class GroupDAOJdbcTest {
     JdbcTemplate jdbc;
 
     private static final String GROUPS_TABLE = "groups";
+    private static final String STUDENT_TABLE = "students";
 
     @BeforeEach
     public void clearContainer() {
-        JdbcTestUtils.deleteFromTables(jdbc, GROUPS_TABLE);
+        JdbcTestUtils.deleteFromTables(jdbc, GROUPS_TABLE, STUDENT_TABLE);
     }
 
     @Test
@@ -108,7 +109,6 @@ class GroupDAOJdbcTest {
     @Test
     void compareGroups_shouldRetrieveThreeGroups() {
 
-        List<Student> students = new ArrayList<>();
         Student[] studentsArray = {new Student(1, 1, "a", "a"),
                 new Student(2, 2, "a", "a"),
                 new Student(3, 2, "a", "a"),
@@ -119,13 +119,14 @@ class GroupDAOJdbcTest {
                 new Student(8, 4, "f", "f"),
                 new Student(9, 4, "g", "g"),
                 new Student(10, 4, "h", "h")};
-        students.addAll(Arrays.asList(studentsArray));
+        List<Student> students = new ArrayList<>(Arrays.asList(studentsArray));
 
-        jdbc.batchUpdate("insert into students values(default,?,?,?)", students, students.size(),
+        jdbc.batchUpdate("insert into students values(?,?,?,?)", students, students.size(),
                 (PreparedStatement ps, Student student) -> {
-                    ps.setInt(1, student.getGroupId());
-                    ps.setString(2, student.getName());
-                    ps.setString(3, student.getSurname());
+                    ps.setInt(1, student.getStudentId());
+                    ps.setInt(2, student.getGroupId());
+                    ps.setString(3, student.getName());
+                    ps.setString(4, student.getSurname());
                 });
 
         List<Group> groups = new ArrayList<>();
