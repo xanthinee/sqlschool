@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.jdbc.JdbcTestUtils;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ContextConfiguration(initializers = {JdbcDaoTestConfig.Initializer.class})
 @SpringBootTest(classes = {JdbcDaoTestConfig.class})
+@ActiveProfiles("test")
 class CourseDAOJdbcTest {
 
     @Autowired

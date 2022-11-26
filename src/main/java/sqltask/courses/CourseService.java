@@ -1,10 +1,12 @@
 package sqltask.courses;
 
 import org.springframework.stereotype.Service;
+import sqltask.helpers.CustomFileReader;
 import sqltask.students.Student;
 import sqltask.students.StudentDAO;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class CourseService {
@@ -54,6 +56,9 @@ public class CourseService {
     public void deleteById(int id) {
         courseDAOJdbc.deleteById(id);
     }
+    public void saveAll(List<Course> courses) {
+        courseDAOJdbc.saveAll(courses);
+    }
     private List<Course> selectRandomCourses(List<Course> allCourses) {
 
         List<Course> courses = new ArrayList<>();
@@ -71,6 +76,14 @@ public class CourseService {
         for (Student student : students) {
             courseDAOJdbc.save(student, selectRandomCourses(courses));
         }
+    }
+
+    public List<Course> makeCoursesList(String fileName) {
+
+        CustomFileReader fileCon = new CustomFileReader();
+        Stream<String> courses = fileCon.readFile(fileName);
+        CoursesParser cp = new CoursesParser();
+        return courses.map(cp::parse).toList();
     }
 
 }

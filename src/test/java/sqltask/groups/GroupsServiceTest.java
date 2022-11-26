@@ -63,7 +63,6 @@ class GroupsServiceTest {
         groupService.deleteById(groupId);
         verify(groupDao, times(1)).deleteById(groupId);
     }
-
     @Test
     void getAll() {
 

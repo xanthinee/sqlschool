@@ -35,6 +35,10 @@ public class GroupService {
         return groupDaoJdbc.compareGroups(groupID);
     }
 
+    public void saveAll(List<Group> groups) {
+        groupDaoJdbc.saveAll(groups);
+    }
+
     public List<Group> generateGroups() {
 
         List<Group> groups = new ArrayList<>();

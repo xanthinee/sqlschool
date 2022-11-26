@@ -8,13 +8,6 @@ import java.util.StringJoiner;
 import java.util.stream.Stream;
 
 public class CourseUtils {
-    public static List<Course> makeCoursesList(String fileName) {
-
-        CustomFileReader fileCon = new CustomFileReader();
-        Stream<String> courses = fileCon.readFile(fileName);
-        CoursesParser cp = new CoursesParser();
-        return courses.map(cp::parse).toList();
-    }
 
     public static String printCoursesOfStud(List<Course> courses) {
         StringJoiner sjCourses = new StringJoiner(System.lineSeparator());

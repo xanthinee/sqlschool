@@ -1,8 +1,11 @@
 package sqltask;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -24,26 +27,25 @@ import java.util.*;
 import java.sql.*;
 
 @Service
+@Profile("!test")
 public class InitializeService implements ApplicationRunner {
 
-    private final StudentDAOJdbc studentDao;
-    private final CourseDAOJdbc courseDao;
-    private final GroupDaoJdbc groupDao;
     private final JdbcTemplate jdbcTemplate;
+    private final CourseService courseService;
+    private final StudentService studentService;
+    private final GroupService groupService;
     private static final String SQL_SCRIPT_PATH = "src/main/resources/sqldata/tables_creation.sql";
     private static final String COURSES_LIST_PATH = "data/courses.txt";
-    public InitializeService(StudentDAOJdbc studentDao, CourseDAOJdbc courseDao, GroupDaoJdbc groupDao, JdbcTemplate jdbcTemplate) {
-        this.studentDao = studentDao;
-        this.courseDao = courseDao;
-        this.groupDao = groupDao;
+    public InitializeService(JdbcTemplate jdbcTemplate, CourseService courseService,
+                             StudentService studentService, GroupService groupService) {
         this.jdbcTemplate = jdbcTemplate;
+        this.courseService = courseService;
+        this.studentService = studentService;
+        this.groupService = groupService;
     }
 
     @Override
     public void run(ApplicationArguments args) {
-        CourseService courseService = new CourseService(courseDao, studentDao);
-        GroupService groupService = new GroupService(groupDao);
-        StudentService studentService = new StudentService(studentDao, groupDao);
 
         DataSource ds = jdbcTemplate.getDataSource();
         if (ds != null) {
@@ -52,14 +54,14 @@ public class InitializeService implements ApplicationRunner {
                 Reader reader = new BufferedReader(new FileReader(SQL_SCRIPT_PATH));
                 sr.runScript(reader);
 
-                List<Course> courses = CourseUtils.makeCoursesList(COURSES_LIST_PATH);
-                courseDao.saveAll(courses);
+                List<Course> courses = courseService.makeCoursesList(COURSES_LIST_PATH);
+                courseService.saveAll(courses);
 
                 List<Group> groups = groupService.generateGroups();
-                groupDao.saveAll(groups);
+                groupService.saveAll(groups);
 
                 List<Student> students = studentService.setGroupsId(studentService.generateStudents());
-                studentDao.saveAll(students);
+                studentService.saveAll(students);
 
                 courseService.createStdCrsTable();
 

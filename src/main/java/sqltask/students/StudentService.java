@@ -1,10 +1,8 @@
 package sqltask.students;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sqltask.groups.Group;
 import sqltask.groups.GroupDAO;
-import sqltask.groups.GroupDaoJdbc;
 import sqltask.helpers.CustomFileReader;
 
 import java.util.ArrayList;
@@ -45,6 +43,9 @@ public class StudentService {
 
     public void save(Student student) {
         studentDAOJdbc.save(student);
+    }
+    public void saveAll(List<Student> students) {
+        studentDAOJdbc.saveAll(students);
     }
 
     public List<Student> generateStudents() {
