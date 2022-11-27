@@ -1,7 +1,6 @@
 package sqltask.groups;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -12,7 +11,7 @@ import java.util.*;
 @SuppressWarnings("java:S1874")
 @Repository
 @Component
-public class GroupDaoJdbc implements GroupDAO {
+public class GroupDAOJdbc implements GroupDAO {
 
     private final JdbcTemplate jdbcTemplate;
     private static final String GROUP_TABLE = "groups";
@@ -29,7 +28,7 @@ public class GroupDaoJdbc implements GroupDAO {
             + STUDENTS_TABLE + " s2 where s2.group_id = ?)";
     private final GroupRowMapper groupRowMapper = new GroupRowMapper();
 
-    public GroupDaoJdbc(JdbcTemplate jdbcTemplate) {
+    public GroupDAOJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

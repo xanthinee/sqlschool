@@ -5,12 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.jdbc.JdbcTestUtils;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import sqltask.JdbcDaoTestConfig;
 import sqltask.students.Student;
 
@@ -30,7 +28,7 @@ class GroupDAOJdbcTest {
     ApplicationContext ctx;
 
     @Autowired
-    GroupDaoJdbc dao;
+    GroupDAOJdbc dao;
     @Autowired
     JdbcTemplate jdbc;
 

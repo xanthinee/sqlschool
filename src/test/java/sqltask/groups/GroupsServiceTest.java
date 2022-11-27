@@ -26,7 +26,7 @@ class GroupsServiceTest {
     private GroupService groupService;
 
     @MockBean
-    private GroupDaoJdbc groupDao;
+    private GroupDAOJdbc groupDao;
 
     @Test
     void compareGroups() {
