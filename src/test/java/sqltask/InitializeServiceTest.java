@@ -14,10 +14,8 @@ import org.springframework.test.context.ActiveProfiles;
 import sqltask.courses.Course;
 import sqltask.courses.CourseDAOJdbc;
 import sqltask.courses.CourseService;
-import sqltask.courses.CoursesParser;
 import sqltask.groups.Group;
 import sqltask.groups.GroupService;
-import sqltask.helpers.CustomFileReader;
 import sqltask.students.Student;
 import sqltask.students.StudentDAOJdbc;
 import sqltask.students.StudentService;
@@ -33,7 +31,7 @@ class InitializeServiceTest {
     @SpringBootTest
     @ActiveProfiles("test")
     @Nested
-    class appRunnerTest {
+    class AppRunnerTest {
 
         @MockBean
         InitializeService initializeService;
@@ -49,7 +47,7 @@ class InitializeServiceTest {
 
     @Nested
     @ExtendWith(MockitoExtension.class)
-    class appRunnerInsideMethodsTest {
+    class AppRunnerInsideMethodsTest {
 
         @InjectMocks
         InitializeService initializeService;
@@ -61,10 +59,6 @@ class InitializeServiceTest {
         StudentService studentService;
         @Mock
         JdbcTemplate jdbcTemplate;
-        @Mock
-        CustomFileReader fileReader;
-        @Mock
-        CoursesParser coursesParser;
         @Mock
         StudentDAOJdbc studentDao;
         @Mock

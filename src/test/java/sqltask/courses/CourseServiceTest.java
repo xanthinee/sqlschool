@@ -1,15 +1,11 @@
 package sqltask.courses;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
-import sqltask.JdbcDaoTestConfig;
 import sqltask.students.Student;
 import java.util.*;
 
@@ -19,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@ExtendWith(MockitoExtension.class)
 @SpringBootTest()
 @ActiveProfiles("test")
 class CourseServiceTest {
@@ -131,17 +126,17 @@ class CourseServiceTest {
     void printCoursesOfStud_whenHasCourses_shouldPrintCourses() {
 
         List<Course> courses = new ArrayList<>();
-        Course testCourse1 = new Course(1, "course", "description");
-        Course testCourse2 = new Course(2, "course", "description");
-        Course testCourse3 = new Course(3, "course", "description");
+        Course testCourse1 = new Course(1, "music", "description1");
+        Course testCourse2 = new Course(2, "mathematics", "description2");
+        Course testCourse3 = new Course(3, "english", "description3");
         courses.add(testCourse1);
         courses.add(testCourse2);
         courses.add(testCourse3);
         String result = """
                 Entered STUDENT has next COURSES:\s
-                1. course
-                2. course
-                3. course""";
+                1. music
+                2. mathematics
+                3. english""";
         assertEquals(result, CourseUtils.printCoursesOfStud(courses));
     }
 
@@ -150,8 +145,8 @@ class CourseServiceTest {
 
         List<Course> allCourses = courseService.makeCoursesList("testdata/coursestest.txt");
         List<Course> avbCourses = new ArrayList<>();
-        Course course = new Course(1, "Computer science", "description");
-        Course course2 = new Course(2, "Foreign language", "description");
+        Course course = new Course(1, "Computer science", "description1");
+        Course course2 = new Course(2, "Foreign language", "description2");
         avbCourses.add(course);
         avbCourses.add(course2);
 

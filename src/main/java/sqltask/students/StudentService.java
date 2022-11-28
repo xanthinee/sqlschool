@@ -71,12 +71,14 @@ public class StudentService {
         for (Group group : groups) {
             int groupMembers = rd.nextInt(MIN_AMOUNT_OF_STUDENTS_IN_GROUP, MAX_AMOUNT_OF_STUDENTS_IN_GROUP + 1);
                 for (int i = 0; i < groupMembers; i++) {
-                    int studIndex = rd.nextInt(0, students.size());
-                    Student student = students.remove(studIndex);
-                    student.setGroupId(group.getId());
-                    groupedStudents.add(student);
-                    if (students.isEmpty()) {
-                        break;
+                    if (!students.isEmpty()) {
+                        int studIndex = rd.nextInt(0, students.size());
+                        Student student = students.remove(studIndex);
+                        student.setGroupId(group.getId());
+                        groupedStudents.add(student);
+                        if (students.isEmpty()) {
+                            break;
+                        }
                     }
                 }
         }

@@ -16,15 +16,13 @@ import java.util.*;
 @Profile("!test")
 public class InitializeService implements ApplicationRunner {
 
-    private final JdbcTemplate jdbcTemplate;
     private final CourseService courseService;
     private final StudentService studentService;
     private final GroupService groupService;
     private static final String COURSES_LIST_PATH = "data/courses.txt";
 
-    public InitializeService(JdbcTemplate jdbcTemplate, CourseService courseService,
+    public InitializeService(CourseService courseService,
                              StudentService studentService, GroupService groupService) {
-        this.jdbcTemplate = jdbcTemplate;
         this.courseService = courseService;
         this.studentService = studentService;
         this.groupService = groupService;
