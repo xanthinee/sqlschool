@@ -4,9 +4,14 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.stereotype.Service;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 @TestConfiguration
+@ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION,
+        classes = Service.class))
 public class JdbcDaoTestConfig {
 
     private final static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13")

@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
+import sqltask.applicationmenu.AppMenu;
 import sqltask.courses.Course;
 import sqltask.courses.CourseDAOJdbc;
 import sqltask.courses.CourseService;
@@ -63,6 +64,8 @@ class InitializeServiceTest {
         StudentDAOJdbc studentDao;
         @Mock
         CourseDAOJdbc courseDao;
+        @Mock
+        AppMenu appMenu;
         @Test
         void initializeGroups() {
             List<Group> groups = new ArrayList<>(Arrays.asList(
@@ -70,6 +73,7 @@ class InitializeServiceTest {
                     new Group(2,"22-bb")
             ));
             Mockito.when(groupService.generateGroups()).thenReturn(groups);
+            Mockito.doNothing().when(appMenu).doAction();
             initializeService.run(null);
             verify(groupService, times(1)).saveAll(groups);
         }
@@ -88,6 +92,7 @@ class InitializeServiceTest {
             ));
             Mockito.when(studentService.generateStudents()).thenReturn(creation);
             Mockito.when(studentService.setGroupsId(creation)).thenReturn(groupSetting);
+            Mockito.doNothing().when(appMenu).doAction();
             initializeService.run(null);
             verify(studentService, times(1)).saveAll(groupSetting);
         }
@@ -100,12 +105,14 @@ class InitializeServiceTest {
                     new Course(2, "name2", "description2")
             ));
             Mockito.doReturn(courses).when(courseService).makeCoursesList(anyString());
+            Mockito.doNothing().when(appMenu).doAction();
             initializeService.run(null);
             verify(courseService, times(1)).saveAll(courses);
         }
 
         @Test
         void initializeStudentsCourses() {
+            Mockito.doNothing().when(appMenu).doAction();
             initializeService.run(null);
             verify(courseService, times(1)).createStdCrsTable();
         }

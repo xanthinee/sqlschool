@@ -41,7 +41,7 @@ public class CourseDAOImpl implements CourseDAO {
     }
 
     @Override
-    public void saveCourse(Course course) {
+    public void save(Course course) {
 
         try (Connection con = ds.getConnection();
         PreparedStatement ps = con.prepareStatement("insert into " +  COURSES_TABLE + " values (default, ?,?)")) {
@@ -209,7 +209,7 @@ public class CourseDAOImpl implements CourseDAO {
     }
 
     @Override
-    public void save (Student student, List<Course> courses) {
+    public void saveStudentsCourses(Student student, List<Course> courses) {
 
             try (Connection con = ds.getConnection();
                  PreparedStatement ps = con.prepareStatement("insert into " + STUDENTS_COURSES_TABLE + " values (default,?,?)")) {

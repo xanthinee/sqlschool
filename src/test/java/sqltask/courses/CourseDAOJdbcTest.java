@@ -3,15 +3,12 @@ package sqltask.courses;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.jdbc.JdbcTestUtils;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import sqltask.JdbcDaoTestConfig;
 import sqltask.students.Student;
 import sqltask.students.StudentDAOJdbc;
@@ -49,7 +46,7 @@ class CourseDAOJdbcTest {
 
     @Test
     void saveCourse_shouldSaveOnlyOneLine() {
-        dao.saveCourse(new Course(1,"a", "a"));
+        dao.save(new Course(1,"a", "a"));
         assertEquals(1, JdbcTestUtils.countRowsInTable(jdbc, COURSE_TABLE));
     }
 
@@ -146,7 +143,7 @@ class CourseDAOJdbcTest {
                 ps.setString(2, courseJdbc.getDescription());
                 });
 
-        dao.save(student, courses);
+        dao.saveStudentsCourses(student, courses);
         assertEquals(2, JdbcTestUtils.countRowsInTable(jdbc, STUDENT_COURSE));
     }
 

@@ -1,16 +1,16 @@
 package sqltask.students;
 
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.jdbc.JdbcTestUtils;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import sqltask.JdbcDaoTestConfig;
 
 import java.sql.PreparedStatement;
@@ -37,6 +37,12 @@ class StudentDAOJdbcTest {
     @BeforeEach
     public void clearContainer() {
         JdbcTestUtils.deleteFromTables(jdbc, STUDENTS_TABLE);
+    }
+    @Test
+    public void beans() {
+        System.out.println("!!!!!");
+        System.out.println(Arrays.toString(ctx.getBeanDefinitionNames()));
+        System.out.println("!!!!!");
     }
 
     @Test

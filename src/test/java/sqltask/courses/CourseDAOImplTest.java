@@ -36,7 +36,7 @@ class CourseDAOImplTest {
         int courseID = 1;
         Course course = new Course(courseID, "name", "description");
         Course courseToCompare = new Course(null, null, null);
-        courseDAO.saveCourse(course);
+        courseDAO.save(course);
 
         try (Connection connection = ds.getConnection();
              PreparedStatement ps = connection.prepareStatement("select * from courses")) {
@@ -220,7 +220,7 @@ class CourseDAOImplTest {
             e.printStackTrace();
         }
 
-        courseDAO.save(student, courses);
+        courseDAO.saveStudentsCourses(student, courses);
 
         List<Course> coursesOfStud = new ArrayList<>();
         try (Connection connection = ds.getConnection();

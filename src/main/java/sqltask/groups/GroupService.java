@@ -8,35 +8,35 @@ import java.util.List;
 @Service
 public class GroupService {
 
-    private final GroupDAO groupDaoJdbc;
+    private final GroupDAO groupDao;
     private static final int TOTAL_AMOUNT_OF_GROUPS = 10;
 
-    public GroupService(GroupDAO groupDaoJdbc) {
-        this.groupDaoJdbc = groupDaoJdbc;
+    public GroupService(GroupDAO groupDao) {
+        this.groupDao = groupDao;
     }
 
     public void deleteAll() {
-        groupDaoJdbc.deleteAll();
+        groupDao.deleteAll();
     }
 
     public List<Group> getAll() {
-        return groupDaoJdbc.getAll();
+        return groupDao.getAll();
     }
 
     public Group getById(int id) {
-        return groupDaoJdbc.getById(id);
+        return groupDao.getById(id);
     }
 
     public void deleteById(int id) {
-        groupDaoJdbc.deleteById(id);
+        groupDao.deleteById(id);
     }
 
     public List<Group> compareGroups(int groupID) {
-        return groupDaoJdbc.compareGroups(groupID);
+        return groupDao.compareGroups(groupID);
     }
 
     public void saveAll(List<Group> groups) {
-        groupDaoJdbc.saveAll(groups);
+        groupDao.saveAll(groups);
     }
 
     public List<Group> generateGroups() {

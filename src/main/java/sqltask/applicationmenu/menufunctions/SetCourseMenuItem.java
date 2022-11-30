@@ -1,5 +1,7 @@
 package sqltask.applicationmenu.menufunctions;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import sqltask.courses.Course;
 import sqltask.courses.CourseService;
 import sqltask.applicationmenu.*;
@@ -10,6 +12,7 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 @SuppressWarnings("java:S106")
 public class SetCourseMenuItem implements Menu {
 
@@ -17,6 +20,7 @@ public class SetCourseMenuItem implements Menu {
     private final InputStream inputStream;
     private final PrintStream outStream;
 
+    @Autowired
     public SetCourseMenuItem (CourseService service) {
         this (service, System.in, System.out);
     }

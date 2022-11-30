@@ -1,5 +1,7 @@
 package sqltask.applicationmenu.menufunctions;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import sqltask.applicationmenu.Menu;
 import sqltask.groups.Group;
 import sqltask.groups.GroupService;
@@ -9,6 +11,7 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 @SuppressWarnings("java:S106")
 public class GroupsByStudentCountMenuItem implements Menu {
 
@@ -16,6 +19,7 @@ public class GroupsByStudentCountMenuItem implements Menu {
     private final InputStream inStream;
     private final PrintStream outStream;
 
+    @Autowired
     public GroupsByStudentCountMenuItem(GroupService service) {
         this(service, System.in, System.out);
     }

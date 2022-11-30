@@ -12,52 +12,52 @@ import java.util.stream.Stream;
 public class CourseService {
 
     private final Random rd = new Random();
-    private final CourseDAO courseDAOJdbc;
-    private final StudentDAO studentDAOJdbc;
+    private final CourseDAO courseDao;
+    private final StudentDAO studentDao;
     private static final int MAX_COURSES_PER_STUDENT = 3;
 
-    public CourseService(CourseDAO courseDAOJdbc, StudentDAO studentDAOJdbc) {
-        this.courseDAOJdbc = courseDAOJdbc;
-        this.studentDAOJdbc = studentDAOJdbc;
+    public CourseService(CourseDAO courseDao, StudentDAO studentDao) {
+        this.courseDao = courseDao;
+        this.studentDao = studentDao;
     }
 
     public void deleteAll() {
-        courseDAOJdbc.deleteAll();
+        courseDao.deleteAll();
     }
 
     public List<Course> getAll() {
-        return courseDAOJdbc.getAll();
+        return courseDao.getAll();
     }
 
     public List<Course> getCoursesOfStudent(int studID) {
-        return courseDAOJdbc.getCoursesOfStudent(studID);
+        return courseDao.getCoursesOfStudent(studID);
     }
 
     public List<Course> findAvailableCourses(int studentID) {
-        return courseDAOJdbc.findAvailableCourses(studentID);
+        return courseDao.findAvailableCourses(studentID);
     }
 
     public List<Student> getCourseMembers(String courseName) {
-        return courseDAOJdbc.getCourseMembers(courseName);
+        return courseDao.getCourseMembers(courseName);
     }
 
     public void unlinkCourse(int studentID, String courseToDelete) {
-        courseDAOJdbc.unlinkCourse(studentID, courseToDelete);
+        courseDao.unlinkCourse(studentID, courseToDelete);
     }
 
     public void setNewCourse(int studentID, String courseName) {
-        courseDAOJdbc.setNewCourse(studentID, courseName);
+        courseDao.setNewCourse(studentID, courseName);
     }
 
     public Course getById(int id) {
-        return courseDAOJdbc.getById(id);
+        return courseDao.getById(id);
     }
 
     public void deleteById(int id) {
-        courseDAOJdbc.deleteById(id);
+        courseDao.deleteById(id);
     }
     public void saveAll(List<Course> courses) {
-        courseDAOJdbc.saveAll(courses);
+        courseDao.saveAll(courses);
     }
     private List<Course> selectRandomCourses(List<Course> allCourses) {
 
@@ -70,11 +70,11 @@ public class CourseService {
 
     public void createStdCrsTable() {
 
-        List<Student> students = studentDAOJdbc.getAll();
-        List<Course> courses = courseDAOJdbc.getAll();
+        List<Student> students = studentDao.getAll();
+        List<Course> courses = courseDao.getAll();
 
         for (Student student : students) {
-            courseDAOJdbc.save(student, selectRandomCourses(courses));
+            courseDao.saveStudentsCourses(student, selectRandomCourses(courses));
         }
     }
 

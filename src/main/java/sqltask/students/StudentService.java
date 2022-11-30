@@ -13,39 +13,39 @@ import java.util.Random;
 @SuppressWarnings("java:S106")
 public class StudentService {
 
-    private final StudentDAO studentDAOJdbc;
-    private final GroupDAO groupDaoJdbc;
+    private final StudentDAO studentDao;
+    private final GroupDAO groupDao;
     private static final int TOTAL_AMOUNT_OF_STUDENTS = 200;
     private static final int MIN_AMOUNT_OF_STUDENTS_IN_GROUP = 10;
     private static final int MAX_AMOUNT_OF_STUDENTS_IN_GROUP = 30;
     private static final Random rd = new Random();
 
-    public StudentService(StudentDAO studentDAOJdbc, GroupDAO groupDaoJdbc) {
-        this.studentDAOJdbc = studentDAOJdbc;
-        this.groupDaoJdbc = groupDaoJdbc;
+    public StudentService(StudentDAO studentDao, GroupDAO groupDao) {
+        this.studentDao = studentDao;
+        this.groupDao = groupDao;
     }
 
     public void deleteAll() {
-        studentDAOJdbc.deleteAll();
+        studentDao.deleteAll();
     }
 
     public List<Student> getAll() {
-        return studentDAOJdbc.getAll();
+        return studentDao.getAll();
     }
 
     public Student getById(int id) {
-        return studentDAOJdbc.getById(id);
+        return studentDao.getById(id);
     }
 
     public void deleteById(int id) {
-        studentDAOJdbc.deleteById(id);
+        studentDao.deleteById(id);
     }
 
     public void save(Student student) {
-        studentDAOJdbc.save(student);
+        studentDao.save(student);
     }
     public void saveAll(List<Student> students) {
-        studentDAOJdbc.saveAll(students);
+        studentDao.saveAll(students);
     }
 
     public List<Student> generateStudents() {
@@ -65,7 +65,7 @@ public class StudentService {
 
     public List<Student> setGroupsId(List<Student> students) {
 
-        List<Group> groups = groupDaoJdbc.getAll();
+        List<Group> groups = groupDao.getAll();
         List<Student> groupedStudents = new ArrayList<>();
 
         for (Group group : groups) {

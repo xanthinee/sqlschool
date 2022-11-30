@@ -1,18 +1,17 @@
 package sqltask.applicationmenu;
 
-import java.util.*;
 import java.util.List;
 import java.util.Scanner;
 
 @SuppressWarnings("java:S106")
-public class MenuGroup implements Menu {
+public class AppMenu implements Menu {
 
     private final String label;
-    private final List<Menu> menuList;
+    private final List<Menu> items;
 
-    public MenuGroup(String label) {
+    public AppMenu(String label, List<Menu> items) {
         this.label = label;
-        this.menuList = new ArrayList<>();
+        this.items = items;
     }
 
     @Override
@@ -22,7 +21,7 @@ public class MenuGroup implements Menu {
 
 
     public void addItem(Menu menuItem) {
-            menuList.add(menuItem);
+            items.add(menuItem);
     }
 
     @Override
@@ -33,7 +32,7 @@ public class MenuGroup implements Menu {
         do {
             int index = 0;
             System.out.println(label);
-            for (Menu item : menuList) {
+            for (Menu item : items) {
                 System.out.println(index + 1 + ". " + item.getLabel());
                 index++;
             }
@@ -41,7 +40,7 @@ public class MenuGroup implements Menu {
             System.out.println("Print 0 to exit.");
             action = sc.nextInt();
             if (action != 0) {
-                menuList.get(action - 1).doAction();
+                items.get(action - 1).doAction();
             }
         } while (action != 0);
     }

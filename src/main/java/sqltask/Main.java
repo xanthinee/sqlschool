@@ -1,32 +1,23 @@
 package sqltask;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import sqltask.applicationmenu.MenuGroup;
-import sqltask.applicationmenu.menufunctions.*;
-import sqltask.courses.*;
-import sqltask.groups.GroupService;
-import sqltask.students.*;
 import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
+import sqltask.students.Student;
+import sqltask.students.StudentDAO;
+import sqltask.students.StudentDAOJdbc;
 
 @SpringBootApplication
 @SuppressWarnings("java:S106")
 public class Main {
     public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
 
-        ApplicationContext ctx = SpringApplication.run(Main.class, args);
-        StudentService studentService = ctx.getBean(StudentService.class);
-        GroupService groupService = ctx.getBean(GroupService.class);
-        CourseService courseService = ctx.getBean(CourseService.class);
+        ApplicationContext ctx = SpringApplication.run(Main.class);
+        StudentDAO studentDAO = ctx.getBean(StudentDAOJdbc.class);
 
-        MenuGroup appMenu = new MenuGroup("SQL APP");
-        appMenu.addItem(new AddStudentMenuItem(studentService));
-        appMenu.addItem(new DeleteStudentMenuItem(studentService));
-        appMenu.addItem(new GroupsByStudentCountMenuItem(groupService));
-        appMenu.addItem(new SetCourseMenuItem(courseService));
-        appMenu.addItem(new StudentsByCourseMenuItem(courseService));
-        appMenu.addItem(new UnlinkCourseMenuItem(courseService));
-        appMenu.doAction();
+        Student student = new Student(1,1,"a","a");
+        studentDAO.save(student);
     }
 }
 

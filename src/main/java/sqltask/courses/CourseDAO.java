@@ -12,9 +12,6 @@ public interface CourseDAO extends DAO<Course> {
     void setNewCourse(int studentID, String courseName);
     List<Course> findAvailableCourses(int studentID);
     List<Course> getCoursesOfStudent(int studentID);
-    void saveAll(List<Course> courses);
     void deleteAllFromStudentsCourses();
-    void save(Student student, List<Course> courses);
-
-    void saveCourse(Course course);
+    void saveStudentsCourses(Student student, List<Course> courses);
 }

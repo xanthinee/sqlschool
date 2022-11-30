@@ -1,5 +1,7 @@
 package sqltask.applicationmenu.menufunctions;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import sqltask.students.StudentService;
 import sqltask.applicationmenu.Menu;
 
@@ -8,12 +10,14 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 @SuppressWarnings("java:S106")
+@Component
 public class DeleteStudentMenuItem implements Menu {
 
     private final StudentService service;
     private final InputStream inputStream;
     private final PrintStream outStream;
 
+    @Autowired
     public DeleteStudentMenuItem (StudentService service) {
         this(service, System.in, System.out);
     }

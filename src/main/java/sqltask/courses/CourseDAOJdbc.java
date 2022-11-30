@@ -55,7 +55,7 @@ public class CourseDAOJdbc implements CourseDAO {
     }
 
     @Override
-    public void saveCourse(Course course) {
+    public void save(Course course) {
         jdbcTemplate.update(SAVE_COURSE, course.getName(), course.getDescription());
     }
 
@@ -89,7 +89,7 @@ public class CourseDAOJdbc implements CourseDAO {
     }
 
     @Override
-    public void save (Student student, List<Course> courses) {
+    public void saveStudentsCourses(Student student, List<Course> courses) {
         jdbcTemplate.batchUpdate(INSERT_INTO_STUDENTS_COURSES, courses, courses.size(),
                 (PreparedStatement ps, Course course) -> {
             ps.setInt(1, student.getStudentId());

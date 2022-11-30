@@ -8,5 +8,6 @@ public interface DAO<T> {
     List<T> getAll();
     void deleteAll();
     void deleteById(int id);
-
+    void saveAll(List<T> list);
+    void save(T entity);
 }
