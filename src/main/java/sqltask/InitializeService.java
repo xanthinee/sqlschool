@@ -2,6 +2,7 @@ package sqltask;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import sqltask.applicationmenu.AppMenu;
@@ -15,6 +16,7 @@ import java.util.*;
 
 @Service
 @Profile("!test")
+@EnableAspectJAutoProxy
 public class InitializeService implements ApplicationRunner {
 
     private final CourseService courseService;
