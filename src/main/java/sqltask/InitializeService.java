@@ -1,11 +1,7 @@
 package sqltask;
 
 import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import sqltask.applicationmenu.AppMenu;
 import sqltask.courses.*;
 import sqltask.groups.Group;
 import sqltask.groups.GroupService;
@@ -15,26 +11,21 @@ import sqltask.students.StudentService;
 import java.util.*;
 
 @Service
-@Profile("!test")
-@EnableAspectJAutoProxy
-public class InitializeService implements ApplicationRunner {
+public class InitializeService {
 
     private final CourseService courseService;
     private final StudentService studentService;
     private final GroupService groupService;
     private static final String COURSES_LIST_PATH = "data/courses.txt";
-    private final AppMenu appMenu;
 
     public InitializeService(CourseService courseService,
-                             StudentService studentService, GroupService groupService, AppMenu appMenu) {
+                             StudentService studentService, GroupService groupService) {
         this.courseService = courseService;
         this.studentService = studentService;
         this.groupService = groupService;
-        this.appMenu = appMenu;
     }
 
-    @Override
-    public void run(ApplicationArguments args) {
+    public void initializeTables() {
 
         try {
             List<Course> courses = courseService.makeCoursesList(COURSES_LIST_PATH);
@@ -50,10 +41,5 @@ public class InitializeService implements ApplicationRunner {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        Student student = new Student(1,1,"a","a");
-        studentService.save(student);
-        appMenu.doAction();
-
     }
 }

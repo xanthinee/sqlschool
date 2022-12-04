@@ -1,7 +1,5 @@
 package sqltask.students;
 
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +35,6 @@ class StudentDAOJdbcTest {
     @BeforeEach
     public void clearContainer() {
         JdbcTestUtils.deleteFromTables(jdbc, STUDENTS_TABLE);
-    }
-    @Test
-    public void beans() {
-        System.out.println("!!!!!");
-        System.out.println(Arrays.toString(ctx.getBeanDefinitionNames()));
-        System.out.println("!!!!!");
     }
 
     @Test
