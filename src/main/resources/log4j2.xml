@@ -9,11 +9,13 @@
 
     <Appenders>
         <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
 
-        <RollingFile name="FileAppender" fileName="logs/application-log.log"
+        <RollingFile name="FileAppender" fileName="logs/application-log-current.log"
                      filePattern="logs/application-log-%d{yyyy-MM-dd}-%i.log">
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout>
                 <Pattern>${LOG_PATTERN}</Pattern>
             </PatternLayout>
@@ -25,8 +27,9 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="sqltask" level="debug" additivity="false">
+        <Logger name="sqltask" level="info" additivity="false">
             <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="FileAppender" />
         </Logger>
 
         <Root level="info">
