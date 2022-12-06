@@ -3,11 +3,13 @@ package sqltask.applicationmenu.menufunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sqltask.applicationmenu.*;
+import sqltask.courses.Course;
 import sqltask.courses.CourseService;
 import sqltask.courses.CourseUtils;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -31,11 +33,14 @@ public class StudentsByCourseMenuItem implements Menu {
 
     @Override
     public String getLabel() {
-        return "Get all students having exact course";
+        return "Get all students with chosen course";
     }
 
     @Override
     public void doAction() {
+
+        outStream.println("List of all courses:");
+        outStream.println(CourseUtils.printCourses(service.getAll()));
         Scanner sc = new Scanner(inputStream);
         outStream.println("ENTER name of COURSE bellow: ");
         String courseName = sc.next();

@@ -55,4 +55,14 @@ public class CourseUtils {
         }
         return sj.toString();
     }
+
+    public static String printCourses(List<Course> courses) {
+        StringJoiner sj = new StringJoiner(System.lineSeparator());
+        int index = 1;
+        for (Course courseName : courses) {
+            sj.add(index + ". " + courseName.getName());
+            index++;
+        }
+        return sj.toString();
+    }
 }

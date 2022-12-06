@@ -13,18 +13,19 @@ import java.util.Scanner;
 
 @Component
 @SuppressWarnings("java:S106")
-public class GroupsByStudentCountMenuItem implements Menu {
+public class CompareGroupsMenuItem implements Menu {
 
     private final GroupService service;
     private final InputStream inStream;
     private final PrintStream outStream;
+    private static final int AMOUNT_OF_GROUPS = 10;
 
     @Autowired
-    public GroupsByStudentCountMenuItem(GroupService service) {
+    public CompareGroupsMenuItem(GroupService service) {
         this(service, System.in, System.out);
     }
 
-    public GroupsByStudentCountMenuItem(GroupService service, InputStream inStream, PrintStream outStream) {
+    public CompareGroupsMenuItem(GroupService service, InputStream inStream, PrintStream outStream) {
         this.service = service;
         this.inStream = inStream;
         this.outStream = outStream;
@@ -32,18 +33,17 @@ public class GroupsByStudentCountMenuItem implements Menu {
 
     @Override
     public String getLabel() {
-        return "Group members comparison";
+        return "Compare groups";
     }
 
     @Override
     public void doAction() {
-        outStream.println("Enter group ID:");
-        try (Scanner scanner = new Scanner(inStream)) {
-            int id = scanner.nextInt();
-            List<Group> groups = service.compareGroups(id);
-            for (Group group : groups) {
-                outStream.println(group);
-            }
+        outStream.println("Enter group ID (1-" + AMOUNT_OF_GROUPS + "):");
+        Scanner sc = new Scanner(inStream);
+        int id = sc.nextInt();
+        List<Group> groups = service.compareGroups(id);
+        for (Group group : groups) {
+            outStream.println(group);
         }
     }
 }

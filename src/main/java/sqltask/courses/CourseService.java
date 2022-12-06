@@ -62,8 +62,15 @@ public class CourseService {
     private List<Course> selectRandomCourses(List<Course> allCourses) {
 
         List<Course> courses = new ArrayList<>();
+        HashSet<Integer> usedCourses = new HashSet<>();
         for (int i = 0; i < MAX_COURSES_PER_STUDENT + 1; i++) {
-            courses.add(allCourses.get(rd.nextInt(0, allCourses.size())));
+            Course course = allCourses.get(rd.nextInt(0, allCourses.size()));
+            if (!usedCourses.contains(course.getId())) {
+                usedCourses.add(course.getId());
+                courses.add(course);
+            } else {
+                i--;
+            }
         }
         return courses;
     }

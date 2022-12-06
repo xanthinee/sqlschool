@@ -1,6 +1,5 @@
 package sqltask;
 
-import org.springframework.boot.ApplicationArguments;
 import org.springframework.stereotype.Service;
 import sqltask.courses.*;
 import sqltask.groups.Group;
