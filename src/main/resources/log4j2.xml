@@ -15,26 +15,25 @@
 
         <RollingFile name="FileAppender" fileName="logs/application-log-current.log"
                      filePattern="logs/application-log-%d{yyyy-MM-dd}-%i.log">
-            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout>
                 <Pattern>${LOG_PATTERN}</Pattern>
             </PatternLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size="10kB" />
+                <SizeBasedTriggeringPolicy size="100kB" />
             </Policies>
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
     </Appenders>
 
     <Loggers>
-        <Logger name="sqltask" level="info" additivity="false">
-            <AppenderRef ref="ConsoleAppender" />
+        <Logger name="sqltask" level="debug" additivity="false">
+            <AppenderRef ref="ConsoleAppender"  />
             <AppenderRef ref="FileAppender" />
         </Logger>
 
         <Root level="info">
-            <AppenderRef ref="ConsoleAppender" />
-            <AppenderRef ref="FileAppender" />
+            <AppenderRef ref="ConsoleAppender"  />
+            <AppenderRef ref="FileAppender"   />
         </Root>
     </Loggers>
 </Configuration>

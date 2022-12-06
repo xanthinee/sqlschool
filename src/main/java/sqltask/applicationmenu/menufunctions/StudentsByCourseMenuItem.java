@@ -3,13 +3,11 @@ package sqltask.applicationmenu.menufunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sqltask.applicationmenu.*;
-import sqltask.courses.Course;
 import sqltask.courses.CourseService;
 import sqltask.courses.CourseUtils;
 
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.List;
 import java.util.Scanner;
 
 @Component

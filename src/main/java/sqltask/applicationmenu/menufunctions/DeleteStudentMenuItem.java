@@ -40,6 +40,4 @@ public class DeleteStudentMenuItem implements Menu {
         int studentID = sc.nextInt();
         service.deleteById(studentID);
     }
-
-
 }
