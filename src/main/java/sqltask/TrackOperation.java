@@ -1,10 +1,10 @@
 package sqltask;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @SuppressWarnings("java:S106")
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TrackOperation {
 
-    private final Logger logger = LoggerFactory.getLogger(TrackOperation.class);
+    private final Logger logger = LogManager.getLogger(TrackOperation.class);
     private static final String BEFORE_MESSAGE = "Calling {} with args ({})";
     private static final String AFTER_MESSAGE_OK = "{} was completed successfully";
     private static final String AFTER_MESSAGE_ERROR = "{} exited abnormally with exception:";

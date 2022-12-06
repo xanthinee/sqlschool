@@ -374,3 +374,243 @@ Caused by: java.util.NoSuchElementException: null
 2022-12-06 10:26:49.252  INFO 86562 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-12-06 10:26:49.258  INFO 86562 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2022-12-06 10:26:49.263  INFO 86562 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 11:44:52.442  INFO 90914 --- [main] sqltask.Main                             : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 90914 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 11:44:52.448  INFO 90914 --- [main] sqltask.Main                             : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 11:44:53.636  INFO 90914 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 11:44:53.679  INFO 90914 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 0 JPA repository interfaces.
+2022-12-06 11:44:54.409  INFO 90914 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-06 11:44:54.957  INFO 90914 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-06 11:44:55.429  INFO 90914 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 11:44:55.492  INFO 90914 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 11:44:55.730  INFO 90914 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 11:44:55.925  INFO 90914 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 11:44:56.193  INFO 90914 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 11:44:56.226  INFO 90914 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:44:56.540  INFO 90914 --- [main] sqltask.Main                             : Started Main in 4.621 seconds (JVM running for 5.667)
+2022-12-06 11:45:08.687  INFO 90914 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:45:08.695  INFO 90914 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-06 11:45:08.709  INFO 90914 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 11:55:37.527  INFO 91748 --- [main] sqltask.Main                             : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 91748 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 11:55:37.530  INFO 91748 --- [main] sqltask.Main                             : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 11:55:37.994  INFO 91748 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 11:55:38.029  INFO 91748 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 0 JPA repository interfaces.
+2022-12-06 11:55:38.508  INFO 91748 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-06 11:55:38.745  INFO 91748 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-06 11:55:39.015  INFO 91748 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 11:55:39.081  INFO 91748 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 11:55:39.283  INFO 91748 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 11:55:39.412  INFO 91748 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 11:55:39.581  INFO 91748 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 11:55:39.592  INFO 91748 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:55:39.776  INFO 91748 --- [main] sqltask.Main                             : Started Main in 2.544 seconds (JVM running for 3.087)
+2022-12-06 11:55:41.886  INFO 91748 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:55:41.889  INFO 91748 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-06 11:55:41.894  INFO 91748 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 11:55:45.996  INFO 91775 --- [main] sqltask.Main                             : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 91775 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 11:55:45.998  INFO 91775 --- [main] sqltask.Main                             : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 11:55:46.371  INFO 91775 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 11:55:46.386  INFO 91775 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
+2022-12-06 11:55:46.636  INFO 91775 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-06 11:55:46.736  INFO 91775 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-06 11:55:46.902  INFO 91775 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 11:55:46.939  INFO 91775 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 11:55:47.052  INFO 91775 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 11:55:47.143  INFO 91775 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 11:55:47.276  INFO 91775 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 11:55:47.294  INFO 91775 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:55:47.466  INFO 91775 --- [main] sqltask.Main                             : Started Main in 1.718 seconds (JVM running for 2.166)
+2022-12-06 11:55:49.446  INFO 91775 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:55:49.453  INFO 91775 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-06 11:55:49.460  INFO 91775 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 11:55:52.982  INFO 91794 --- [main] sqltask.Main                             : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 91794 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 11:55:52.984  INFO 91794 --- [main] sqltask.Main                             : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 11:55:53.383  INFO 91794 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 11:55:53.396  INFO 91794 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
+2022-12-06 11:55:53.702  INFO 91794 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-06 11:55:53.818  INFO 91794 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-06 11:55:53.970  INFO 91794 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 11:55:54.012  INFO 91794 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 11:55:54.133  INFO 91794 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 11:55:54.228  INFO 91794 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 11:55:54.370  INFO 91794 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 11:55:54.378  INFO 91794 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:55:54.545  INFO 91794 --- [main] sqltask.Main                             : Started Main in 1.779 seconds (JVM running for 2.195)
+2022-12-06 11:55:55.793  INFO 91794 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:55:55.798  INFO 91794 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-06 11:55:55.802  INFO 91794 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 11:55:59.289  INFO 91819 --- [main] sqltask.Main                             : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 91819 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 11:55:59.292  INFO 91819 --- [main] sqltask.Main                             : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 11:55:59.661  INFO 91819 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 11:55:59.676  INFO 91819 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 JPA repository interfaces.
+2022-12-06 11:55:59.898  INFO 91819 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-06 11:55:59.986  INFO 91819 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-06 11:56:00.124  INFO 91819 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 11:56:00.148  INFO 91819 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 11:56:00.223  INFO 91819 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 11:56:00.278  INFO 91819 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 11:56:00.356  INFO 91819 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 11:56:00.363  INFO 91819 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:00.494  INFO 91819 --- [main] sqltask.Main                             : Started Main in 1.5 seconds (JVM running for 2.046)
+2022-12-06 11:56:01.716  INFO 91819 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:01.725  INFO 91819 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-06 11:56:01.731  INFO 91819 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 11:56:05.082  INFO 91841 --- [main] sqltask.Main                             : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 91841 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 11:56:05.084  INFO 91841 --- [main] sqltask.Main                             : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 11:56:05.471  INFO 91841 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 11:56:05.488  INFO 91841 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JPA repository interfaces.
+2022-12-06 11:56:05.683  INFO 91841 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-06 11:56:05.775  INFO 91841 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-06 11:56:05.862  INFO 91841 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 11:56:05.894  INFO 91841 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 11:56:05.971  INFO 91841 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 11:56:06.030  INFO 91841 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 11:56:06.100  INFO 91841 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 11:56:06.125  INFO 91841 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:06.280  INFO 91841 --- [main] sqltask.Main                             : Started Main in 1.44 seconds (JVM running for 1.961)
+2022-12-06 11:56:07.512  INFO 91841 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:07.527  INFO 91841 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-06 11:56:07.531  INFO 91841 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 11:56:11.232  INFO 91862 --- [main] sqltask.Main                             : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 91862 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 11:56:11.235  INFO 91862 --- [main] sqltask.Main                             : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 11:56:11.682  INFO 91862 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 11:56:11.699  INFO 91862 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JPA repository interfaces.
+2022-12-06 11:56:11.938  INFO 91862 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-06 11:56:12.039  INFO 91862 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-06 11:56:12.163  INFO 91862 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 11:56:12.190  INFO 91862 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 11:56:12.277  INFO 91862 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 11:56:12.349  INFO 91862 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 11:56:12.445  INFO 91862 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 11:56:12.453  INFO 91862 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:12.591  INFO 91862 --- [main] sqltask.Main                             : Started Main in 1.612 seconds (JVM running for 2.078)
+2022-12-06 11:56:13.940  INFO 91862 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:13.944  INFO 91862 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-06 11:56:13.954  INFO 91862 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 11:56:17.596  INFO 91885 --- [main] sqltask.Main                             : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 91885 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 11:56:17.599  INFO 91885 --- [main] sqltask.Main                             : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 11:56:17.998  INFO 91885 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 11:56:18.009  INFO 91885 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
+2022-12-06 11:56:18.197  INFO 91885 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-06 11:56:18.294  INFO 91885 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-06 11:56:18.427  INFO 91885 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 11:56:18.451  INFO 91885 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 11:56:18.548  INFO 91885 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 11:56:18.617  INFO 91885 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 11:56:18.706  INFO 91885 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 11:56:18.715  INFO 91885 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:18.902  INFO 91885 --- [main] sqltask.Main                             : Started Main in 1.658 seconds (JVM running for 2.071)
+2022-12-06 11:56:20.152  INFO 91885 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:20.156  INFO 91885 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-06 11:56:20.172  INFO 91885 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 11:56:23.555  INFO 91906 --- [main] sqltask.Main                             : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 91906 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 11:56:23.557  INFO 91906 --- [main] sqltask.Main                             : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 11:56:23.910  INFO 91906 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 11:56:23.925  INFO 91906 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 JPA repository interfaces.
+2022-12-06 11:56:24.181  INFO 91906 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-06 11:56:24.276  INFO 91906 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-06 11:56:24.369  INFO 91906 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 11:56:24.398  INFO 91906 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 11:56:24.536  INFO 91906 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 11:56:24.632  INFO 91906 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 11:56:24.759  INFO 91906 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 11:56:24.770  INFO 91906 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:24.962  INFO 91906 --- [main] sqltask.Main                             : Started Main in 1.638 seconds (JVM running for 2.029)
+2022-12-06 11:56:26.023  INFO 91906 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:26.027  INFO 91906 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-06 11:56:26.038  INFO 91906 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 11:56:29.592  INFO 91931 --- [main] sqltask.Main                             : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 91931 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 11:56:29.594  INFO 91931 --- [main] sqltask.Main                             : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 11:56:29.949  INFO 91931 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 11:56:29.960  INFO 91931 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
+2022-12-06 11:56:30.144  INFO 91931 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-06 11:56:30.269  INFO 91931 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-06 11:56:30.374  INFO 91931 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 11:56:30.399  INFO 91931 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 11:56:30.490  INFO 91931 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 11:56:30.587  INFO 91931 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 11:56:30.745  INFO 91931 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 11:56:30.752  INFO 91931 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:30.906  INFO 91931 --- [main] sqltask.Main                             : Started Main in 1.545 seconds (JVM running for 1.917)
+2022-12-06 11:56:32.216  INFO 91931 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:32.222  INFO 91931 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-06 11:56:32.233  INFO 91931 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 11:56:35.671  INFO 91953 --- [main] sqltask.Main                             : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 91953 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 11:56:35.673  INFO 91953 --- [main] sqltask.Main                             : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 11:56:35.999  INFO 91953 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 11:56:36.013  INFO 91953 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 JPA repository interfaces.
+2022-12-06 11:56:36.294  INFO 91953 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-06 11:56:36.417  INFO 91953 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-06 11:56:36.543  INFO 91953 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 11:56:36.582  INFO 91953 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 11:56:36.673  INFO 91953 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 11:56:36.747  INFO 91953 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 11:56:36.846  INFO 91953 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 11:56:36.854  INFO 91953 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:37.025  INFO 91953 --- [main] sqltask.Main                             : Started Main in 1.584 seconds (JVM running for 1.978)
+2022-12-06 11:56:38.790  INFO 91953 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:38.794  INFO 91953 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-06 11:56:38.800  INFO 91953 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 11:56:42.156  INFO 91975 --- [main] sqltask.Main                             : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 91975 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 11:56:42.158  INFO 91975 --- [main] sqltask.Main                             : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 11:56:42.484  INFO 91975 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 11:56:42.498  INFO 91975 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 JPA repository interfaces.
+2022-12-06 11:56:42.740  INFO 91975 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-06 11:56:42.835  INFO 91975 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-06 11:56:43.016  INFO 91975 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 11:56:43.042  INFO 91975 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 11:56:43.142  INFO 91975 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 11:56:43.253  INFO 91975 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 11:56:43.376  INFO 91975 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 11:56:43.387  INFO 91975 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:43.592  INFO 91975 --- [main] sqltask.Main                             : Started Main in 1.669 seconds (JVM running for 2.061)
+2022-12-06 11:56:45.632  INFO 91975 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:45.638  INFO 91975 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-06 11:56:45.644  INFO 91975 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 11:56:49.467  INFO 92001 --- [main] sqltask.Main                             : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 92001 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 11:56:49.469  INFO 92001 --- [main] sqltask.Main                             : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 11:56:49.792  INFO 92001 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 11:56:49.808  INFO 92001 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 0 JPA repository interfaces.
+2022-12-06 11:56:50.007  INFO 92001 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-06 11:56:50.102  INFO 92001 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-06 11:56:50.212  INFO 92001 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 11:56:50.242  INFO 92001 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 11:56:50.311  INFO 92001 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 11:56:50.365  INFO 92001 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 11:56:50.438  INFO 92001 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 11:56:50.445  INFO 92001 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:50.603  INFO 92001 --- [main] sqltask.Main                             : Started Main in 1.352 seconds (JVM running for 1.746)
+2022-12-06 11:56:52.794  INFO 92001 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:52.799  INFO 92001 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-06 11:56:52.805  INFO 92001 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 11:56:55.968  INFO 92023 --- [main] sqltask.Main                             : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 92023 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 11:56:55.969  INFO 92023 --- [main] sqltask.Main                             : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 11:56:56.282  INFO 92023 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 11:56:56.292  INFO 92023 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 JPA repository interfaces.
+2022-12-06 11:56:56.536  INFO 92023 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-06 11:56:56.635  INFO 92023 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-06 11:56:56.769  INFO 92023 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 11:56:56.805  INFO 92023 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 11:56:56.896  INFO 92023 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 11:56:56.967  INFO 92023 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 11:56:57.070  INFO 92023 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 11:56:57.078  INFO 92023 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:57.220  INFO 92023 --- [main] sqltask.Main                             : Started Main in 1.469 seconds (JVM running for 1.861)
+2022-12-06 11:56:58.993  INFO 92023 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 11:56:58.996  INFO 92023 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-06 11:56:59.001  INFO 92023 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-06 13:33:40.252  INFO 95164 --- [main] s.Main                                   : Starting Main using Java 17.0.2 on MacBook-Pro-xntn.local with PID 95164 (/Users/xanthine/IdeaProjects/SqlSchool/target/classes started by xanthine in /Users/xanthine/IdeaProjects/SqlSchool)
+2022-12-06 13:33:40.254  INFO 95164 --- [main] s.Main                                   : No active profile set, falling back to 1 default profile: "default"
+2022-12-06 13:33:40.751  INFO 95164 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-06 13:33:40.768  INFO 95164 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 JPA repository interfaces.
+2022-12-06 13:33:41.095  INFO 95164 --- [main] c.z.h.HikariDataSource                   : HikariPool-1 - Starting...
+2022-12-06 13:33:41.327  INFO 95164 --- [main] c.z.h.HikariDataSource                   : HikariPool-1 - Start completed.
+2022-12-06 13:33:41.550  INFO 95164 --- [main] o.h.j.i.u.LogHelper                      : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-06 13:33:41.597  INFO 95164 --- [main] o.h.Version                              : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-12-06 13:33:41.771  INFO 95164 --- [main] o.h.a.c.Version                          : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-06 13:33:41.882  INFO 95164 --- [main] o.h.d.Dialect                            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-12-06 13:33:42.029  INFO 95164 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-06 13:33:42.039  INFO 95164 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 13:33:42.223  INFO 95164 --- [main] s.Main                                   : Started Main in 2.365 seconds (JVM running for 3.18)
+2022-12-06 13:33:58.826  INFO 95164 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-06 13:33:58.840  INFO 95164 --- [SpringApplicationShutdownHook] c.z.h.HikariDataSource                   : HikariPool-1 - Shutdown initiated...
+2022-12-06 13:33:58.846  INFO 95164 --- [SpringApplicationShutdownHook] c.z.h.HikariDataSource                   : HikariPool-1 - Shutdown completed.
