@@ -1,6 +1,8 @@
 package sqltask.courses;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +13,7 @@ import java.util.*;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -110,6 +112,19 @@ class CourseServiceTest {
         int courseId = 1;
         courseService.deleteById(courseId);
         verify(courseDao, times(1)).deleteById(courseId);
+    }
+
+    @Test
+    void selectRandomCourses_whenUnmodifiableList_shouldCorrectlyReturnCourses() {
+
+        List<Course> courses = new LinkedList<>(Arrays.asList(
+                new Course(1,"name1","description1"),
+                new Course(2, "name2", "description2"),
+                new Course(3,"name3", "description3"),
+                new Course(4,"name4", "description4")
+        ));
+        List<Course> unmodifiableList = Collections.unmodifiableList(courses);
+        Assertions.assertDoesNotThrow(() -> courseService.selectRandomCourses(unmodifiableList));
     }
 
     @Test

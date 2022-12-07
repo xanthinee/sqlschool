@@ -59,14 +59,15 @@ public class CourseService {
     public void saveAll(List<Course> courses) {
         courseDao.saveAll(courses);
     }
-    private List<Course> selectRandomCourses(List<Course> allCourses) {
+    public List<Course> selectRandomCourses(List<Course> allCourses) {
 
+        List<Course> availableCourses = new LinkedList<>(allCourses);
         List<Course> courses = new ArrayList<>();
         for (int i = 0; i < MAX_COURSES_PER_STUDENT + 1; i++) {
-            Course course = allCourses.remove(rd.nextInt(0, allCourses.size()));
+            Course course = availableCourses.remove(rd.nextInt(0, availableCourses.size()));
             courses.add(course);
         }
-        allCourses.addAll(courses);
+        availableCourses.addAll(courses);
         return courses;
     }
 
