@@ -1,31 +1,44 @@
 package sqltask.courses;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import sqltask.ContainersConfig;
+import sqltask.TestConfig;
 import sqltask.students.Student;
+import sqltask.students.StudentDAOJdbc;
+
 import java.util.*;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@SpringBootTest()
+@ContextConfiguration(initializers = {ContainersConfig.Initializer.class})
+@SpringBootTest
+@Import({ContainersConfig.class, TestConfig.class})
 @ActiveProfiles("test")
 class CourseServiceTest {
 
+    @Autowired
+    ApplicationContext applicationContext;
     @Autowired
     private CourseService courseService;
 
     @MockBean
     private CourseDAOJdbc courseDao;
+    @MockBean
+    private StudentDAOJdbc studentDao;
 
     @Test
     void setCourse() {
@@ -115,16 +128,24 @@ class CourseServiceTest {
     }
 
     @Test
-    void selectRandomCourses_whenUnmodifiableList_shouldCorrectlyReturnCourses() {
+    void createStudCoursesTable_whenUnmodifiableListPassed_shouldCorrectlyMakeTables() {
 
+        Student student = new Student(1000,1,"name","surname");
+        List<Student> students = new ArrayList<>();
+        students.add(student);
         List<Course> courses = new LinkedList<>(Arrays.asList(
-                new Course(1,"name1","description1"),
-                new Course(2, "name2", "description2"),
-                new Course(3,"name3", "description3"),
+                new Course(2,"name2","description2"),
+                new Course(3, "name3", "description3"),
+                new Course(1,"name1", "description1"),
                 new Course(4,"name4", "description4")
-        ));
-        List<Course> unmodifiableList = Collections.unmodifiableList(courses);
-        Assertions.assertDoesNotThrow(() -> courseService.selectRandomCourses(unmodifiableList));
+            ));
+            List<Course> unmodifiableList = Collections.unmodifiableList(courses);
+
+            Mockito.when(studentDao.getAll()).thenReturn(students);
+            Mockito.when(courseDao.getAll()).thenReturn(unmodifiableList);
+
+        courseService.createStdCrsTable();
+            verify(courseDao, times(1)).saveStudentsCourses(student, unmodifiableList);
     }
 
     @Test

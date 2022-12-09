@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.jdbc.JdbcTestUtils;
-import sqltask.JdbcDaoTestConfig;
+import sqltask.ContainersConfig;
 import sqltask.students.Student;
 import sqltask.students.StudentDAOJdbc;
 
@@ -21,8 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-@ContextConfiguration(initializers = {JdbcDaoTestConfig.Initializer.class})
-@SpringBootTest(classes = {JdbcDaoTestConfig.class})
+@ContextConfiguration(initializers = {ContainersConfig.Initializer.class})
+@SpringBootTest(classes = {ContainersConfig.class})
 @ActiveProfiles("test")
 class CourseDAOJdbcTest {
 

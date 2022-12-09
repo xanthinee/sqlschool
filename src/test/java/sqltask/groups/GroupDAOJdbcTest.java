@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.jdbc.JdbcTestUtils;
-import sqltask.JdbcDaoTestConfig;
+import sqltask.ContainersConfig;
 import sqltask.students.Student;
 
 import java.sql.PreparedStatement;
@@ -19,8 +19,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ContextConfiguration(initializers = {JdbcDaoTestConfig.Initializer.class})
-@SpringBootTest(classes = JdbcDaoTestConfig.class)
+@ContextConfiguration(initializers = {ContainersConfig.Initializer.class})
+@SpringBootTest(classes = ContainersConfig.class)
 @ActiveProfiles("test")
 class GroupDAOJdbcTest {
 

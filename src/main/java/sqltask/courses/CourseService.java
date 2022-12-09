@@ -1,5 +1,6 @@
 package sqltask.courses;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sqltask.helpers.CustomFileReader;
 import sqltask.students.Student;
@@ -11,14 +12,15 @@ import java.util.stream.Stream;
 @Service
 public class CourseService {
 
-    private final Random rd = new Random();
+    private final Random rd;
     private final CourseDAO courseDao;
     private final StudentDAO studentDao;
     private static final int MAX_COURSES_PER_STUDENT = 3;
 
-    public CourseService(CourseDAO courseDao, StudentDAO studentDao) {
+    public CourseService(CourseDAO courseDao, StudentDAO studentDao, Random rd) {
         this.courseDao = courseDao;
         this.studentDao = studentDao;
+        this.rd = rd;
     }
 
     public void deleteAll() {
@@ -59,7 +61,7 @@ public class CourseService {
     public void saveAll(List<Course> courses) {
         courseDao.saveAll(courses);
     }
-    public List<Course> selectRandomCourses(List<Course> allCourses) {
+    private List<Course> selectRandomCourses(List<Course> allCourses) {
 
         List<Course> availableCourses = new LinkedList<>(allCourses);
         List<Course> courses = new ArrayList<>();

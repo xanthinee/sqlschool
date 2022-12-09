@@ -12,7 +12,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 @TestConfiguration
 @ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION,
         classes = Service.class))
-public class JdbcDaoTestConfig {
+public class ContainersConfig {
 
     private final static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13")
             .withDatabaseName("postgreSQLTaskFoxmindedTests")
