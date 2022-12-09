@@ -134,18 +134,23 @@ class CourseServiceTest {
         List<Student> students = new ArrayList<>();
         students.add(student);
         List<Course> courses = new LinkedList<>(Arrays.asList(
-                new Course(2,"name2","description2"),
-                new Course(3, "name3", "description3"),
-                new Course(1,"name1", "description1"),
-                new Course(4,"name4", "description4")
+                new Course(3,"name3","description3"),
+                new Course(2, "name2", "description2"),
+                new Course(4,"name4", "description4"),
+                new Course(1,"name1", "description1")
             ));
-            List<Course> unmodifiableList = Collections.unmodifiableList(courses);
+        List<Course> unmodifiableList = Collections.unmodifiableList(courses);
 
-            Mockito.when(studentDao.getAll()).thenReturn(students);
-            Mockito.when(courseDao.getAll()).thenReturn(unmodifiableList);
+        Mockito.when(studentDao.getAll()).thenReturn(students);
+        Mockito.when(courseDao.getAll()).thenReturn(unmodifiableList);
 
         courseService.createStdCrsTable();
-            verify(courseDao, times(1)).saveStudentsCourses(student, unmodifiableList);
+        List<Course> savedCourses = Arrays.asList(
+                new Course(2, "name2", "description2"),
+                new Course(3, "name3", "description3"),
+                new Course(1, "name1", "description1"),
+                new Course(4, "name4", "description4"));
+        verify(courseDao, times(1)).saveStudentsCourses(student, savedCourses);
     }
 
     @Test
