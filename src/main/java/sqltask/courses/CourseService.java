@@ -1,6 +1,5 @@
 package sqltask.courses;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sqltask.helpers.CustomFileReader;
 import sqltask.students.Student;
