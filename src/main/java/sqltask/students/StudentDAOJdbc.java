@@ -1,5 +1,6 @@
 package sqltask.students;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -8,6 +9,7 @@ import java.sql.Types;
 import java.util.*;
 
 @Repository
+@Profile("jdbc")
 public class StudentDAOJdbc implements StudentDAO {
 
     private final JdbcTemplate jdbcTemplate;

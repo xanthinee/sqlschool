@@ -1,8 +1,7 @@
 package sqltask.groups;
 
-
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -10,7 +9,7 @@ import java.util.*;
 
 @SuppressWarnings("java:S1874")
 @Repository
-@Component
+@Profile("jdbc")
 public class GroupDAOJdbc implements GroupDAO {
 
     private final JdbcTemplate jdbcTemplate;

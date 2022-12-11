@@ -10,7 +10,6 @@ import java.util.stream.Stream;
 
 @Service
 public class CourseService {
-
     private final Random rd;
     private final CourseDAO courseDao;
     private final StudentDAO studentDao;
