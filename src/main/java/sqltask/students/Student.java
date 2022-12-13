@@ -1,12 +1,18 @@
 package sqltask.students;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import sqltask.courses.Course;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "student")
+@NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "students")
-@NamedQueries({
-        @NamedQuery(name = "student.getAll", query = "select s from student s")
-})
 public class Student {
 
     @Id
@@ -19,7 +25,12 @@ public class Student {
     @Column(name = "second_name")
     private String surname;
 
-    public Student() {}
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "students_courses",
+    joinColumns = @JoinColumn(name = "student_id"),
+    inverseJoinColumns = @JoinColumn(name = "course_id"))
+    Set<Course> coursesOfStud;
+
     public Student(Integer studentId, Integer groupId, String name, String surname) {
         this.studentId = studentId;
         this.groupId = groupId;
@@ -35,38 +46,5 @@ public class Student {
         sb.append("name: ").append(String.format("%-9s", name).trim()).append(" | ");
         sb.append("surname: ").append(String.format("%-14s", surname));
         return sb.toString();
-    }
-
-
-    public Integer getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
-
-    public Integer getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.jdbc.JdbcTestUtils;
 import sqltask.ContainersConfig;
+import sqltask.TestDAOInterface;
 import sqltask.students.Student;
 import sqltask.students.StudentDAOJdbc;
 
@@ -23,8 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ContextConfiguration(initializers = {ContainersConfig.Initializer.class})
 @SpringBootTest(classes = {ContainersConfig.class})
-@ActiveProfiles("test")
-class CourseDAOJdbcTest {
+@ActiveProfiles(profiles = {"test","jdbc"})
+class CourseDAOJdbcTest implements TestDAOInterface {
 
     @Autowired
     ApplicationContext ctx;
@@ -44,14 +45,16 @@ class CourseDAOJdbcTest {
         JdbcTestUtils.deleteFromTables(jdbc, STUDENT_TABLE, COURSE_TABLE, STUDENT_COURSE);
     }
 
+    @Override
     @Test
-    void saveCourse_shouldSaveOnlyOneLine() {
+    public void save_shouldSaveOnlyOneLine() {
         dao.save(new Course(1,"a", "a"));
         assertEquals(1, JdbcTestUtils.countRowsInTable(jdbc, COURSE_TABLE));
     }
 
+    @Override
     @Test
-    void saveAll_shouldSaveSeveralRows() {
+   public void saveAll_shouldSaveSeveralRows() {
 
         List<Course> courses = new ArrayList<>();
         Course course = new Course(1,"a","a");
@@ -65,8 +68,9 @@ class CourseDAOJdbcTest {
         assertEquals(3, JdbcTestUtils.countRowsInTable(jdbc, COURSE_TABLE));
     }
 
+    @Override
     @Test
-    void deleteAll_shouldRetrieveZeroRows() {
+    public void deleteAll_shouldRetrieveZeroRows() {
 
         List<Course> courses = new ArrayList<>();
         Course course = new Course(1,"a","a");
@@ -85,8 +89,9 @@ class CourseDAOJdbcTest {
         assertEquals(0, JdbcTestUtils.countRowsInTable(jdbc, COURSE_TABLE));
     }
 
+    @Override
     @Test
-    void getAll_sizesShouldBeEqual(){
+    public void getAll_sizesShouldBeEqual(){
 
         List<Course> courses = new ArrayList<>();
         Course course = new Course(1,"a","a");
@@ -104,8 +109,9 @@ class CourseDAOJdbcTest {
         assertEquals(courses.size(), dao.getAll().size());
     }
 
+    @Override
     @Test
-    void getById_shouldRetrieveExactStudent() {
+    public void getById_shouldRetrieveExactEntity() {
 
         int courseId = 10;
         Course course = new Course(courseId, "a", "a");
@@ -113,8 +119,9 @@ class CourseDAOJdbcTest {
         assertEquals(course, dao.getById(courseId));
     }
 
+    @Override
     @Test
-    void deleteById_shouldDeleteExistingRow() {
+    public void deleteById_shouldCountZeroRows() {
 
         int courseId = 10;
         Course course = new Course(courseId, "a", "a");

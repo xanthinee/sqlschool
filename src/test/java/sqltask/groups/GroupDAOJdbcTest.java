@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.jdbc.JdbcTestUtils;
 import sqltask.ContainersConfig;
+import sqltask.TestDAOInterface;
 import sqltask.students.Student;
 
 import java.sql.PreparedStatement;
@@ -21,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ContextConfiguration(initializers = {ContainersConfig.Initializer.class})
 @SpringBootTest(classes = ContainersConfig.class)
-@ActiveProfiles("test")
-class GroupDAOJdbcTest {
+@ActiveProfiles(profiles = {"test", "jdbc"})
+class GroupDAOJdbcTest implements TestDAOInterface {
 
     @Autowired
     ApplicationContext ctx;
@@ -40,14 +41,16 @@ class GroupDAOJdbcTest {
         JdbcTestUtils.deleteFromTables(jdbc, GROUPS_TABLE, STUDENT_TABLE);
     }
 
+    @Override
     @Test
-    void save_shouldSaveOnlyOneLine() {
+    public void save_shouldSaveOnlyOneLine() {
         dao.save(new Group(1,"aa-11"));
         assertEquals(1, JdbcTestUtils.countRowsInTable(jdbc, GROUPS_TABLE));
     }
 
+    @Override
     @Test
-    void saveAll_shouldSaveSeveralRows() {
+    public void saveAll_shouldSaveSeveralRows() {
 
         List<Group> groups = new ArrayList<>(Arrays.asList(
                 new Group(1,"aa-11"),
@@ -58,8 +61,9 @@ class GroupDAOJdbcTest {
         assertEquals(3, JdbcTestUtils.countRowsInTable(jdbc, GROUPS_TABLE));
     }
 
+    @Override
     @Test
-    void deleteAll_shouldRetrieveZeroRows() {
+    public void deleteAll_shouldRetrieveZeroRows() {
 
         List<Group> groups = new ArrayList<>(Arrays.asList(
                 new Group(1,"aa-11"),
@@ -73,8 +77,9 @@ class GroupDAOJdbcTest {
         assertEquals(0, JdbcTestUtils.countRowsInTable(jdbc, GROUPS_TABLE));
     }
 
+    @Override
     @Test
-    void getAll_sizesShouldBeEqual() {
+    public void getAll_sizesShouldBeEqual() {
 
         List<Group> groups = new ArrayList<>(Arrays.asList(
                 new Group(1,"aa-11"),
@@ -87,8 +92,9 @@ class GroupDAOJdbcTest {
         assertEquals(groups.size(), dao.getAll().size());
     }
 
+    @Override
     @Test
-    void getById_shouldRetrieveExactGroup() {
+    public void getById_shouldRetrieveExactEntity() {
 
         int groupId = 100;
         Group group = new Group(groupId, "aa-11");
@@ -96,8 +102,9 @@ class GroupDAOJdbcTest {
         assertEquals(group, dao.getById(100));
     }
 
+    @Override
     @Test
-    void deleteById_shouldCountZeroRows() {
+    public void deleteById_shouldCountZeroRows() {
 
         int groupId = 100;
         Group group = new Group(groupId, "aa-11");

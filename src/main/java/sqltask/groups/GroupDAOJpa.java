@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-@Profile("hibernate")
+@Profile("jpa")
 public class GroupDAOJpa implements GroupDAO {
 
     @PersistenceContext
@@ -17,7 +17,10 @@ public class GroupDAOJpa implements GroupDAO {
 
     @Override
     public List<Group> compareGroups(int groupId) {
-        return null;
+        return em.createNamedQuery("group.compareGroup", Group.class)
+                .setParameter(1, groupId)
+                .setParameter(2, groupId)
+                .getResultList();
     }
 
     @Override
@@ -27,9 +30,10 @@ public class GroupDAOJpa implements GroupDAO {
 
     @Override
     public List<Group> getAll() {
-        return em.createNamedQuery("group.getAll", Group.class).getResultList();
+        return em.createQuery("select g from Group g", Group.class).getResultList();
     }
 
+    @Transactional
     @Override
     public void deleteAll() {
         for (Group group : getAll()) {
@@ -37,6 +41,7 @@ public class GroupDAOJpa implements GroupDAO {
         }
     }
 
+    @Transactional
     @Override
     public void deleteById(int id) {
         Group toRemove = em.find(Group.class, id);
@@ -51,7 +56,6 @@ public class GroupDAOJpa implements GroupDAO {
         }
     }
 
-    @Transactional
     @Override
     public void save(Group entity) {
         em.persist(entity);

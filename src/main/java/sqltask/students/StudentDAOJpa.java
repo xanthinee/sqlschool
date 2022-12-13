@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-@Profile("hibernate")
+@Profile("jpa")
 public class StudentDAOJpa implements StudentDAO {
 
     @PersistenceContext
@@ -31,9 +31,10 @@ public class StudentDAOJpa implements StudentDAO {
 
     @Override
     public List<Student> getAll() {
-        return em.createNamedQuery("student.getAll", Student.class).getResultList();
+        return em.createQuery("select s from student s", Student.class).getResultList();
     }
 
+    @Transactional
     @Override
     public void deleteAll() {
         for (Student student : getAll()) {
