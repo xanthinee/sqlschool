@@ -104,12 +104,6 @@ public class CourseDAOJpa implements CourseDAO {
     @Override
     public List<Course> findAvailableCourses(int studentID) {
 
-//        String query = "select c.course_id, c.course_name, c.course_description from courses c where c.course_id " +
-//                "not in (select sc.course_id from students_courses sc where sc.student_id = :1)";
-//        return em.createNativeQuery(query, Course.class)
-//                .setParameter(1, studentID)
-//                .getResultList();
-
         Student s = em.find(Student.class, studentID);
         List<Course> courses = getAll();
         courses.removeAll(s.getCoursesOfStud());
