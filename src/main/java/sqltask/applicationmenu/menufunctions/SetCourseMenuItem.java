@@ -43,7 +43,7 @@ public class SetCourseMenuItem implements Menu {
         int studentID = sc.nextInt();
         List<Course> list = service.getCoursesOfStudent(studentID);
         outStream.println(CourseUtils.printCoursesOfStud(list));
-//        outStream.println(CourseUtils.infoToPrint(list, service.findAvailableCourses(studentID)));
+        outStream.println(CourseUtils.infoToPrint(list, service.findAvailableCourses(studentID)));
         outStream.println("Enter NAME (Only 1 by attempt) of COURSE which you want to ADD: ");
         String courseName = sc.next();
         service.setNewCourse(studentID, courseName);

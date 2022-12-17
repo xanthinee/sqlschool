@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 @Profile("jpa")
@@ -23,6 +24,12 @@ public class CourseDAOJpa implements CourseDAO {
     @Override
     public Course getById(int id) {
         return em.find(Course.class, id);
+    }
+
+    public Course getByName(String name) {
+        return (Course) em.createQuery("from Course c where c.name = :name")
+                .setParameter("name", name)
+                .getSingleResult();
     }
 
     @Override
@@ -53,47 +60,63 @@ public class CourseDAOJpa implements CourseDAO {
         }
     }
 
+    @Transactional
     @Override
     public void save(Course entity) {
         em.persist(entity);
     }
 
+    @Transactional
     @Override
     public List<Student> getCourseMembers(String courseName) {
-        String query = "select s from students s inner join students_courses sc on sc.student_id = s.student_id inner join courses c on sc.course_id = c.course_id where c.course_name = ?1";
-        return em.createNativeQuery(query, Student.class)
-                .setParameter(1,courseName)
-                .getResultList();
+//        String query = "select c.studentSet from " + Course.class.getName() + " c where c.name = :cn";
+//        return new ArrayList<>(em.createQuery(query, Student.class)
+//                .setParameter("cn",courseName)
+//                .);
+
+        Course course = getByName(courseName);
+
+//        Course course = em.find(Course.class, courseName);
+
+        System.out.println(new ArrayList<>(course.getStudentSet()).size());
+        return new ArrayList<>(course.getStudentSet());
     }
 
+    @Transactional
     @Override
     public void unlinkCourse(int studentID, String courseToDelete) {
-        String query = "delete from students_courses sc using courses c where c.course_id = sc.course_id and sc.student_id = ?1 and c.course_name = ?2";
-        em.createNativeQuery(query)
-                .setParameter(1, studentID)
-                .setParameter(2, courseToDelete)
-                .executeUpdate();
+        Student s = em.find(Student.class, studentID);
+        Course c = getByName(courseToDelete);
+        s.getCoursesOfStud().remove(c);
+        c.getStudentSet().remove(s);
     }
 
     @Transactional
     @Override
     public void setNewCourse(int studentID, String courseName) {
-        String query = "insert into students_courses (student_id, course_id) select ?1, course_id from courses where course_name = ?2";
-        em.createNativeQuery(query)
-                .setParameter(1, studentID)
-                .setParameter(2, courseName)
-                .executeUpdate();
+        Student s = em.find(Student.class, studentID);
+        Course c = getByName(courseName);
+        s.getCoursesOfStud().add(c);
+        c.getStudentSet().add(s);
     }
 
+    @Transactional
     @Override
     public List<Course> findAvailableCourses(int studentID) {
 
-        String query = "select c.course_id, c.course_name, c.course_description from courses c where c.course_id not in (select sc.course_id from students_courses sc where sc.student_id = :1)";
-        return em.createNativeQuery(query, Course.class)
-                .setParameter(1, studentID)
-                .getResultList();
+//        String query = "select c.course_id, c.course_name, c.course_description from courses c where c.course_id " +
+//                "not in (select sc.course_id from students_courses sc where sc.student_id = :1)";
+//        return em.createNativeQuery(query, Course.class)
+//                .setParameter(1, studentID)
+//                .getResultList();
+
+        Student s = em.find(Student.class, studentID);
+        List<Course> courses = getAll();
+        courses.removeAll(s.getCoursesOfStud());
+        return courses;
     }
 
+    @Transactional
     @Override
     public List<Course> getCoursesOfStudent(int studentID) {
         Student student = em.find(Student.class, studentID);

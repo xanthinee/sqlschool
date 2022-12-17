@@ -17,6 +17,7 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "student_id")
     private Integer studentId;
     @Column(name = "group_id")
     private Integer groupId;
@@ -25,7 +26,7 @@ public class Student {
     @Column(name = "second_name")
     private String surname;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "students_courses",
     joinColumns = @JoinColumn(name = "student_id"),
     inverseJoinColumns = @JoinColumn(name = "course_id"))

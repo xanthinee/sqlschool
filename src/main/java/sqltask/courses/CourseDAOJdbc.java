@@ -20,7 +20,7 @@ public class CourseDAOJdbc implements CourseDAO {
     private static final String COURSE_TABLE = "courses";
     private static final String STUDENTS_COURSES_TABLE = "students_courses";
     private static final String STUDENT_TABLE = "students";
-    private static final String INSERT_INTO_STUDENTS_COURSES = "insert into " + STUDENTS_COURSES_TABLE + " values(default,?,?)";
+    private static final String INSERT_INTO_STUDENTS_COURSES = "insert into " + STUDENTS_COURSES_TABLE + " values(?,?)";
     private static final String GET_BY_ID = "select * from " + COURSE_TABLE + " where course_id = ?";
     private static final String DELETE_ALL = "delete from " + COURSE_TABLE;
     private static final String DELETE_ALL_STUDENTS_COURSES = "delete from " + STUDENTS_COURSES_TABLE;

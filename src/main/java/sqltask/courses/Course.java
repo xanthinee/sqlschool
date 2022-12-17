@@ -17,13 +17,14 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "course_id")
     private Integer id;
     @Column(name = "course_name")
     private String name;
     @Column(name = "course_description")
     private String description;
 
-    @ManyToMany(mappedBy = "coursesOfStud", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "coursesOfStud")
     Set<Student> studentSet;
 
     public Course(Integer id, String name, String description) {
