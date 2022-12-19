@@ -69,15 +69,7 @@ public class CourseDAOJpa implements CourseDAO {
     @Transactional
     @Override
     public List<Student> getCourseMembers(String courseName) {
-//        String query = "select c.studentSet from " + Course.class.getName() + " c where c.name = :cn";
-//        return new ArrayList<>(em.createQuery(query, Student.class)
-//                .setParameter("cn",courseName)
-//                .);
-
         Course course = getByName(courseName);
-
-//        Course course = em.find(Course.class, courseName);
-
         System.out.println(new ArrayList<>(course.getStudentSet()).size());
         return new ArrayList<>(course.getStudentSet());
     }
