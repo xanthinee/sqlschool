@@ -8,6 +8,7 @@ import sqltask.groups.GroupService;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -38,12 +39,25 @@ public class CompareGroupsMenuItem implements Menu {
 
     @Override
     public void doAction() {
+
+        List<Group> groups = service.getAll();
+        List<Integer> groupNames = new ArrayList<>();
+        for (Group group : groups) {
+            groupNames.add(group.getId());
+        }
         outStream.println("Enter group ID (1-" + AMOUNT_OF_GROUPS + "):");
         Scanner sc = new Scanner(inStream);
-        int id = sc.nextInt();
-        List<Group> groups = service.compareGroups(id);
-        for (Group group : groups) {
-            outStream.println(group);
+        try {
+            int id = sc.nextInt();
+            if(!groupNames.contains(id)) {
+                throw new IllegalArgumentException("Wrong id");
+            }
+            List<Group> comparedGroups = service.compareGroups(id);
+            for (Group group : comparedGroups) {
+                outStream.println(group);
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
     }
 }

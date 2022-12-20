@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
 @Profile("jpa")
@@ -21,15 +20,15 @@ public class CourseDAOJpa implements CourseDAO {
     @PersistenceContext
     private EntityManager em;
 
-    @Override
-    public Course getById(int id) {
-        return em.find(Course.class, id);
-    }
-
-    public Course getByName(String name) {
+    private Course getByName(String name) {
         return (Course) em.createQuery("from Course c where c.name = :name")
                 .setParameter("name", name)
                 .getSingleResult();
+    }
+
+    @Override
+    public Course getById(int id) {
+        return em.find(Course.class, id);
     }
 
     @Override
@@ -60,7 +59,6 @@ public class CourseDAOJpa implements CourseDAO {
         }
     }
 
-    @Transactional
     @Override
     public void save(Course entity) {
         em.persist(entity);
@@ -70,26 +68,25 @@ public class CourseDAOJpa implements CourseDAO {
     @Override
     public List<Student> getCourseMembers(String courseName) {
         Course course = getByName(courseName);
-        System.out.println(new ArrayList<>(course.getStudentSet()).size());
         return new ArrayList<>(course.getStudentSet());
     }
 
     @Transactional
     @Override
     public void unlinkCourse(int studentID, String courseToDelete) {
-        Student s = em.find(Student.class, studentID);
-        Course c = getByName(courseToDelete);
-        s.getCoursesOfStud().remove(c);
-        c.getStudentSet().remove(s);
+        Student student = em.find(Student.class, studentID);
+        Course course = getByName(courseToDelete);
+        student.getCoursesOfStud().remove(course);
+        course.getStudentSet().remove(student);
     }
 
     @Transactional
     @Override
     public void setNewCourse(int studentID, String courseName) {
-        Student s = em.find(Student.class, studentID);
-        Course c = getByName(courseName);
-        s.getCoursesOfStud().add(c);
-        c.getStudentSet().add(s);
+        Student student = em.find(Student.class, studentID);
+        Course course = getByName(courseName);
+        student.getCoursesOfStud().add(course);
+        course.getStudentSet().add(student);
     }
 
     @Transactional
@@ -112,8 +109,7 @@ public class CourseDAOJpa implements CourseDAO {
     @Transactional
     @Override
     public void deleteAllFromStudentsCourses() {
-        String query = "delete from students_courses";
-        em.createNativeQuery(query);
+        em.createNativeQuery("delete from students_courses");
     }
 
     @Transactional

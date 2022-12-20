@@ -9,6 +9,7 @@ import sqltask.courses.CourseUtils;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -41,11 +42,23 @@ public class SetCourseMenuItem implements Menu {
         Scanner sc = new Scanner(inputStream);
         outStream.println("Enter student_id of STUDENT: ");
         int studentID = sc.nextInt();
-        List<Course> list = service.getCoursesOfStudent(studentID);
-        outStream.println(CourseUtils.printCoursesOfStud(list));
-        outStream.println(CourseUtils.infoToPrint(list, service.findAvailableCourses(studentID)));
+        List<Course> studentCourses = service.getCoursesOfStudent(studentID);
+        outStream.println(CourseUtils.printCoursesOfStud(studentCourses));
+        List<Course> availableCourses = service.findAvailableCourses(studentID);
+        List<String> courseNames = new ArrayList<>();
+        for (Course course : availableCourses) {
+            courseNames.add(course.getName());
+        }
+        outStream.println(CourseUtils.infoToPrint(studentCourses, availableCourses));
         outStream.println("Enter NAME (Only 1 by attempt) of COURSE which you want to ADD: ");
-        String courseName = sc.next();
-        service.setNewCourse(studentID, courseName);
+        try {
+            String courseName = sc.next();
+            if (!courseNames.contains(courseName)) {
+                throw new IllegalArgumentException("Wrong course name");
+            }
+            service.setNewCourse(studentID, courseName);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
     }
 }

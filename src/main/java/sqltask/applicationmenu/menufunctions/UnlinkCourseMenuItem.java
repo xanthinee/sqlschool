@@ -2,6 +2,7 @@ package sqltask.applicationmenu.menufunctions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import sqltask.courses.Course;
 import sqltask.courses.CourseService;
 import sqltask.applicationmenu.*;
 import sqltask.courses.CourseUtils;
@@ -9,6 +10,7 @@ import sqltask.courses.CourseUtils;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
+import java.util.*;
 
 @SuppressWarnings("java:S106")
 @Component
@@ -39,9 +41,21 @@ public class UnlinkCourseMenuItem implements Menu {
         Scanner sc = new Scanner(inputStream);
         outStream.println("Enter student_id of STUDENT: ");
         int studentID = sc.nextInt();
-        outStream.println(CourseUtils.printCoursesOfStud(service.getCoursesOfStudent(studentID)));
+        List<Course> courses = service.getCoursesOfStudent(studentID);
+        List<String> courseNames = new ArrayList<>();
+        for (Course course : courses) {
+            courseNames.add(course.getName());
+        }
+        outStream.println(CourseUtils.printCoursesOfStud(courses));
         outStream.println("You can DELETE one of them - ENTER bellow it's NAME: ");
-        String courseToDelete = sc.next();
-        service.unlinkCourse(studentID, courseToDelete);
+        try {
+            String courseToDelete = sc.next();
+            if (!courseNames.contains(courseToDelete)) {
+                throw new IllegalArgumentException("Student doesn't have such course");
+            }
+            service.unlinkCourse(studentID, courseToDelete);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -2,13 +2,14 @@ package sqltask.applicationmenu.menufunctions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import sqltask.students.Student;
 import sqltask.students.StudentService;
 import sqltask.applicationmenu.Menu;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
-
+import java.util.*;
 @SuppressWarnings("java:S106")
 @Component
 public class DeleteStudentMenuItem implements Menu {
@@ -35,9 +36,21 @@ public class DeleteStudentMenuItem implements Menu {
 
     @Override
     public void doAction() {
+        List<Student> studentList = service.getAll();
+        List<Integer> studentsIDs = new ArrayList<>();
+        for (Student student : studentList) {
+            studentsIDs.add(student.getStudentId());
+        }
         Scanner sc = new Scanner(inputStream);
         outStream.println("Enter ID of student: ");
-        int studentID = sc.nextInt();
-        service.deleteById(studentID);
+        try {
+            int studentID = sc.nextInt();
+            if (!studentsIDs.contains(studentID)) {
+                throw new IllegalArgumentException("No student with such id");
+            }
+            service.deleteById(studentID);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
     }
 }

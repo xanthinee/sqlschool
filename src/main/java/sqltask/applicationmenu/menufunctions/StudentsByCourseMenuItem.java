@@ -3,12 +3,14 @@ package sqltask.applicationmenu.menufunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sqltask.applicationmenu.*;
+import sqltask.courses.Course;
 import sqltask.courses.CourseService;
 import sqltask.courses.CourseUtils;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
+import java.util.*;
 
 @Component
 @SuppressWarnings("java:S106")
@@ -38,10 +40,22 @@ public class StudentsByCourseMenuItem implements Menu {
     public void doAction() {
 
         outStream.println("List of all courses:");
-        outStream.println(CourseUtils.printCourses(service.getAll()));
+        List<Course> courses = service.getAll();
+        outStream.println(CourseUtils.printCourses(courses));
+        List<String> courseNames = new ArrayList<>();
+        for (Course course : courses) {
+            courseNames.add(course.getName());
+        }
         Scanner sc = new Scanner(inputStream);
         outStream.println("ENTER name of COURSE bellow: ");
-        String courseName = sc.next();
-        outStream.println(CourseUtils.printMembers(service.getCourseMembers(courseName)));
+        try {
+            String courseName = sc.next();
+            if (!courseNames.contains(courseName)) {
+                throw new IllegalArgumentException("Course with such name doesn't exist");
+            }
+            outStream.println(CourseUtils.printMembers(service.getCourseMembers(courseName)));
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
     }
 }

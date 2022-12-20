@@ -1,11 +1,8 @@
 package sqltask.courses;
 
-import sqltask.helpers.CustomFileReader;
 import sqltask.students.Student;
-
 import java.util.List;
 import java.util.StringJoiner;
-import java.util.stream.Stream;
 
 public class CourseUtils {
 
