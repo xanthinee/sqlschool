@@ -54,8 +54,7 @@ class CourseDAOJdbcTest implements TestDAOInterface {
 
     @Override
     @Test
-   public void saveAll_shouldSaveSeveralRows() {
-
+    public void saveAll_shouldSaveSeveralRows() {
         List<Course> courses = new ArrayList<>();
         Course course = new Course(1,"a","a");
         Course course1 = new Course(2,"b","b");

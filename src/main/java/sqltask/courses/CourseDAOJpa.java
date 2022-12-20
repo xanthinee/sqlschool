@@ -1,8 +1,10 @@
 package sqltask.courses;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import sqltask.students.Student;
+import sqltask.students.StudentDAOJpa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +21,9 @@ public class CourseDAOJpa implements CourseDAO {
 
     @PersistenceContext
     private EntityManager em;
+
+    @Autowired
+    StudentDAOJpa studentDao;
 
     private Course getByName(String name) {
         return (Course) em.createQuery("from Course c where c.name = :name")
@@ -109,7 +114,15 @@ public class CourseDAOJpa implements CourseDAO {
     @Transactional
     @Override
     public void deleteAllFromStudentsCourses() {
-        em.createNativeQuery("delete from students_courses");
+
+        List<Student> students = studentDao.getAll();
+        for (Student student : students) {
+            student.getCoursesOfStud().clear();
+        }
+        List<Course> courses = getAll();
+        for (Course course : courses) {
+            course.getStudentSet().clear();
+        }
     }
 
     @Transactional

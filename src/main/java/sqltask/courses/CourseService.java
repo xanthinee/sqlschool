@@ -89,4 +89,7 @@ public class CourseService {
         return courses.map(cp::parse).toList();
     }
 
+    public void deleteAllFromStudentsCourses() {
+        courseDao.deleteAllFromStudentsCourses();
+    }
 }

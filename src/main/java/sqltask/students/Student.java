@@ -6,6 +6,7 @@ import lombok.Setter;
 import sqltask.courses.Course;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity(name = "student")
@@ -47,5 +48,18 @@ public class Student {
         sb.append("name: ").append(String.format("%-9s", name).trim()).append(" | ");
         sb.append("surname: ").append(String.format("%-14s", surname));
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return studentId.equals(student.studentId) && groupId.equals(student.groupId) && name.equals(student.name) && surname.equals(student.surname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(studentId, groupId, name, surname);
     }
 }

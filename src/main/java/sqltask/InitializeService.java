@@ -26,7 +26,6 @@ public class InitializeService {
     public void initializeTables() {
 
         try {
-//            studentService.save(new Student(null, 1, "Artem", "Smrnov"));
             List<Course> courses = courseService.makeCoursesList(COURSES_LIST_PATH);
             courseService.saveAll(courses);
 
