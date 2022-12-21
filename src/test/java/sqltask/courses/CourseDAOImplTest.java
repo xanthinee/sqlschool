@@ -338,7 +338,7 @@ class CourseDAOImplTest {
         }
 
         try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("insert into public.students_courses values (default,?,?)")) {
+             PreparedStatement ps = con.prepareStatement("insert into public.students_courses values (?,?)")) {
             for (Course courseAdd : courses) {
                 ps.setInt(1, student.getStudentId());
                 ps.setInt(2, courseAdd.getId());
@@ -419,7 +419,7 @@ class CourseDAOImplTest {
         }
 
         try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("insert into public.students_courses values (default,?,?)")) {
+             PreparedStatement ps = con.prepareStatement("insert into public.students_courses values (?,?)")) {
             for (Course courseAdd : courses) {
                 ps.setInt(1, student.getStudentId());
                 ps.setInt(2, courseAdd.getId());
@@ -497,7 +497,7 @@ class CourseDAOImplTest {
         }
 
         try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("insert into public.students_courses values (default,?,?)")) {
+             PreparedStatement ps = con.prepareStatement("insert into public.students_courses values (?,?)")) {
             for (Course courseAdd : courses) {
                 ps.setInt(1, student.getStudentId());
                 ps.setInt(2, courseAdd.getId());
@@ -509,7 +509,7 @@ class CourseDAOImplTest {
         }
 
         try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("insert into public.students_courses values (default,?,?)")) {
+             PreparedStatement ps = con.prepareStatement("insert into public.students_courses values (?,?)")) {
             for (Course courseAdd : courses) {
                 ps.setInt(1, student1.getStudentId());
                 ps.setInt(2, courseAdd.getId());
@@ -522,7 +522,7 @@ class CourseDAOImplTest {
 
 
         try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("insert into public.students_courses values (default,?,?)")) {
+             PreparedStatement ps = con.prepareStatement("insert into public.students_courses values (?,?)")) {
             for (Course courseAdd : courses) {
                 ps.setInt(1, student2.getStudentId());
                 ps.setInt(2, courseAdd.getId());
@@ -574,7 +574,7 @@ class CourseDAOImplTest {
 
 
         try (Connection con = ds.getConnection();
-             PreparedStatement ps = con.prepareStatement("insert into public.students_courses values (default,?,?)")) {
+             PreparedStatement ps = con.prepareStatement("insert into public.students_courses values (?,?)")) {
             for (Course courseAdd : courses) {
                 ps.setInt(1, student.getStudentId());
                 ps.setInt(2, courseAdd.getId());

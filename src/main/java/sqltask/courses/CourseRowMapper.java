@@ -1,10 +1,6 @@
 package sqltask.courses;
 
-//import org.flywaydb.core.internal.jdbc.RowMapper;
-
-import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.RowMapper;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

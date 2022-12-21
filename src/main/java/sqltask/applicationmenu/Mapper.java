@@ -3,7 +3,6 @@ package sqltask.applicationmenu;
 
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
-import java.util.*;
 
 public interface Mapper<T> {
 

@@ -1,7 +1,6 @@
 package sqltask.applicationmenu.menufunctions;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import sqltask.applicationmenu.Menu;
 import sqltask.students.Student;

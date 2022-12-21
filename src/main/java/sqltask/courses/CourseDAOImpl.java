@@ -212,7 +212,7 @@ public class CourseDAOImpl implements CourseDAO {
     public void saveStudentsCourses(Student student, List<Course> courses) {
 
             try (Connection con = ds.getConnection();
-                 PreparedStatement ps = con.prepareStatement("insert into " + STUDENTS_COURSES_TABLE + " values (default,?,?)")) {
+                 PreparedStatement ps = con.prepareStatement("insert into " + STUDENTS_COURSES_TABLE + " values (?,?)")) {
                 for (Course course : courses) {
                     ps.setInt(1, student.getStudentId());
                     ps.setInt(2, course.getId());

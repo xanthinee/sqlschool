@@ -1,12 +1,10 @@
 package sqltask.groups;
 
 import sqltask.applicationmenu.Mapper;
-import sqltask.courses.Course;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
 
 public class GroupMapper implements Mapper<Group> {
 

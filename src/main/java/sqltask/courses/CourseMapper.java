@@ -1,12 +1,10 @@
 package sqltask.courses;
 
-//import org.flywaydb.core.internal.jdbc.RowMapper;
 import sqltask.applicationmenu.Mapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
 
 public class CourseMapper implements Mapper<Course> {
 

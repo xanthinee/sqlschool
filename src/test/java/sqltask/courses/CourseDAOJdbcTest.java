@@ -42,7 +42,7 @@ class CourseDAOJdbcTest implements TestDAOInterface {
 
     @BeforeEach
     public void clearContainer() {
-        JdbcTestUtils.deleteFromTables(jdbc, STUDENT_TABLE, COURSE_TABLE, STUDENT_COURSE);
+        JdbcTestUtils.deleteFromTables(jdbc,STUDENT_COURSE, STUDENT_TABLE, COURSE_TABLE);
     }
 
     @Override
@@ -143,10 +143,11 @@ class CourseDAOJdbcTest implements TestDAOInterface {
         jdbc.update("insert into " + STUDENT_TABLE + " values (?,?,?,?)", student.getStudentId(), student.getGroupId(),
                 student.getName(), student.getSurname());
 
-        jdbc.batchUpdate("insert into " + COURSE_TABLE + " values (default,?,?)", courses, courses.size(),
+        jdbc.batchUpdate("insert into " + COURSE_TABLE + " values (?,?,?)", courses, courses.size(),
                 (PreparedStatement ps, Course courseJdbc) -> {
-                ps.setString(1, courseJdbc.getName());
-                ps.setString(2, courseJdbc.getDescription());
+                ps.setInt(1, courseJdbc.getId());
+                ps.setString(2, courseJdbc.getName());
+                ps.setString(3, courseJdbc.getDescription());
                 });
 
         dao.saveStudentsCourses(student, courses);
@@ -167,12 +168,13 @@ class CourseDAOJdbcTest implements TestDAOInterface {
         jdbc.update("insert into " + STUDENT_TABLE + " values (?,?,?,?)", student.getStudentId(), student.getGroupId(),
                 student.getName(), student.getSurname());
 
-        jdbc.batchUpdate("insert into " + COURSE_TABLE + " values (default,?,?)", courses, courses.size(),
+        jdbc.batchUpdate("insert into " + COURSE_TABLE + " values (?,?,?)", courses, courses.size(),
                 (PreparedStatement ps, Course courseJdbc) -> {
-                    ps.setString(1, courseJdbc.getName());
-                    ps.setString(2, courseJdbc.getDescription());
+                    ps.setInt(1, courseJdbc.getId());
+                    ps.setString(2, courseJdbc.getName());
+                    ps.setString(3, courseJdbc.getDescription());
                 });
-        jdbc.batchUpdate("insert into " + STUDENT_COURSE + " values (default, ?,?)", courses, courses.size(),
+        jdbc.batchUpdate("insert into " + STUDENT_COURSE + " values (?,?)", courses, courses.size(),
                 (PreparedStatement ps, Course courseJdbc) -> {
             ps.setInt(1, student.getStudentId());
             ps.setInt(2, courseJdbc.getId());
@@ -196,12 +198,13 @@ class CourseDAOJdbcTest implements TestDAOInterface {
         jdbc.update("insert into " + STUDENT_TABLE + " values (?,?,?,?)", student.getStudentId(), student.getGroupId(),
                 student.getName(), student.getSurname());
 
-        jdbc.batchUpdate("insert into " + COURSE_TABLE + " values (default,?,?)", courses, courses.size(),
+        jdbc.batchUpdate("insert into " + COURSE_TABLE + " values (?,?,?)", courses, courses.size(),
                 (PreparedStatement ps, Course courseJdbc) -> {
-                    ps.setString(1, courseJdbc.getName());
-                    ps.setString(2, courseJdbc.getDescription());
+                    ps.setInt(1, courseJdbc.getId());
+                    ps.setString(2, courseJdbc.getName());
+                    ps.setString(3, courseJdbc.getDescription());
                 });
-        jdbc.batchUpdate("insert into " + STUDENT_COURSE + " values (default, ?,?)", courses, courses.size(),
+        jdbc.batchUpdate("insert into " + STUDENT_COURSE + " values (?,?)", courses, courses.size(),
                 (PreparedStatement ps, Course courseJdbc) -> {
                     ps.setInt(1, student.getStudentId());
                     ps.setInt(2, courseJdbc.getId());
@@ -237,12 +240,18 @@ class CourseDAOJdbcTest implements TestDAOInterface {
                     ps.setString(2, courseJdbc.getName());
                     ps.setString(3, courseJdbc.getDescription());
                 });
-        jdbc.batchUpdate("insert into " + STUDENT_COURSE + " values (default, ?,?)", courses, courses.size(),
+        jdbc.batchUpdate("insert into " + STUDENT_COURSE + " values (?,?)", courses, courses.size(),
                 (PreparedStatement ps, Course courseJdbc) -> {
                     ps.setInt(1, student.getStudentId());
                     ps.setInt(2, courseJdbc.getId());
                 });
+        System.out.println("!!!");
+        System.out.println(dao.getCoursesOfStudent(studentID).stream().toList());
+        System.out.println("!!!");
         dao.unlinkCourse(studentID, courseNameToDelete);
+        System.out.println("!!!");
+        System.out.println(dao.getCoursesOfStudent(studentID).stream().toList());
+        System.out.println("!!!");
         assertEquals(0, JdbcTestUtils.countRowsInTableWhere(jdbc, STUDENT_COURSE, "course_id =" + idOfCourseToDelete));
         assertEquals(1, JdbcTestUtils.countRowsInTable(jdbc, STUDENT_COURSE));
     }
@@ -279,17 +288,17 @@ class CourseDAOJdbcTest implements TestDAOInterface {
                     ps.setString(2, courseJdbc.getName());
                     ps.setString(3, courseJdbc.getDescription());
                 });
-        jdbc.batchUpdate("insert into " + STUDENT_COURSE + " values (default,?,?)", courses, courses.size(),
+        jdbc.batchUpdate("insert into " + STUDENT_COURSE + " values (?,?)", courses, courses.size(),
                 (PreparedStatement ps, Course courseJdbc) -> {
                     ps.setInt(1, student.getStudentId());
                     ps.setInt(2, courseJdbc.getId());
                 });
-        jdbc.batchUpdate("insert into " + STUDENT_COURSE + " values (default,?,?)", courses, courses.size(),
+        jdbc.batchUpdate("insert into " + STUDENT_COURSE + " values (?,?)", courses, courses.size(),
                 (PreparedStatement ps, Course courseJdbc) -> {
                     ps.setInt(1, student1.getStudentId());
                     ps.setInt(2, courseJdbc.getId());
                 });
-        jdbc.batchUpdate("insert into " + STUDENT_COURSE + " values (default,?,?)", courses, courses.size(),
+        jdbc.batchUpdate("insert into " + STUDENT_COURSE + " values (?,?)", courses, courses.size(),
                 (PreparedStatement ps, Course courseJdbc) -> {
                     ps.setInt(1, student2.getStudentId());
                     ps.setInt(2, courseJdbc.getId());
@@ -323,7 +332,7 @@ class CourseDAOJdbcTest implements TestDAOInterface {
 
         courses.remove(0);
 
-        jdbc.batchUpdate("insert into " + STUDENT_COURSE + " values (default, ?,?)", courses, courses.size(),
+        jdbc.batchUpdate("insert into " + STUDENT_COURSE + " values (?,?)", courses, courses.size(),
                 (PreparedStatement ps, Course courseJdbc) -> {
                     ps.setInt(1, student.getStudentId());
                     ps.setInt(2, courseJdbc.getId());

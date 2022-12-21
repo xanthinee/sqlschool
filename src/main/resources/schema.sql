@@ -25,8 +25,6 @@ CREATE TABLE public.courses (
 );
 
 CREATE TABLE public.students_courses (
-                                         row_id serial NOT NULL,
                                          student_id integer NOT NULL references students(student_id) on DELETE cascade,
-                                         course_id integer NOT NULL,
-                                         CONSTRAINT students_courses_pkey PRIMARY KEY (row_id)
+                                         course_id integer NOT NULL references courses(course_id) on DELETE cascade
 );
