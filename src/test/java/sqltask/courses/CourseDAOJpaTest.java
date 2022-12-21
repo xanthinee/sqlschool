@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,9 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = ContainersConfig.class)
 @ActiveProfiles(profiles = {"test", "jpa"})
 public class CourseDAOJpaTest implements TestDAOInterface {
-
     @Autowired
-    @PersistenceContext
     EntityManager entityManager;
 
     @Autowired
@@ -37,7 +36,7 @@ public class CourseDAOJpaTest implements TestDAOInterface {
 
     @BeforeEach
     public void clearContainer() {
-        JdbcTestUtils.deleteFromTables(jdbc, "courses", "students", "students_courses");
+        JdbcTestUtils.deleteFromTables(jdbc, "students_courses","courses", "students");
     }
     @Override
     @Test
@@ -61,6 +60,7 @@ public class CourseDAOJpaTest implements TestDAOInterface {
 
     @Override
     @Test
+    @Transactional
     public void deleteAll_shouldRetrieveZeroRows() {
         List<Course> courses = new ArrayList<>(Arrays.asList(
                 new Course(1,"name1", "description1"),
